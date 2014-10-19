@@ -37,9 +37,9 @@ fi
 
 export PIP_DOWNLOAD_CACHE="$HOME/.pip/download-cache"
 export LANGUAGE="en_GB:en"
-export LC_MESSAGES="en_GB.UTF-8"
-export LC_CTYPE="en_GB.UTF-8"
-export LC_COLLATE="en_GB.UTF-8"
+export LC_MESSAGES="en_GB.utf8"
+export LC_CTYPE="en_GB.utf8"
+export LC_COLLATE="en_GB.utf8"
 export GREP_COLOR="33;51;1"
 export GREP_OPTIONS="--color=auto"
 
@@ -65,7 +65,7 @@ if [ -e "$NIXOS" ]; then
     export PATH="$NIXOS/bin:$PATH"
 fi
 
-which setxkbmap
+which setxkbmap 2> /dev/null
 if [ $? -eq 0 ]; then
     setxkbmap -layout gb -option ctrl:nocaps
 fi
