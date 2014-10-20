@@ -34,10 +34,12 @@ URxvt*transparent: true
 URxvt*tintColor: #ff0000
 #URxvt*shading: 40
 URxvt*saveLines: 12000
-URxvt*foreground: #ffff00
-URxvt*background: #000000
+URxvt*foreground: #fff000
+URxvt*background: #0000cc
 URxvt*font: xft:Monospace:size=10
 #URxvt*boldFont: xft:Monospace:bold:size=10
 URxvt*scrollBar_right: false
 URxvt*scrollBar_left: false
 URxvt*scrollstyle: rxvt
+URxvt*scrollBar: false
+URxvt*loginShell: true

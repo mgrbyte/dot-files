@@ -1,16 +1,20 @@
 #!/bin/sh
 
+setxkbmap -layout gb -option ctrl:nocaps
+
 # Tray
-trayer &
+pgrep trayer
+[ $? -eq 0 ] || trayer &
 
 # X stuff
-xscreensaver -no-splash &
+pgrep xscreensaver 
+[ $? -eq 0 ] || xscreensaver -no-splash &
 
 # Background
 feh --bg-scale "$HOME/Pictures/backgrounds/haskell.png"
 
 # Emacs
-emacs --daemon
-touch ~/xinit.ran
+pgrep -f "emacs --daemon"
+[ $? -eq 0 ] || emacs --daemon
 
-exec xmonad
+pgrep xmonad || exec xmonad
