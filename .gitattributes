@@ -1,5 +1,5 @@
-.gitignore export-ignore
-.gitattributes export-ignore
-./deploy.sh export-ignore
+deploy.sh export-ignore
 LICENSE export-ignore
 README.md export-ignore
+.gitignore export-ignore
+.gitattributes export-ignore
