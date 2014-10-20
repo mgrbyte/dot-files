@@ -2,6 +2,6 @@
 ARCHIVE="/tmp/dot-files.tar.gz"
 git archive -o "$ARCHIVE" HEAD
 cd "$HOME"
-tar tvf "$ARCHIVE"
+tar xvf "$ARCHIVE"
 rm "$ARCHIVE"
 
