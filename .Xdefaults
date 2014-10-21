@@ -43,3 +43,11 @@ URxvt*scrollBar_left: false
 URxvt*scrollstyle: rxvt
 URxvt*scrollBar: false
 URxvt*loginShell: true
+
+Xft.dpi: 96
+Xft.lcdfilter: lcddefault
+Xft.antialias: true
+Xft.hinting:true
+Xft.hintstyle: hintfull
+Xft.rgba: rgb
+*customization: -color
