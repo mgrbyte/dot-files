@@ -67,7 +67,7 @@ fi
 
 which setxkbmap 2> /dev/null
 if [ $? -eq 0 ]; then
-    setxkbmap -layout gb -option ctrl:nocaps
+    setxkbmap -layout us -option ctrl:nocaps -geometry hhk
 fi
 
 alias ls="ls -p"
