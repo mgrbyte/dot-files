@@ -12,7 +12,6 @@
 (require 'magit)
 (require 'org)
 (require 'org-install)
-;; (require 'pyvenv)
 (require 'python)
 (require 'rst)
 (require 's)
@@ -36,8 +35,7 @@
  '((emacs-lisp . t)
    (python . t)
    ))
-				 
-
+			 
 (setq-default theme-load-from-file t)
 (setq-default theme-default 'solarized-dark)
 (menu-bar-mode 1)
@@ -148,7 +146,6 @@
 
 (add-hook 'dired-load-hook
 	  '(lambda ()
-	     (require 'dired-x)
 	     (dired-omit-mode 1)))
 
 (setq-default jabber-account-list
