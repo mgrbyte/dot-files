@@ -1,4 +1,4 @@
-dot-files-nixos
-===============
+dot-files
+=========
 
-Unix 'dot-files' for my profile on a nixos machine.
+Unix 'dot-files' for my profile on a unix-like machine.
