@@ -103,9 +103,10 @@ Return nil if this is not the case."
 (defun py-set-flycheck-flake8rc-for-current-git-repo()
   (require 'flycheck)
   (let* ((curr-git-remote-url (git-get-current-remote-name))
-   (flake8rc-filename "flake8rc"))
-    (if (is-pylons-project-repository curr-git-remote-url)
-  (setq flake8rc-filename "pylons.flake8rc"))
+	 (flake8rc-filename "flake8rc"))
+    (if (and curr-git-remote-url
+	     (is-pylons-project-repository curr-git-remote-url))
+	(setq flake8rc-filename "pylons.flake8rc"))
     (setq-default flycheck-flake8rc (concat "~/.config/" flake8rc-filename))))
 
 (defun pyvenv-activate-safely (directory)
@@ -138,6 +139,9 @@ Return nil if this is not the case."
   (pyvenv-deactivate)
       (pyvenv-workon (car venvs-matched)))))
 
+(defun py-set-newline-and-indent ()
+  "Map the return key with `newline-and-indent'."
+  (local-set-key (kbd "RET") 'newline-and-indent))
 
 (defun py-handle-virtualenvs ()
   "Handle Python virualenvs."
@@ -155,6 +159,7 @@ Return nil if this is not the case."
   "Setup Python developemnt environment."
   (py-auto-workon-maybe)
   (py-handle-virtualenvs)
+  (py-set-newline-and-indent)
   (py-set-flycheck-flake8rc-for-current-git-repo))
 
 (add-hook 'python-mode-hook #'py-setup)
