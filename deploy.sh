@@ -13,10 +13,7 @@ git remote -v | grep "netsight/emacs"
 if [ $? -ne 0 ]; then
     cd "$HOME"
     git clone https://github.com/netsight/emacs.d ~/.emacs.d
-    curl -fsSL https://raw.githubusercontent.com/cask/cask/master/go | python
-    cd ~/.emacs.d
-    cask update
-    cask upgrade
+    make
 fi
 popd
 
