@@ -30,7 +30,7 @@
 (setq ido-everywhere t)
 (setq ido-enable-prefix nil)
 (setq ido-enable-flex-matching t)
-(setq ido-create-new-buffer 'always)
+(setq ido-create-new-buffer #'always)
 (setq ido-max-prospects 10)
 (setq ido-file-extensions-order
       '(".py" ".zcml" ".el" ".xml" ".js"))
@@ -41,33 +41,32 @@
       (list "~/org/work.org"
       "~/org/home.org"))
 (org-babel-do-load-languages
- 'org-babel-load-languages
+ #'org-babel-load-languages
  '((emacs-lisp . t)
-   (python . t)
-   ))
+   (python . t)))
          
 
 (setq-default theme-load-from-file t)
-(setq-default theme-default 'solarized-dark)
+(setq-default theme-default #'solarized-dark)
 (menu-bar-mode 1)
 (set-fill-column 79)
 
 ;; dired
 (setq-default dired-omit-files-p t)
-(add-hook 'dired-load-hook
-    '(lambda ()
-       (require 'dired-x)
-       (dired-omit-mode 1)))
+(add-hook #'dired-load-hook
+	  '(lambda ()
+	     (require 'dired-x)
+	     (dired-omit-mode 1)))
 
 (defun setup-global-key-bindings ()
   "Setup global key bindings."
-  (global-set-key (kbd "C-c +") 'text-scale-increase)
-  (global-set-key (kbd "C-c -") 'text-scale-decrease)
-  (global-set-key (kbd "C-c l") 'org-store-link)
-  (global-set-key (kbd "C-c c") 'org-capture)
-  (global-set-key (kbd "C-c a") 'org-agenda)
-  (global-set-key (kbd "C-c b") 'org-iswitchb)
-  (global-set-key (kbd "C-c m") 'magit-status))
+  (global-set-key (kbd "C-c +") #'text-scale-increase)
+  (global-set-key (kbd "C-c -") #'text-scale-decrease)
+  (global-set-key (kbd "C-c l") #'org-store-link)
+  (global-set-key (kbd "C-c c") #'org-capture)
+  (global-set-key (kbd "C-c a") #'org-agenda)
+  (global-set-key (kbd "C-c b") #'org-iswitchb)
+  (global-set-key (kbd "C-c m") #'magit-status))
 
 (add-hook #'after-init-hook #'setup-global-key-bindings)
 
@@ -150,14 +149,14 @@ Return nil if this is not the case."
 
 (defun py-set-newline-and-indent ()
   "Map the return key with `newline-and-indent'."
-  (local-set-key (kbd "RET") 'newline-and-indent))
+  (local-set-key (kbd "RET") #'newline-and-indent))
 
 (defun py-handle-virtualenvs ()
   "Handle Python virualenvs."
   (pyvenv-mode 1)
-  (define-key python-mode-map (kbd "C-c w") 'pyvenv-workon)
-  (define-key python-mode-map (kbd "C-c v d") 'pyvenv-deactivate)
-  (define-key python-mode-map (kbd "C-c v e") 'pyvenv-activate-safely))
+  (define-key python-mode-map (kbd "C-c w") #'pyvenv-workon)
+  (define-key python-mode-map (kbd "C-c v d") #'pyvenv-deactivate)
+  (define-key python-mode-map (kbd "C-c v e") #'pyvenv-activate-safely))
 
 (defun py-handle-sphinx-docs ()
   "Handle Sphinx docs doing python reference lookups using virtualenvs."
@@ -170,16 +169,15 @@ Return nil if this is not the case."
   (py-handle-virtualenvs)
   (py-set-newline-and-indent)
   (py-set-flycheck-flake8rc-for-current-git-repo)
-  (setq jedi:complete-on-dot 't)
+  (setq jedi:complete-on-dot #'t)
   (pungi:setup-jedi))
 
 (add-hook 'python-mode-hook #'py-setup)
 (add-hook 'rst-mode #'py-handle-sphinx-docs)
 
-
 ;; jabber
 (setq-default jabber-account-list
-	      '((:password: nil)
+	      #'((:password: nil)
 		(:network-server . "")
 		(:port 5220)
 		(:connection-type . ssl)))
@@ -195,8 +193,7 @@ Return nil if this is not the case."
     (notify (format "%s" (jabber-jid-displayname from))
 	    text)))
 
-(add-hook 'jabber-alert-message-hooks 'notify-jabber-notify)
-
+(add-hook #'jabber-alert-message-hooks #'notify-jabber-notify)
 
 ;; common lisp
 (setq-default quicklisp-el "~/quicklisp/slime-helper.el")
