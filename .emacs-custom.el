@@ -10,6 +10,7 @@
 (setq debug-on-error t)
 (require 'dash)
 (require 'flycheck)
+(require 'jabber)
 (require 'ido)
 (require 'magit)
 (require 'org)
@@ -21,7 +22,6 @@
 (require 'rst)
 (require 's)
 
-(setq-default dired-omit-files-p t)
 (setq custom-theme-directory (locate-user-emacs-file "themes"))
 (setq custom-theme-allow-multiple-selections nil)
 
@@ -51,6 +51,13 @@
 (setq-default theme-default 'solarized-dark)
 (menu-bar-mode 1)
 (set-fill-column 79)
+
+;; dired
+(setq-default dired-omit-files-p t)
+(add-hook 'dired-load-hook
+    '(lambda ()
+       (require 'dired-x)
+       (dired-omit-mode 1)))
 
 (defun setup-global-key-bindings ()
   "Setup global key bindings."
@@ -170,20 +177,34 @@ Return nil if this is not the case."
 (add-hook 'python-mode-hook #'py-setup)
 (add-hook 'rst-mode #'py-handle-sphinx-docs)
 
-(add-hook 'dired-load-hook
-    '(lambda ()
-       (require 'dired-x)
-       (dired-omit-mode 1)))
 
+;; jabber
 (setq-default jabber-account-list
-    '((:password: nil)
-      (:network-server . "")
-      (:port 5220)
-      (:connection-type . ssl)))
+	      '((:password: nil)
+		(:network-server . "")
+		(:port 5220)
+		(:connection-type . ssl)))
 
-(load (expand-file-name "~/quicklisp/slime-helper.el"))
-;; Replace "sbcl" with the path to your implementation
-(setq inferior-lisp-program "sbcl")
+(defun notify-jabber-notify (from buf text proposed-alert)
+  "Notify via notify.el about new messages using FROM BUF TEXT PROPOSED-ALERT."
+  (when (or jabber-message-alert-same-buffer
+	    (not (memq (selected-window) (get-buffer-window-list buf))))
+    (if (jabber-muc-sender-p from)
+	(notify (format "(PM) %s"
+			(jabber-jid-displayname (jabber-jid-user from)))
+		(format "%s: %s" (jabber-jid-resource from) text)))
+    (notify (format "%s" (jabber-jid-displayname from))
+	    text)))
+
+(add-hook 'jabber-alert-message-hooks 'notify-jabber-notify)
+
+
+;; common lisp
+(setq-default quicklisp-el "~/quicklisp/slime-helper.el")
+(when (file-exists-p quicklisp-el)
+  (load (expand-file-name quicklisp-el))
+  (setq inferior-lisp-program "sbcl"))
+
 
 (defun load-my-theme ()
   "Load my theme with powerline enabled."
