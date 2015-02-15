@@ -8,18 +8,22 @@
 ;;
 ;;; Code:
 (setq debug-on-error t)
-(require 'dired-x)
+(require 'dash)
+(require 'flycheck)
 (require 'ido)
 (require 'magit)
-(require 'notify)
 (require 'org)
 (require 'org-install)
+(require 'powerline)
+(require 'pungi)
 (require 'python)
+(require 'pyvenv)
 (require 'rst)
 (require 's)
 
 (setq-default dired-omit-files-p t)
 (setq custom-theme-directory (locate-user-emacs-file "themes"))
+(setq custom-theme-allow-multiple-selections nil)
 
 (ido-mode 1)
 (setq ido-case-fold t)
@@ -32,8 +36,6 @@
       '(".py" ".zcml" ".el" ".xml" ".js"))
 
 ;; org-mode
-(setq org-log-done t)
-(setq org-agenda-files (list "~/org/work.org"))
 (setq org-log-done #'time)
 (setq org-agenda-files
       (list "~/org/work.org"
@@ -50,11 +52,17 @@
 (menu-bar-mode 1)
 (set-fill-column 79)
 
-(setq-default jabber-account-list
-    '((:password: nil)
-      (:network-server . "")
-      (:port 5220)
-      (:connection-type . ssl)))
+(defun setup-global-key-bindings ()
+  "Setup global key bindings."
+  (global-set-key (kbd "C-c +") 'text-scale-increase)
+  (global-set-key (kbd "C-c -") 'text-scale-decrease)
+  (global-set-key (kbd "C-c l") 'org-store-link)
+  (global-set-key (kbd "C-c c") 'org-capture)
+  (global-set-key (kbd "C-c a") 'org-agenda)
+  (global-set-key (kbd "C-c b") 'org-iswitchb)
+  (global-set-key (kbd "C-c m") 'magit-status))
+
+(add-hook #'after-init-hook #'setup-global-key-bindings)
 
 (defvar py-workon-home (or (getenv "WORKON_HOME") "~/.virtualenvs")
   "The virtualenvwrapper stuff.")
@@ -73,7 +81,9 @@
     "pyramid_zcml"
     "pyramid_zodbconn"
     "sdidemo"
-    "substanced"))
+    "substanced"
+    "webob"
+    "waitress"))
 
 (defun get-git-repo-name (url)
   "Return the git repository name given a URL.
@@ -98,7 +108,7 @@ Return nil if this is not the case."
       (magit-get "remote" remote "url"))))
 
 (defun py-set-flycheck-flake8rc-for-current-git-repo()
-  (require 'flycheck)
+  "Set the flake8rc file for the current git repository."
   (let* ((curr-git-remote-url (git-get-current-remote-name))
 	 (flake8rc-filename "flake8rc"))
     (if (and curr-git-remote-url
@@ -114,26 +124,22 @@ Return nil if this is not the case."
 (defun py-venv-known-names (directory)
   "List `known` virtualenvs names only in DIRECTORY."
   (let* ((dir-name (directory-file-name directory))
-   (full-names 1)
-   (files (directory-files directory full-names))
-   (dirs (remove-if-not #'file-directory-p files))
-   (names (remove-if
-     #'(lambda (name)
-         (s-match ".+\\.+$" name)) dirs)))
-    (mapcar #'file-name-base names)))
+	 (files (directory-files directory 1))
+	 (starts-with-dot (apply-partially #'s-starts-with? "."))
+	 (dir-names (-filter #'file-directory-p files))
+	 (entries (-map #'file-name-nondirectory dir-names)))
+    (-drop-while starts-with-dot entries)))
 
 (defun py-auto-workon-maybe ()
   "Attempt to automatically workon known virtualenvs."
   (require 'pyvenv)
   (let* ((git-remote-name (git-get-current-remote-name))
-   (git-repo-name (or (file-name-base git-remote-name) ""))
-   (venv-names (py-venv-known-names py-workon-home))
-   (venvs-matched (remove-if-not
-       #'(lambda (venv-name)
-           (s-contains? git-repo-name venv-name))
-           venv-names)))
-    (if (and (> 1 (length venvs-matched)) pyvenv-virtual-env)
-  (pyvenv-deactivate)
+	 (git-repo-name (or (file-name-base git-remote-name) ""))
+	 (venv-names (py-venv-known-names py-workon-home))
+	 (repo-venv (apply-partially #'s-contains? git-repo-name))
+	 (venvs-matched (-filter repo-venv venv-names)))
+    (if (and (> 0 (length venvs-matched)) pyvenv-virtual-env)
+	(pyvenv-deactivate)
       (pyvenv-workon (car venvs-matched)))))
 
 (defun py-set-newline-and-indent ()
@@ -152,49 +158,42 @@ Return nil if this is not the case."
   (auto-fill-mode t)
   (handle-virtualenvs))
 
-(add-hook 'rst-mode #'py-handle-sphinx-docs)
-
 (defun py-setup ()
   "Setup Python developemnt environment."
   (py-auto-workon-maybe)
   (py-handle-virtualenvs)
   (py-set-newline-and-indent)
-  (py-set-flycheck-flake8rc-for-current-git-repo))
+  (py-set-flycheck-flake8rc-for-current-git-repo)
+  (setq jedi:complete-on-dot 't)
+  (pungi:setup-jedi))
 
 (add-hook 'python-mode-hook #'py-setup)
+(add-hook 'rst-mode #'py-handle-sphinx-docs)
 
-(defun notify-jabber-notify (from buf text proposed-alert)
-  "Notify via notify.el about new messages using FROM BUF TEXT PROPOSED-ALERT."
-  (when (or jabber-message-alert-same-buffer
-            (not (memq (selected-window) (get-buffer-window-list buf))))
-    (if (jabber-muc-sender-p from)
-        (notify (format "(PM) %s"
-                       (jabber-jid-displayname (jabber-jid-user from)))
-               (format "%s: %s" (jabber-jid-resource from) text)))
-      (notify (format "%s" (jabber-jid-displayname from))
-             text)))
+(add-hook 'dired-load-hook
+    '(lambda ()
+       (require 'dired-x)
+       (dired-omit-mode 1)))
 
-(add-hook 'jabber-alert-message-hooks 'notify-jabber-notify)
+(setq-default jabber-account-list
+    '((:password: nil)
+      (:network-server . "")
+      (:port 5220)
+      (:connection-type . ssl)))
 
-(defun dired-omit-hook ()
-  "Omit mode on by default."
-  (dired-omit-mode 1))
+(load (expand-file-name "~/quicklisp/slime-helper.el"))
+;; Replace "sbcl" with the path to your implementation
+(setq inferior-lisp-program "sbcl")
 
-(add-hook 'dired-load-hook 'dired-omit-hook)
+(defun load-my-theme ()
+  "Load my theme with powerline enabled."
+  (interactive)
+  (powerline-revert)
+  (powerline-reset)
+  (call-interactively #'load-theme)
+  (powerline-default-theme))
 
-(defun setup-global-key-bindings ()
-  "Setup global key bindings."
-  (require 'magit)
-  (require 'org)
-  (global-set-key (kbd "C-c +") 'text-scale-increase)
-  (global-set-key (kbd "C-c -") 'text-scale-decrease)
-  (global-set-key (kbd "C-c l") 'org-store-link)
-  (global-set-key (kbd "C-c c") 'org-capture)
-  (global-set-key (kbd "C-c a") 'org-agenda)
-  (global-set-key (kbd "C-c b") 'org-iswitchb)
-  (global-set-key (kbd "C-c m") 'magit-status))
-
-(add-hook #'after-init-hook #'setup-global-key-bindings)
+(powerline-default-theme)
 
 (provide '.emacs-custom)
 ;;; .emacs-custom.el ends here
