@@ -139,7 +139,6 @@ Return nil if this is not the case."
 
 (defun py-auto-workon-maybe ()
   "Attempt to automatically workon known virtualenvs."
-  (require 'pyvenv)
   (let* ((git-remote-name (git-get-current-remote-name))
 	 (git-repo-name (or (file-name-base git-remote-name) ""))
 	 (venv-names (py-venv-known-names py-workon-home))
