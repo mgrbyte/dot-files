@@ -14,5 +14,6 @@ compinit
 
 autoload -U promptinit
 promptinit
-prompt fade
+prompt adam2
+
 
