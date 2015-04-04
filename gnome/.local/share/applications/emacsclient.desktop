@@ -1,0 +1,9 @@
+[Desktop Entry]
+Version=1.0
+Name=emacsclient
+Exec=env UBUNTU_MENUPROXY=0 /usr/local/bin/emacsclient -c
+Terminal=false
+Icon=emacs
+Type=Application
+Categories=IDE
+X-Ayatana-Desktop-Shortcuts=NewWindow

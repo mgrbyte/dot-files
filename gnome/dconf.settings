@@ -1,0 +1,140 @@
+[org/gnome/settings-daemon/plugins/media-keys]
+custom-keybindings=['/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0/', '/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom1/', '/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom2/']
+
+[org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom2]
+binding='<Shift><Super>s'
+command='dbus-send --system --print-reply  --dest="org.freedesktop.UPower"  /org/freedesktop/UPower \\\n    org.freedesktop.UPower.Suspend'
+name='Suspend'
+
+[org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom1]
+binding='<Super>m'
+command='thunderbird'
+name='Mail'
+
+[org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0]
+binding='<Super>e'
+command='emacsclient -c'
+name='emacs'
+
+[org/gnome/settings-daemon/peripherals/keyboard]
+numlock-state='off'
+
+[org/gnome/shell]
+command-history=['gnome-tweak-tool']
+favorite-apps=['Emacs-24.desktop', 'firefox.desktop', 'nautilus.desktop']
+
+[org/gnome/shell/overrides]
+button-layout=':minimize,maximize,close'
+
+[org/gnome/gedit/preferences/ui]
+statusbar-visible=true
+notebook-show-tabs-mode='always'
+
+[org/gnome/gedit/plugins]
+active-plugins=['time', 'filebrowser', 'modelines', 'spell', 'docinfo', 'zeitgeistplugin']
+
+[org/gnome/gedit/state/window]
+size=(1134, 729)
+state=388
+bottom-panel-size=140
+side-panel-size=200
+side-panel-active-page=228660812
+
+[org/gnome/nautilus/window-state]
+geometry='1093x655+510+219'
+maximized=false
+
+[org/gnome/evince/default]
+window-ratio=(2.5081699346405228, 1.0075757575757576)
+
+[org/gnome/file-roller/listing]
+sort-method='name'
+name-column-width=250
+sort-type='ascending'
+list-mode='as-folder'
+show-path=false
+
+[org/gnome/file-roller/ui]
+sidebar-width=200
+window-height=848
+window-width=1535
+
+[org/gnome/deja-dup]
+backend='file'
+prompt-check='disabled'
+
+[org/gnome/desktop/screensaver]
+lock-delay=uint32 0
+
+[org/gnome/desktop/notifications]
+application-children=['launchy']
+
+[org/gnome/desktop/notifications/application/launchy]
+application-id='launchy.desktop'
+
+[org/gnome/desktop/wm/preferences]
+theme='Radiance'
+
+[org/gnome/desktop/background]
+picture-uri='file:///usr/share/backgrounds/Forever_by_Shady_S.jpg'
+color-shading-type='solid'
+primary-color='#000000'
+picture-options='stretched'
+secondary-color='#000000'
+
+[org/gnome/desktop/input-sources]
+sources=[('xkb', 'gb'), ('xkb', 'us')]
+xkb-options=['ctrl:nocaps']
+
+[org/gnome/desktop/session]
+idle-delay=uint32 1800
+
+[org/gnome/desktop/interface]
+text-scaling-factor=1.0
+gtk-key-theme='Emacs'
+cursor-size=24
+gtk-im-module='gtk-im-context-simple'
+scaling-factor=uint32 1
+toolkit-accessibility=false
+icon-theme='gnome'
+enable-animations=true
+clock-show-date=true
+
+[org/gnome/libgnomekbd/preview]
+width=1224
+height=524
+x=200
+y=112
+
+[org/gnome/rhythmbox/plugins/audioscrobbler/Last.fm]
+scrobbling-enabled=true
+
+[org/gtk/settings/file-chooser]
+sort-column='name'
+sidebar-width=148
+window-position=(500, 190)
+show-size-column=true
+show-hidden=false
+window-size=(910, 682)
+sort-order='ascending'
+location-mode='path-bar'
+
+[apps/update-manager]
+first-run=false
+launch-time=1428149844
+
+[com/canonical/indicator/messages]
+applications=['thunderbird.desktop', 'xchat.desktop']
+
+[com/ubuntu/sound]
+allow-amplified-volume=true
+
+[desktop/gnome/crypto/cache]
+gpg-cache-method='always'
+
+[desktop/ibus/general]
+engines-order=['xkb:gb::eng']
+preload-engine-mode=1
+preload-engines=['xkb:gb::eng']
+preload-engines-inited=true
+version='1.5.5'
