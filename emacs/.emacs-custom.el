@@ -7,7 +7,7 @@
 ;;;    notably the Pylons project.
 ;;
 ;;; Code:
-(message (format "%s" (shell-command "/bin/hostname")))
+
 (defvar user-lisp-directory (expand-file-name "~/elisp")
   "Place to load local LISP code from.")
 
