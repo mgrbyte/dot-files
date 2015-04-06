@@ -90,7 +90,11 @@ Return nil if this is not the case."
 (use-package pyvenv
   :bind (("C-c w" . pyvenv-workon)
 	 ("C-c v d" . pyvenv-deactivate)
-	 ("C-c v e" . pyautomagic--activate-venv-safely)))
+	 ("C-c v e" . pyautomagic--activate-venv-safely))
+  :config
+  (progn
+    (setq pyvenv-mode-line-indicator '(pyvenv-virtual-env-name
+                                     ("[venv:" pyvenv-virtual-env-name "] ")))))
 
 (use-package python
   :bind (("RET" . newline-and-indent))
