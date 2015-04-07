@@ -83,9 +83,9 @@ function steeef_precmd {
         # check for untracked files or updated submodules, since vcs_info doesn't
         if [[ ! -z $(git ls-files --other --exclude-standard 2> /dev/null) ]]; then
             PR_GIT_UPDATE=1
-            FMT_BRANCH="${PM_RST} on %{$turquoise%}%b%u%c%{$hotpink%} Α${PR_RST}"
+            FMT_BRANCH="${PM_RST} on %{$turquoise%%}%b%u%c%{$limegreen%} Α${PR_RST}"
         else
-            FMT_BRANCH="${PM_RST} on %{$turquoise%}%b%u%c${PR_RST}"
+            FMT_BRANCH="${PM_RST} on %{$turquoise%%}%b%u%c${PR_RST}"
         fi
         zstyle ':vcs_info:*:prompt:*' formats       "${FMT_BRANCH}"
 
@@ -99,4 +99,4 @@ function is_localhost {
     HOSTNAME="$(hostname)"
 }
 
-PROMPT=$'%{$purple%}%n%{$reset_color%}%{$fg_bold[white]%}@%{$reset_color%}%{$fg_bold[red]%}%m%{$reset_color%} in %{$limegreen%}%~%{$reset_color%}$(ruby_prompt_info " with%{$fg[red]%} " v g "%{$reset_color%}")$vcs_info_msg_0_%{$orange%} λ%{$reset_color%}: '
+PROMPT=$'%{$yellow%}%n%{$reset_color%}%{$fg_bold[white]%}@%{$reset_color%}%{$fg_bold[red]%}%m%{$reset_color%} in %{$limegreen%}%~%{$reset_color%}$(ruby_prompt_info " with%{$fg[red]%} " v g "%{$reset_color%}")$vcs_info_msg_0_%{$orange%} λ%{$reset_color%}: '
