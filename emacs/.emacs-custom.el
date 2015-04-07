@@ -11,6 +11,11 @@
 (defvar user-lisp-directory (expand-file-name "~/elisp")
   "Place to load local LISP code from.")
 
+(use-package auth-source)
+
+(use-package gnus
+  :bind (("C-x g" . gnus-other-frame)))
+
 (use-package org
   :bind (("C-c l" . org-store-link)
 	 ("C-c c" . org-capture)
@@ -41,17 +46,40 @@
 
 (use-package jabber
   :load-path user-lisp-directory
-  :bind (("C-x C-j" . jabber-connect))
   :preface
-  :config
-  (setq jabber-account-list
-	'(("mattr@netsight.co.uk/laptop"
-	   (:network-server . "jabber.netsight.co.uk"))
-	  ("mattr@netsight.co.uk/workstation"
-	   (:network-server ."jabber.netsight.co.uk"))
-	  ("matthew.russell@horizon5.org"
-	   (:network-server . "talk.google.com")
-	   (:connection-type . ssl)))))
+  (defun set-jabber-credentials ()
+    "Reads jabber credentials from encrypted authinfo GPG file.
+
+     Assumptions:
+
+         * Pre-existance of a line such as the following in ~/.authinfo.gpg:
+           machine jabber port xmpp login <user-mail-address> password <passwd
+
+         * This is the netsight.co.uk jabber server.
+
+         * Environment variable `EMAIL` is set to a Netsight email address.
+
+     References:
+     http://enthusiasm.cozy.org/archives/2014/07/auth-source-getting-my-secrets-out-of-my-emacs-init-file
+     https://github.com/ardumont/org/blob/master/articles/emacs-jabber.org"
+    (setq creds (auth-source-search :user user-mail-address
+				    :host "jabber"
+				    :port "xmpp"
+				    :max 1
+				    :require '(:secret)))
+    (if creds
+	(let* ((authinfo-get (apply-partially #'plist-get (car creds)))
+	       (user (funcall authinfo-get :user))
+	       (host (concat "jabber." (jabber-jid-server user-mail-address)))
+	       (port (funcall authinfo-get :port))
+	       (passwd (funcall (funcall authinfo-get :secret))))
+	(setq jabber-account-list
+	      `((,user
+		 (:password . ,passwd)
+		 (:connection-type . starttls)))))
+      (error "Could not read authinfo credentials for Jabber")))
+    :config
+  (add-hook 'after-init-hook #'set-jabber-credentials))
 
 (use-package helm-config
   :bind (("C-c h" . helm-command-prefix)
@@ -80,21 +108,13 @@
 (use-package thememgr
   :load-path user-lisp-directory)
 
-(use-package gnus
-  :bind (("C-x g" . gnus-other-frame)))
-
 (setq debug-on-error t)
 (setq custom-theme-directory (locate-user-emacs-file "themes"))
 (setq custom-theme-allow-multiple-selections nil)
 (setq-default theme-load-from-file t)
+(setq user-full-name "Matt Russell")
 (menu-bar-mode 0)
 (helm-mode 1)
-
-;; common lisp
-(setq-default quicklisp-el "~/quicklisp/slime-helper.el")
-(when (file-exists-p quicklisp-el)
-  (load (expand-file-name quicklisp-el))
-  (setq inferior-lisp-program "sbcl"))
 
 (provide '.emacs-custom)
 ;;; .emacs-custom.el ends here
