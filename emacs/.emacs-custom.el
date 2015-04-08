@@ -82,10 +82,7 @@
   (add-hook 'after-init-hook #'set-jabber-credentials))
 
 (use-package helm-config
-  :bind (("C-c h" . helm-command-prefix)
-	 ("<tab>" . helm-execute-persistent-action)
-	 ("C-i" . helm-execute-persistent-action)
-	 ("C-z" . helm-select-action))
+  :bind (("C-c h" . helm-command-prefix))
   :init
   (global-unset-key (kbd "C-x c"))
   (when (executable-find "curl")
