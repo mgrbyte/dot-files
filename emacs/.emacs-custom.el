@@ -13,6 +13,15 @@
 
 (use-package auth-source)
 
+(use-package frame-cmds
+  :bind (("C-c f m" . maximize-frame)
+	 ("C-c f r" . restore-frame)
+	 ("C-c f o" . other-window-or-frame)
+	 ("<M-up>" . move-frame-up)
+	 ("<M-down>" . move-frame-down)
+	 ("<M-left>" . move-frame-left)
+ 	 ("<M-right>" . move-frame-right)))
+
 (use-package gnus
   :bind (("C-x g" . gnus-other-frame)))
 
