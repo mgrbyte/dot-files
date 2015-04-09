@@ -2,8 +2,8 @@
 ;;;
 ;;; Commentary:
 ;;; Integrates with netsight-emacs.
-;;; Customisations:
-;;;  - Adapts python-mode to work with differnet project styles,
+;;; Customisation:
+;;;  - Adapts python-mode to work with different project styles,
 ;;;    notably the Pylons project.
 ;;
 ;;; Code:
@@ -11,6 +11,22 @@
 (defvar user-lisp-directory (expand-file-name "~/elisp")
   "Place to load local LISP code from.")
 
+(defun add-to-hooks (function mode-hooks)
+  "Add FUNCTION to multiple modes MODE-HOOKS."
+  (mapc (lambda (hook) (add-hook hook function)) mode-hooks))
+
+(use-package emacs-lisp-mode
+  :mode (("*scratch*" . emacs-lisp-mode)
+	 ("\\.el$" . emacs-lisp-mode)))
+
+(use-package paredit-mode
+  :init
+  (add-to-hooks #'enable-paredit-mode `(lisp-mode-hook emacs-lisp-mode-hook)))
+
+(use-package pretty-symbols-mode
+  :config
+  (add-hooks 'emacs-lisp-mode))
+  
 (use-package auth-source)
 
 (use-package frame-cmds
@@ -22,7 +38,7 @@
 	 ("<M-left>" . move-frame-left)
  	 ("<M-right>" . move-frame-right)))
 
-(use-package gnus
+t(use-package gnus
   :bind (("C-x g" . gnus-other-frame)))
 
 (use-package org
@@ -44,12 +60,22 @@
   :config
   (setq-default dired-omit-files-p t)
   :init
+  (require 'dired-x)
   (dired-omit-mode 1))
 
 (use-package text-scale-mode
   :bind (("C-c +" . text-scale-increase)
 	 ("C-c -" . text-scale-decrease)))
- 
+
+(use-package ispell
+  :bind (("C-c i" . ispell-buffer))
+  :init
+  (add-to-hooks #'flyspell-mode
+		`(git-commit-mode-hook
+		  jabber-chat-mode-hook
+		  rst-mode-hook
+		  sphinx-doc-mode-hook)))
+
 (use-package magit
   :bind (("C-c m" . magit-status)))
 
@@ -59,7 +85,7 @@
   (defun set-jabber-credentials ()
     "Reads jabber credentials from encrypted authinfo GPG file.
 
-     Assumptions:
+         Assumptions:
 
          * Pre-existance of a line such as the following in ~/.authinfo.gpg:
            machine jabber port xmpp login <user-mail-address> password <passwd
@@ -88,14 +114,23 @@
 		 (:connection-type . starttls)))))
       (error "Could not read authinfo credentials for Jabber")))
     :config
-  (add-hook 'after-init-hook #'set-jabber-credentials))
+    (add-hook 'after-init-hook #'set-jabber-credentials))
+
+(use-package recentf
+  :bind (("C-x r e" . recentf-edit-list)))
 
 (use-package helm-config
-  :bind (("C-c h" . helm-command-prefix))
-  :init
-  (global-unset-key (kbd "C-x c"))
-  (when (executable-find "curl")
-    (setq helm-google-suggest-use-curl-p t))
+  :bind (("C-c h" . helm-command-prefix)
+	 ("C-x b" . helm-mini)
+	 ("C-x f" . helm-find-files)
+	 ("M-x" . helm-M-x))
+  :preface
+  (progn
+    (require 'helm)
+    (global-unset-key (kbd "C-x c"))
+    (define-key helm-map (kbd "<tab>") #'helm-execute-persistent-action)
+    (define-key helm-map (kbd "C-e") #'recentf-edit-list)
+    (define-key helm-map (kbd "C-z") #'helm-select-action))
   :config
   ;; open helm buffer inside current window, not occupy whole other window
   (setq helm-split-window-in-side-p t)
@@ -105,8 +140,13 @@
   (setq helm-ff-search-library-in-sexp t)
   ;; scroll 8 lines other window using M-<next>/M-<prior>s
   (setq helm-scroll-amount 8)
-  (setq helm-recentf-fuzzy-match t)
-  (setq helm-ff-file-name-history-use-recentf t))
+  (setq helm-M-x-fuzzy-match te
+	helm-buffers-fuzzy-matching t
+	helm-recentf-fuzzy-match t)
+  (setq helm-ff-file-name-history-use-recentf t)
+  :init
+  (when (executable-find "curl")
+    (setq helm-google-suggest-use-curl-p t)))
 
 (use-package pyautomagic
   :load-path user-lisp-directory)
