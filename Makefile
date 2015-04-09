@@ -1,7 +1,7 @@
 DIRS=$(shell find . -maxdepth 1 -type d -exec basename {} \; | grep -vE '^(\.)')
 
 install: clean venvwrapper stow
-update: clean venvwrapper restow
+update: clean restow
 uninstall: clean unstow
 
 venvwrapper:
