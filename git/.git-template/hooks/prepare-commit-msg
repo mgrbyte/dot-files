@@ -5,24 +5,38 @@ import sys
 
 import git
 
-# TODO: comment conflicts as per default hook.
-
-commit_edit_msg_path = sys.argv[1]
-
-with open(commit_edit_msg_path) as fp:
-    lines = fp.readlines()
-
-
-# If we are on a branch that's named JAQ, then start the commit msg with
-# the JAQ reference
 jaq_branch_regex = re.compile(r'(?P<issue_id>^JAQ\d+)')
 
-repo = git.Repo()
-match = jaq_branch_regex.match(repo.active_branch.name)
-lines = []
-if match is not None:
-    matched = match.groupdict()
-    lines = ['# Describe the issue:', '{issue_id} '.format(**matched)] + lines
+conflicts_regex = re.compile(r'[\n]*$(?P<conflicts_block>\s+Conflicts:.*)$^\n',
+                             re.MULTILINE | re.DOTALL | re.UNICODE)
+
+
+def comment_conflicts(match):
+    conflict_block = match.groupdict()['conflicts_block']
+    lines = ['']
+    lines.extend('#{line}'.format(line=line)
+                 for line in conflict_block.splitlines())
+    lines.append('')
+    return os.linesep.join(lines)
+
+
+def format_pre_commit_msg(msg):
+    msg = conflicts_regex.sub(comment_conflicts, msg)
+    repo = git.Repo()
+    match = jaq_branch_regex.match(repo.active_branch.name)
+    lines = []
+    if match is not None:
+        matched = match.groupdict()
+        lines += ['# Describe the issue:',
+                  '{issue_id} '.format(**matched)]
+    lines.extend(msg.splitlines())
     msg = os.linesep.join(lines)
     with open(commit_edit_msg_path, 'w') as fp:
-        fp.write(msg)
+        fp.write(msg.encode('utf-8'))
+
+
+if __name__ == '__main__':
+    commit_edit_msg_path = sys.argv[1]
+    with open(commit_edit_msg_path) as fp:
+        msg = fp.read().decode('utf-8')
+    format_pre_commit_msg(msg)
