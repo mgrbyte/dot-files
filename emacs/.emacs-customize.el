@@ -13,6 +13,7 @@
     ("ad9fc392386f4859d28fe4ef3803585b51557838dbc072762117adad37e83585" "06f0b439b62164c6f8f84fdda32b62fb50b6d00e8b01c2208e55543a6337433a" "39086f79b61a097c01bc73059817d96801557bd32134da44ecfac5807ed8d0fb" "f0a99f53cbf7b004ba0c1760aa14fd70f2eabafe4e62a2b3cf5cabae8203113b" "aa6c83f72549eff3468580d0be5b7e06b67ed4378ba9d5cb23ca1517bd94e4ee" "4aee8551b53a43a883cb0b7f3255d6859d766b6c5e14bcb01bed572fcbef4328" "3164a65923ef23e0f3dff9f9607b4da1e07ef1c3888d0f6878feef6c28357732" "b25b9e1afbc81ee81d5eeced8724ac96dcd30ccb4cc401bbf7f797ec498d1835" default)))
  '(fci-rule-color "#373b41")
  '(powerline-default-separator (quote wave))
+ '(safe-local-variable-values (quote ((dired-omit-files))))
  '(scala-interpreter "sbt console")
  '(vc-annotate-background nil)
  '(vc-annotate-color-map
