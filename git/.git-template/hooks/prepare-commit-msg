@@ -1,4 +1,6 @@
 #!/usr/bin/env python3
+import functools
+import operator
 import os
 import re
 import sys
@@ -7,36 +9,38 @@ import git
 
 jaq_branch_regex = re.compile(r'(?P<issue_id>^JAQ\d+)')
 
-conflicts_regex = re.compile(r'[\n]*$(?P<conflicts_block>\s+Conflicts:.*)$^\n',
+conflicts_regex = re.compile(r'(?P<space>\s*)$'
+                             r'(?P<conflicts_block>\s+Conflicts:.*)$^\n',
                              re.MULTILINE | re.DOTALL | re.UNICODE)
 
+match_values = operator.itemgetter('space', 'conflicts_block')
 
-def comment_conflicts(match):
-    conflict_block = match.groupdict()['conflicts_block']
-    lines = ['']
-    lines.extend('#{line}'.format(line=line)
-                 for line in conflict_block.splitlines())
+repo = git.Repo()
+
+
+def _comment_conflicts(match):
+    (space, conflict_block) = match_values(match.groupdict())
+    lines = [space]
+    for line in conflict_block.splitlines(False):
+        if line.rstrip():
+            lines.append('#{line}'.format(line=line))
     lines.append('')
     return os.linesep.join(lines)
 
 
+comment_conflicts = functools.partial(conflicts_regex.sub, _comment_conflicts)
+
+jaq_strapline = functools.partial(jaq_branch_regex.sub,
+                                  '# Describe the issue:\n\g<issue_id>\n')
+
+
 def format_pre_commit_msg(msg):
-    msg = conflicts_regex.sub(comment_conflicts, msg)
-    repo = git.Repo()
-    match = jaq_branch_regex.match(repo.active_branch.name)
-    lines = []
-    if match is not None:
-        matched = match.groupdict()
-        lines += ['# Describe the issue:',
-                  '{issue_id} '.format(**matched)]
-    lines.extend(msg.splitlines())
-    msg = os.linesep.join(lines)
-    with open(commit_edit_msg_path, 'w') as fp:
-        fp.write(msg.encode('utf-8'))
+    return jaq_strapline(comment_conflicts(msg))
 
 
 if __name__ == '__main__':
     commit_edit_msg_path = sys.argv[1]
-    with open(commit_edit_msg_path) as fp:
-        msg = fp.read().decode('utf-8')
-    format_pre_commit_msg(msg)
+    with open(commit_edit_msg_path, mode='r+') as fp:
+        msg = fp.read()
+        fp.seek(0)
+        fp.write(format_pre_commit_msg(msg))
