@@ -1,4 +1,4 @@
-export EDITOR="emacs-24.4 -nw"
+export EDITOR="et"
 export EMACS_SERVER_FILE="$HOME/.emacs.d/server/server"
 export EMAIL="mattr@netsight.co.uk"
 export GIT_TEMPLATES_DIR="$HOME/.git-templates"
@@ -51,5 +51,7 @@ fi
 alias ls="ls -p"
 alias ll="ls -l"
 alias la="ls -a"
+alias ec="emacsclient -c"
+alias et="emacsclient -t"
 alias pbcopy="xclip -selection clipboard";
 alias pbpaste="xclip -selection clipboard -o";
