@@ -1,11 +1,11 @@
-;;; Package -- Matt Russell's custom emacs setup
+;;; Package -- Matt Russell's custom emacs setup -*- lexical-binding: t; coding: utf-8; mode: lisp -*-
 ;;;
 ;;; Commentary:
 ;;; Integrates with netsight-emacs.
 ;;; Customisation:
 ;;;  - Adapts python-mode to work with different project styles,
 ;;;    notably the Pylons project.
-;;
+;;;
 ;;; Code:
 
 (defvar user-lisp-directory (expand-file-name "~/elisp")
@@ -15,9 +15,18 @@
   "Add FUNCTION to multiple modes MODE-HOOKS."
   (mapc (lambda (hook) (add-hook hook function)) mode-hooks))
 
-(use-package emacs-lisp-mode
-  :mode (("*scratch*" . emacs-lisp-mode)
-	 ("\\.el$" . emacs-lisp-mode)))
+(use-package netsight
+  :preface
+  (defvar jaq-url-tmpl "https://jaq.netsight.co.uk/jaq/queue/")
+  (defun netsight-ffap ()
+    "Find file at point support for JAQ URLs."
+    (interactive)
+    (let* ((word (thing-at-point 'word))
+	   (url (s-replace "JAQ" jaq-url-tmpl word)))
+      (ffap url)))
+  :config
+  (define-key netsight-keymap (kbd "C-x 4 s") #'netsight-sudo-edit)
+  (define-key netsight-keymap (kbd "C-x C-o") #'netsight-ffap))
 
 (use-package paredit-mode
   :init
@@ -26,7 +35,7 @@
 (use-package pretty-symbols-mode
   :config
   (add-hooks 'emacs-lisp-mode))
-  
+
 (use-package auth-source)
 
 (use-package frame-cmds
@@ -38,7 +47,7 @@
 	 ("<M-left>" . move-frame-left)
  	 ("<M-right>" . move-frame-right)))
 
-t(use-package gnus
+(use-package gnus
   :bind (("C-x g" . gnus-other-frame)))
 
 (use-package org
@@ -123,6 +132,7 @@ t(use-package gnus
   :bind (("C-c h" . helm-command-prefix)
 	 ("C-x b" . helm-mini)
 	 ("C-x f" . helm-find-files)
+	 ("C-x C-r" . helm-recentf)
 	 ("M-x" . helm-M-x))
   :preface
   (progn
