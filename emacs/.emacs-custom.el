@@ -25,18 +25,31 @@
 	   (url (s-replace "JAQ" jaq-url-tmpl word)))
       (ffap url)))
   :config
-  (define-key netsight-keymap (kbd "C-x 4 s") #'netsight-sudo-edit)
-  (define-key netsight-keymap (kbd "C-x C-o") #'netsight-ffap))
+  (bind-key "C-x 4 s" #'netsight-sudo-edit netsight-keymap)
+  (bind-key "C-x C-o" #'netsight-ffap netsight-keymap)
 
-(use-package paredit-mode
-  :init
+  (setq debug-on-error t)
+  (setq custom-theme-directory (locate-user-emacs-file "themes"))
+  (setq custom-theme-allow-multiple-selections nil)
+  (setq-default theme-load-from-file t)
+  (setq user-full-name "Matt Russell")
+  (menu-bar-mode 0)
+  (helm-mode 1))
+
+(use-package paredit
+  :diminish paredit-mode
+  :config
   (add-to-hooks #'enable-paredit-mode `(lisp-mode-hook emacs-lisp-mode-hook)))
 
-(use-package pretty-symbols-mode
+(use-package pretty-symbols
+  :preface
+  (defun enable-pretty-symbols-mode ()
+    (pretty-symbols-mode 1))
   :config
-  (add-hooks 'emacs-lisp-mode))
-
-(use-package auth-source)
+  (add-to-hooks #'enable-pretty-symbols-mode
+		`(emacs-lisp-mode-hook
+		  lisp-mode-hook
+		  python-mode-hook)))
 
 (use-package frame-cmds
   :bind (("C-c f m" . maximize-frame)
@@ -76,6 +89,8 @@
   :bind (("C-c +" . text-scale-increase)
 	 ("C-c -" . text-scale-decrease)))
 
+(use-package flycheck :diminish flycheck-mode)
+
 (use-package ispell
   :bind (("C-c i" . ispell-buffer))
   :init
@@ -86,7 +101,9 @@
 		  sphinx-doc-mode-hook)))
 
 (use-package magit
-  :bind (("C-c m" . magit-status)))
+  :bind (("C-c m" . magit-status))
+  :config
+  (setq magit-last-seen-setup-instructions "1.4.0"))
 
 (use-package jabber
   :load-path user-lisp-directory
@@ -128,6 +145,8 @@
 (use-package recentf
   :bind (("C-x r e" . recentf-edit-list)))
 
+(use-package helm :diminish helm-mode)
+
 (use-package helm-config
   :bind (("C-c h" . helm-command-prefix)
 	 ("C-x b" . helm-mini)
@@ -137,10 +156,10 @@
   :preface
   (progn
     (require 'helm)
-    (global-unset-key (kbd "C-x c"))
-    (define-key helm-map (kbd "<tab>") #'helm-execute-persistent-action)
-    (define-key helm-map (kbd "C-e") #'recentf-edit-list)
-    (define-key helm-map (kbd "C-z") #'helm-select-action))
+    (unbind-key "C-x c")
+    (bind-key "<tab>" #'helm-execute-persistent-action helm-map)
+    (bind-key "C-e" #'recentf-edit-list helm-map)
+    (bind-key "C-z" #'helm-select-action helm-map))
   :config
   ;; open helm buffer inside current window, not occupy whole other window
   (setq helm-split-window-in-side-p t)
@@ -166,14 +185,6 @@
 
 (use-package thememgr
   :load-path user-lisp-directory)
-
-(setq debug-on-error t)
-(setq custom-theme-directory (locate-user-emacs-file "themes"))
-(setq custom-theme-allow-multiple-selections nil)
-(setq-default theme-load-from-file t)
-(setq user-full-name "Matt Russell")
-(menu-bar-mode 0)
-(helm-mode 1)
 
 (provide '.emacs-custom)
 ;;; .emacs-custom.el ends here
