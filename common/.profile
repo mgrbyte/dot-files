@@ -16,6 +16,12 @@ export WORKON_HOME="$HOME/.virtualenvs"
 # Make sure /usr/local is before /usr/bin so custom stuff gets preference
 export PATH="/usr/local/bin:$(echo $PATH | sed 's/\/usr\/local\/bin://g')"
 
+# Anaconda
+ANACONDA3_HOME="$HOME/anaconda3"
+if [ -d "$ANACONDA3_HOME"]; then
+    export PATH="$HOME/anaconda3/bin:$PATH"
+fi
+
 CASK="$HOME/.cask"
 if [ -e "$CASK" ]; then
     export PATH="$PATH:$CASK/bin"
