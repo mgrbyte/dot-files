@@ -158,6 +158,9 @@
   (when (executable-find "curl")
     (setq helm-google-suggest-use-curl-p t)))
 
+(use-package package
+  :bind (("C-c C-l" . list-packages)))
+
 (use-package pyautomagic
   :load-path user-lisp-directory)
 
