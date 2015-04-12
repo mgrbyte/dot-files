@@ -18,7 +18,7 @@ export PATH="/usr/local/bin:$(echo $PATH | sed 's/\/usr\/local\/bin://g')"
 
 # Anaconda
 ANACONDA3_HOME="$HOME/anaconda3"
-if [ -d "$ANACONDA3_HOME"]; then
+if [ -d "$ANACONDA3_HOME" ]; then
     export PATH="$HOME/anaconda3/bin:$PATH"
 fi
 
