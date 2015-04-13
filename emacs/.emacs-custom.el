@@ -16,18 +16,8 @@
   (mapc (lambda (hook) (add-hook hook function)) mode-hooks))
 
 (use-package netsight
-  :preface
-  (defvar jaq-url-tmpl "https://jaq.netsight.co.uk/jaq/queue/")
-  (defun netsight-ffap ()
-    "Find file at point support for JAQ URLs."
-    (interactive)
-    (let* ((word (thing-at-point 'word))
-	   (url (s-replace "JAQ" jaq-url-tmpl word)))
-      (ffap url)))
   :config
   (bind-key "C-x 4 s" #'netsight-sudo-edit netsight-keymap)
-  (bind-key "C-x C-o" #'netsight-ffap netsight-keymap)
-
   (setq debug-on-error t)
   (setq custom-theme-directory (locate-user-emacs-file "themes"))
   (setq custom-theme-allow-multiple-selections nil)
