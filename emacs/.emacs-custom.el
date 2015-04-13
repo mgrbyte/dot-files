@@ -169,13 +169,15 @@
   (setq helm-ff-search-library-in-sexp t)
   ;; scroll 8 lines other window using M-<next>/M-<prior>s
   (setq helm-scroll-amount 8)
-  (setq helm-M-x-fuzzy-match te
+  (setq helm-M-x-fuzzy-match t
 	helm-buffers-fuzzy-matching t
 	helm-recentf-fuzzy-match t)
   (setq helm-ff-file-name-history-use-recentf t)
-  :init
   (when (executable-find "curl")
-    (setq helm-google-suggest-use-curl-p t)))
+    (setq helm-google-suggest-use-curl-p t))
+  (when (executable-find "ack-grep")
+    (setq helm-grep-default-command "ack-grep -Hn --no-group --no-color %e %p %f"
+          helm-grep-default-recurse-command "ack-grep -H --no-group --no-color %e %p %f")))
 
 (use-package package
   :bind (("C-c C-l" . list-packages)))
