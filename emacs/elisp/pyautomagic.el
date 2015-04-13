@@ -82,35 +82,5 @@ Return nil if this is not the case."
 	(pyvenv-deactivate)
       (pyvenv-workon (car venvs-matched)))))
 
-(use-package jedi
-  :config
-  (progn
-    (setq jedi:complete-on-dot 't)))
-
-(use-package pyvenv
-  :bind (("C-c w" . pyvenv-workon)
-	 ("C-c v d" . pyvenv-deactivate)
-	 ("C-c v e" . pyautomagic--activate-venv-safely))
-  :config
-  (progn
-    (setq pyvenv-mode-line-indicator '(pyvenv-virtual-env-name
-                                     ("[venv:" pyvenv-virtual-env-name "] ")))))
-
-(use-package python
-  :bind (("RET" . newline-and-indent))
-  :init
-  (progn
-    (add-hook #'python-mode-hook
-	      (lambda ()
-		(pyvenv-mode 1)
-		(pyautomagic--flake8-for-current-git-repo)
-		(pyautomagic--venv-for-current-git-repo)))))
-
-(use-package rst
-  :init
-  (progn
-    (auto-fill-mode t)
-    (pyvenv-mode 1)))
-
 (provide 'pyautomagic)
 ;;; pyautomagic.el ends here

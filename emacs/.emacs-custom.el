@@ -170,10 +170,37 @@
 (use-package package
   :bind (("C-c C-l" . list-packages)))
 
-(use-package pyautomagic
+(use-package thememgr
   :load-path user-lisp-directory)
 
-(use-package thememgr
+(use-package jedi
+  :config
+  (progn
+    (setq jedi:complete-on-dot 't)))
+
+(use-package pyvenv
+  :bind (("C-c w" . pyvenv-workon)
+	 ("C-c v d" . pyvenv-deactivate)
+	 ("C-c v e" . pyautomagic--activate-venv-safely))
+  :config
+  (setq pyvenv-mode-line-indicator '(pyvenv-virtual-env-name
+                                     ("[venv:" pyvenv-virtual-env-name "] "))))
+
+(use-package python
+  :bind (("RET" . newline-and-indent))
+  :init
+  (add-hook #'python-mode-hook
+	    (lambda ()
+	      (pyvenv-mode 1)
+	      (pyautomagic--flake8-for-current-git-repo)
+	      (pyautomagic--venv-for-current-git-repo))))
+
+(use-package rst
+  :init
+  (auto-fill-mode t)
+  (pyvenv-mode 1))
+
+(use-package pyautomagic
   :load-path user-lisp-directory)
 
 (provide '.emacs-custom)
