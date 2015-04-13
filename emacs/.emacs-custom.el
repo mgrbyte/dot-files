@@ -79,8 +79,6 @@
   :bind (("C-c +" . text-scale-increase)
 	 ("C-c -" . text-scale-decrease)))
 
-(use-package flycheck :diminish flycheck-mode)
-
 (use-package ispell
   :bind (("C-c i" . ispell-buffer))
   :init
