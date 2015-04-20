@@ -127,8 +127,9 @@
 		 (:password . ,passwd)
 		 (:connection-type . starttls)))))
       (error "Could not read authinfo credentials for Jabber")))
-    :config
-    (add-hook 'after-init-hook #'set-jabber-credentials))
+  :config
+  (jabber-activity-personal-face ((t (:foreground "yellow" :weight bold))))
+  (add-hook 'after-init-hook #'set-jabber-credentials))
 
 (use-package recentf
   :bind (("C-x r e" . recentf-edit-list)))
