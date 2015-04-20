@@ -128,8 +128,6 @@
 		 (:connection-type . starttls)))))
       (error "Could not read authinfo credentials for Jabber")))
   :config
-  (setq-default jabber-activity-personal-face
-		`((t (:foreground "yellow" :weight bold))))
   (add-hook 'after-init-hook #'set-jabber-credentials))
 
 (use-package recentf
