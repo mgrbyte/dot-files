@@ -180,11 +180,13 @@
 
 (use-package pyvenv
   :bind (("C-c w" . pyvenv-workon)
+	 ("C-c v a" . pyvenv-activate)
 	 ("C-c v d" . pyvenv-deactivate)
 	 ("C-c v e" . pyautomagic--activate-venv-safely))
-  :config
-  (setq pyvenv-mode-line-indicator '(pyvenv-virtual-env-name
-                                     ("[venv:" pyvenv-virtual-env-name "] "))))
+  :init
+  (setq pyvenv-mode-line-indicator
+	'(pyvenv-virtual-env-name
+	  ("[venv:" pyvenv-virtual-env-name "] "))))
 
 (use-package python
   :bind (("RET" . newline-and-indent))
