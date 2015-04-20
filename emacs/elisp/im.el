@@ -9,6 +9,7 @@
 ;;; Code:
 
 (require 'jabber)
+(require 'notify)
 
 (defun notify-jabber-notify (from buf text proposed-alert)
   "Notify via notify.el about new messages using FROM BUF TEXT PROPOSED-ALERT."
@@ -21,7 +22,7 @@
     (notify (format "%s" (jabber-jid-displayname from))
 	    text)))
 
-(add-hook #'jabber-alert-message-hooks #'notify-jabber-notify)
+(add-hook 'jabber-alert-message-hooks #'notify-jabber-notify)
 
 (provide 'im)
 ;;; im.el ends here
