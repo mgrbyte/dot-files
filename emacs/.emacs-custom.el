@@ -112,13 +112,12 @@
      http://enthusiasm.cozy.org/archives/2014/07/auth-source-getting-my-secrets-out-of-my-emacs-init-file
      https://github.com/ardumont/org/blob/master/articles/emacs-jabber.org"
     (setq creds (auth-source-search :user user-mail-address
-				    :host "jabber"
 				    :port "xmpp"
 				    :max 1
 				    :require '(:secret)))
     (if creds
 	(let* ((authinfo-get (apply-partially #'plist-get (car creds)))
-	       (user (funcall authinfo-get :user))
+	       (user (concat (funcall authinfo-get :user) "/workstation"))
 	       (host (concat "jabber." (jabber-jid-server user-mail-address)))
 	       (port (funcall authinfo-get :port))
 	       (passwd (funcall (funcall authinfo-get :secret))))
