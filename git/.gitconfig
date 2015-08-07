@@ -1,7 +1,20 @@
 [init]
 	templatedir = ~/.git-template
 [user]
-	email = matthew.russell@horizon5.org
+	email = mattr@netsight.co.uk
 	name = Matt Russell
 [push]
 	default = simple
+[alias]
+    br = branch
+    ci = commit
+    cb = checkout -b
+    co = checkout
+    df = diff
+    db = branch -D
+    rh = reset --hard
+    rn = branch -m
+    st = status
+    mnf = merge --no-ff
+    rhh  = reset ---hard HEAD
+    rpo = remote prune origin
