@@ -37,16 +37,16 @@ Return nil if this is not the case."
     (if (s-suffix? suffix repo-name)
       (car (s-split suffix repo-name)))))
 
-(defun pyautomagic--is-pylons-project-repository (url)
-  "Return true if URL is a Pylons repository."
-  (member (pyautomagic--get-git-repo-name url) pylons-git-repos))
-
 (defun pyautomagic--git-get-current-remote-name ()
   "Get the current git remote name if any."
   (let* ((branch  (magit-get-current-branch))
          (remote (magit-get "branch" branch "remote")))
     (when remote
       (magit-get "remote" remote "url"))))
+
+(defun pyautomagic--is-pylons-project-repository (url)
+  "Return true if URL is a Pylons repository."
+  (member (pyautomagic--get-git-repo-name url) pylons-git-repos))
 
 (defun pyautomagic--flake8-for-current-git-repo()
   "Set the flake8rc file for the current git repository."
