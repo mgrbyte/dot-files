@@ -89,9 +89,7 @@
 		  sphinx-doc-mode-hook)))
 
 (use-package magit
-  :bind (("C-c m" . magit-status))
-  :config
-  (setq magit-last-seen-setup-instructions "1.4.0"))
+  :bind (("C-c m" . magit-status)))
 
 (use-package jabber
   :load-path user-lisp-directory
@@ -112,13 +110,12 @@
      http://enthusiasm.cozy.org/archives/2014/07/auth-source-getting-my-secrets-out-of-my-emacs-init-file
      https://github.com/ardumont/org/blob/master/articles/emacs-jabber.org"
     (setq creds (auth-source-search :user user-mail-address
-				    :host "jabber"
 				    :port "xmpp"
 				    :max 1
 				    :require '(:secret)))
     (if creds
 	(let* ((authinfo-get (apply-partially #'plist-get (car creds)))
-	       (user (funcall authinfo-get :user))
+	       (user (concat (funcall authinfo-get :user) "/workstation"))
 	       (host (concat "jabber." (jabber-jid-server user-mail-address)))
 	       (port (funcall authinfo-get :port))
 	       (passwd (funcall (funcall authinfo-get :secret))))
@@ -204,6 +201,12 @@
 
 (use-package pyautomagic
   :load-path user-lisp-directory)
+
+(use-package sgml-mode
+    :config
+    (add-hook 'sgml-mode-hook
+	    (lambda ()
+            (setq indent-tabs-mode nil))))
 
 (provide '.emacs-custom)
 ;;; .emacs-custom.el ends here

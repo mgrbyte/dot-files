@@ -54,6 +54,16 @@ else
     echo "No Python virtualenv support (pew nor virtualenvwrapper)"
 fi
 
+JAVA_HOME="$HOME/jdk"
+if [ -d "$JAVA_HOME" ]; then
+    export JAVA_HOME
+fi
+
+ANDROID_STUDIO="$HOME/android-studio"
+if [ -d "$ANDROID_STUDIO" ]; then
+    export PATH="$PATH:$ANDROID_STUDIO/bin"
+fi
+
 alias ls="ls -p"
 alias ll="ls -l"
 alias la="ls -a"

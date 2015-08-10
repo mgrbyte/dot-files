@@ -24,5 +24,21 @@
 
 (add-hook 'jabber-alert-message-hooks #'notify-jabber-notify)
 
+(defun jabber-visit-history (jid)
+  "Visit jabber history with JID in a new buffer.
+
+Performs well only for small files.  Expect to wait a few seconds
+for large histories.  Adapted from `jabber-chat-create-buffer'."
+  (interactive (list (jabber-read-jid-completing "JID: ")))
+  (let ((buffer (generate-new-buffer (format "*-jabber-history-%s-*"
+                                             (jabber-jid-displayname jid)))))
+    (switch-to-buffer buffer)
+    (make-local-variable 'jabber-chat-ewoc)
+    (setq jabber-chat-ewoc (ewoc-create #'jabber-chat-pp))
+    (mapc 'jabber-chat-insert-backlog-entry
+          (nreverse (jabber-history-query nil nil t t "."
+                                          (jabber-history-filename jid))))
+    (view-mode)))
+
 (provide 'im)
 ;;; im.el ends here
