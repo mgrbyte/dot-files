@@ -18,3 +18,5 @@
     mnf = merge --no-ff
     rhh  = reset ---hard HEAD
     rpo = remote prune origin
+[core]
+	excludesfile = /home/mattr/.gitignore_global
