@@ -15,8 +15,12 @@
  '(jabber-avatar-cache-directory "~/.jabber-avatars")
  '(jabber-debug-keep-process-buffers t)
  '(powerline-default-separator (quote wave))
- '(safe-local-variable-values (quote ((dired-omit-files))))
+ '(safe-local-variable-values
+   (quote
+    ((clojure-project-dir . ~/clojure-noob)
+     (dired-omit-files))))
  '(scala-interpreter "sbt console")
+ '(send-mail-function nil)
  '(vc-annotate-background nil)
     '(vc-annotate-color-map
          (quote

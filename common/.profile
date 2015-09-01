@@ -12,15 +12,16 @@ export PIP_DOWNLOAD_CACHE="$HOME/.pip/download-cache"
 export VENV_WRAPPER="$HOME/.local/bin/virtualenvwrapper.sh"
 export VISUAL="$EDITOR"
 export WORKON_HOME="$HOME/.virtualenvs"
+export JAVA_HOME="/usr/lib/jvm/java-7-openjdk-amd64"
 
 # Make sure /usr/local is before /usr/bin so custom stuff gets preference
 export PATH="/usr/local/bin:$(echo $PATH | sed 's/\/usr\/local\/bin://g')"
 
 # Anaconda
-ANACONDA3_HOME="$HOME/anaconda3"
-if [ -d "$ANACONDA3_HOME" ]; then
-    export PATH="$HOME/anaconda3/bin:$PATH"
-fi
+# ANACONDA3_HOME="$HOME/anaconda3"
+# if [ -d "$ANACONDA3_HOME" ]; then
+#     export PATH="$HOME/anaconda3/bin:$PATH"
+# fi
 
 CASK="$HOME/.cask"
 if [ -e "$CASK" ]; then
@@ -63,6 +64,11 @@ ANDROID_STUDIO="$HOME/android-studio"
 if [ -d "$ANDROID_STUDIO" ]; then
     export PATH="$PATH:$ANDROID_STUDIO/bin"
 fi
+
+LEIN_FAST_TRAMPOLINE=y
+export LEIN_FAST_TRAMPOLINE
+
+alias cljsbuild="lein trampoline cljsbuild $@"
 
 alias ls="ls -p"
 alias ll="ls -l"
