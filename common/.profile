@@ -58,6 +58,7 @@ fi
 JAVA_HOME="$HOME/jdk"
 if [ -d "$JAVA_HOME" ]; then
     export JAVA_HOME
+    export PATH="$JAVA_HOME/bin:$PATH"
 fi
 
 ANDROID_STUDIO="$HOME/android-studio"
@@ -77,3 +78,4 @@ alias ec="emacsclient -c"
 alias et="emacsclient -t"
 alias pbcopy="xclip -selection clipboard";
 alias pbpaste="xclip -selection clipboard -o";
+alias clean-old-kernels="sudo apt-get purge $(dpkg --list |egrep 'linux-image-[0-9]' |awk '{print $3,$2}' |sort -nr |tail -n +2 |grep -v $(uname -r) |awk '{ print $2}')"
