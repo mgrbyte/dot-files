@@ -15,6 +15,8 @@
   "Add FUNCTION to multiple modes MODE-HOOKS."
   (mapc (lambda (hook) (add-hook hook function)) mode-hooks))
 
+(use-package keyfreq)
+
 (use-package netsight
   :config
   (bind-key "C-x 4 s" #'netsight-sudo-edit netsight-keymap)
@@ -23,6 +25,7 @@
   (setq custom-theme-allow-multiple-selections nil)
   (setq-default theme-load-from-file t)
   (setq user-full-name "Matt Russell")
+  (keyfreq-mode)
   (menu-bar-mode 0)
   (helm-mode 1))
 
@@ -212,10 +215,14 @@
   :init
   (add-hook #'python-mode-hook
 	    (lambda ()
+	      (jedi:ac-setup)
 	      (setq import-python-el-settings 't)
 	      (pyvenv-mode 1)
 	      (pyautomagic--flake8-for-current-git-repo)
 	      (pyautomagic--venv-for-current-git-repo))))
+(use-package jedi
+  :bind (("C-c p" . jedi:goto-definition-pop-marker)
+	 ("C-c m" . jedi:goto-definition-push-marker)))
 
 (use-package rst
   :init
