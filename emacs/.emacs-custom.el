@@ -15,12 +15,57 @@
   "Add FUNCTION to multiple modes MODE-HOOKS."
   (mapc (lambda (hook) (add-hook hook function)) mode-hooks))
 
+;; Makes working with data structures easier
+(use-package dash)
+
+;; Makes working with filesystem awesome
+(use-package f)
+
+;; Makes working with strings awesome
+(use-package s)
+
 (use-package company-jedi)
 
 (use-package keyfreq)
 
-(use-package my-org
-  :load-path user-lisp-directory)
+(use-package org
+  :bind (("C-c l" . org-store-link)
+	 ("C-c c" . org-capture)
+	 ("C-c C-x i" . org-clock-in)
+	 ("C-c C-x o" . org-clock-out)
+	 ("C-c a" . org-agenda)
+	 ("C-c C-x a" . org-cycle-agenda-files)
+	 ("C-c C-x s" . org-mode--show-agenda)
+            ("C-c b" . org-iswitchb))
+  :preface
+  (defun list-org-files (directory)
+    "List all `org-mode' files under DIRECTORY."
+    (-filter (apply-partially #'s-ends-with? ".org")
+	     (-filter #'f-file? (f-entries directory))))
+  :config
+  (setq org-clock-persist t)
+  (setq org-log-done #'time)
+  (setq org-todo-keywords
+        (quote ((sequence
+		 "TODO(t)"
+		 "NEXT(n)"
+		 "|"
+		 "DONE(d)")
+		(sequence
+		 "WAITING(w@/!)"
+		 "HOLD(h@/!)"
+		 "|"
+		 "CANCELLED(c@/!)"
+		 "PHONE"
+		 "MEETING"))))
+  (setq org-agenda-files (list-org-files "~/org"))
+  (setq org-directory "~/org")
+  (setq org-default-notes-file "~/org/refile.org")
+  (org-clock-persistence-insinuate)
+  (org-babel-do-load-languages
+   #'org-babel-load-languages
+   '((emacs-lisp . t)
+     (python . t))))
 
 (use-package netsight
   :config
@@ -180,7 +225,10 @@
 (use-package jedi
   :config
   (progn
-    (setq jedi:complete-on-dot 't)))
+      (setq jedi:complete-on-dot 't)))
+
+(use-package gnus
+    :bind (("C-c C-x m" . gnus)))
 
 (use-package pyvenv
   :bind (("C-c w" . pyvenv-workon)
