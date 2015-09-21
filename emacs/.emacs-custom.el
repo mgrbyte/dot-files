@@ -231,11 +231,6 @@
 (use-package thememgr
   :load-path user-lisp-directory)
 
-(use-package jedi
-  :config
-  (progn
-      (setq jedi:complete-on-dot 't)))
-
 (use-package gnus
     :bind (("C-c C-x m" . gnus)))
 
@@ -256,14 +251,17 @@
   :init
   (add-hook #'python-mode-hook
 	    (lambda ()
-	      (jedi:ac-setup)
 	      (setq import-python-el-settings 't)
 	      (pyvenv-mode 1)
 	      (pyautomagic--flake8-for-current-git-repo)
 	      (pyautomagic--venv-for-current-git-repo))))
+
 (use-package jedi
-  :bind (("C-c p" . jedi:goto-definition-pop-marker)
-	 ("C-c m" . jedi:goto-definition-push-marker)))
+  :config
+  (jedi:ac-setup)
+  (setq jedi:complete-on-dot 't)
+  (bind-key "." #'jedi:goto-definition-pop-marker esc-map)
+  (bind-key "S-." #'jedi:goto-definition-push-marker esc-map))
 
 (use-package rst
   :init
