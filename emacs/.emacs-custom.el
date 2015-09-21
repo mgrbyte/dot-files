@@ -70,7 +70,6 @@
    '((emacs-lisp . t)
      (python . t))))
 
->>>>>>> 3558e58... Basic org-mode configuration.
 (use-package netsight
   :config
   (bind-key "C-x 4 s" #'netsight-sudo-edit netsight-keymap)
