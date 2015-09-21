@@ -15,12 +15,20 @@
   "Add FUNCTION to multiple modes MODE-HOOKS."
   (mapc (lambda (hook) (add-hook hook function)) mode-hooks))
 
+(use-package company-jedi)
+
 (use-package keyfreq)
+
+(use-package my-org
+  :load-path user-lisp-directory)
 
 (use-package netsight
   :config
+  (bind-key "C-c f m" #'toggle-frame-maximized)
   (bind-key "C-x 4 s" #'netsight-sudo-edit netsight-keymap)
   (setq debug-on-error t)
+  (setq tab-width 4)
+  (setq tab-stop-list (number-sequence 4 200 4))
   (setq custom-theme-directory (locate-user-emacs-file "themes"))
   (setq custom-theme-allow-multiple-selections nil)
   (setq-default theme-load-from-file t)
@@ -44,32 +52,8 @@
 		  lisp-mode-hook
 		  python-mode-hook)))
 
-(use-package frame-cmds
-  :bind (("C-c f m" . maximize-frame)
-	 ("C-c f r" . restore-frame)
-	 ("C-c f o" . other-window-or-frame)
-	 ("<M-up>" . move-frame-up)
-	 ("<M-down>" . move-frame-down)
-	 ("<M-left>" . move-frame-left)
- 	 ("<M-right>" . move-frame-right)))
-
 (use-package gnus
   :bind (("C-x g" . gnus-other-frame)))
-
-(use-package org
-  :bind (("C-c l" . org-store-link)
-	 ("C-c c" . org-capture)
-	 ("C-c a" . org-agenda)
-	 ("C-c b" . org-iswitchb))
-  :config
-  (setq org-log-done #'time)
-  (setq org-agenda-files
-	(list "~/org/work.org"
-	      "~/org/home.org"))
-  (org-babel-do-load-languages
-   #'org-babel-load-languages
-   '((emacs-lisp . t)
-     (python . t))))
 
 (use-package dired
   :config
@@ -100,14 +84,14 @@
   (defun set-jabber-credentials ()
     "Reads jabber credentials from encrypted authinfo GPG file.
 
-         Assumptions:
+	 Assumptions:
 
-         * Pre-existance of a line such as the following in ~/.authinfo.gpg:
-           machine jabber port xmpp login <user-mail-address> password <passwd
+	 * Pre-existance of a line such as the following in ~/.authinfo.gpg:
+	   machine jabber port xmpp login <user-mail-address> password <passwd
 
-         * This is the netsight.co.uk jabber server.
+	 * This is the netsight.co.uk jabber server.
 
-         * Environment variable `EMAIL` is set to a Netsight email address.
+	 * Environment variable `EMAIL` is set to a Netsight email address.
 
      References:
      http://enthusiasm.cozy.org/archives/2014/07/auth-source-getting-my-secrets-out-of-my-emacs-init-file
@@ -138,14 +122,14 @@
     Connect to SERVER at PORT using NICK SSL and PASS then issue COMMAND.
     The command uses interactive mode if passed an argument."
    (fset command
-         `(lambda (arg)
-           (interactive "p")
+	 `(lambda (arg)
+	   (interactive "p")
 	   (if (not (= 1 arg))
 	       (call-interactively 'erc)
 	     (let ((erc-connect-function ',(if ssl
-	 				       'erc-open-ssl-stream
+					       'erc-open-ssl-stream
 					     'open-network-stream)))
- 	       (erc :server ,server :port ,port :nick ,nick :password ,pass))))))
+	       (erc :server ,server :port ,port :nick ,nick :password ,pass))))))
   :config
   (autoload 'erc "erc" "" t)
   (erc-bouncer-connect erc-ifs "t4nk.irc.tf" 6697 "mattr" t "637094"))
@@ -185,7 +169,7 @@
     (setq helm-google-suggest-use-curl-p t))
   (when (executable-find "ack-grep")
     (setq helm-grep-default-command "ack-grep -Hn --no-group --no-color %e %p %f"
-          helm-grep-default-recurse-command "ack-grep -H --no-group --no-color %e %p %f")))
+	  helm-grep-default-recurse-command "ack-grep -H --no-group --no-color %e %p %f")))
 
 (use-package package
   :bind (("C-c C-l" . list-packages)))
@@ -212,17 +196,24 @@
 
 (use-package python
   :bind (("RET" . newline-and-indent))
+  :config
+  (add-to-list #'company-backends #'pet-snake)
+  (setq import-python-el-settings 't)
   :init
-  (add-hook #'python-mode-hook
-	    (lambda ()
-	      (jedi:ac-setup)
-	      (setq import-python-el-settings 't)
-	      (pyvenv-mode 1)
-	      (pyautomagic--flake8-for-current-git-repo)
-	      (pyautomagic--venv-for-current-git-repo))))
+  (defun pet-snake ()
+    "My custom `python-mode-hook'."
+    (pyvenv-mode 1)
+    (pyautomagic--flake8-for-current-git-repo)
+    (pyautomagic--venv-for-current-git-repo))
+  (add-hook #'python-mode-hook #'pet-snake))
+
 (use-package jedi
   :bind (("C-c p" . jedi:goto-definition-pop-marker)
-	 ("C-c m" . jedi:goto-definition-push-marker)))
+	 ("C-c n" . jedi:goto-definition-push-marker))
+  :config
+  (setq jedi:complete-on-dot t)
+  :init
+  (jedi:ac-setup))
 
 (use-package rst
   :init
