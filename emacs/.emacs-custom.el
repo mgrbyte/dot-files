@@ -31,6 +31,18 @@
 
 (use-package keyfreq)
 
+(use-package netsight
+  :config
+  (bind-key "C-x 4 s" #'netsight-sudo-edit netsight-keymap)
+  (setq debug-on-error t)
+  (setq custom-theme-directory (locate-user-emacs-file "themes"))
+  (setq custom-theme-allow-multiple-selections nil)
+  (setq-default theme-load-from-file t)
+  (setq user-full-name "Matt Russell")
+  (keyfreq-mode)
+  (menu-bar-mode 0)
+  (helm-mode 1))
+
 (use-package org
   :bind (("C-c l" . org-store-link)
 	 ("C-c c" . org-capture)
@@ -70,18 +82,6 @@
    '((emacs-lisp . t)
      (python . t))))
 
-(use-package netsight
-  :config
-  (bind-key "C-x 4 s" #'netsight-sudo-edit netsight-keymap)
-  (setq debug-on-error t)
-  (setq custom-theme-directory (locate-user-emacs-file "themes"))
-  (setq custom-theme-allow-multiple-selections nil)
-  (setq-default theme-load-from-file t)
-  (setq user-full-name "Matt Russell")
-  (keyfreq-mode)
-  (menu-bar-mode 0)
-  (helm-mode 1))
-
 (use-package paredit
   :diminish paredit-mode
   :config
@@ -108,21 +108,6 @@
 
 (use-package gnus
   :bind (("C-x g" . gnus-other-frame)))
-
-(use-package org
-  :bind (("C-c l" . org-store-link)
-	 ("C-c c" . org-capture)
-	 ("C-c a" . org-agenda)
-	 ("C-c b" . org-iswitchb))
-  :config
-  (setq org-log-done #'time)
-  (setq org-agenda-files
-	(list "~/org/work.org"
-	      "~/org/home.org"))
-  (org-babel-do-load-languages
-   #'org-babel-load-languages
-   '((emacs-lisp . t)
-     (python . t))))
 
 (use-package dired
   :config
