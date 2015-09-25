@@ -13,7 +13,7 @@
 
 (defun add-to-hooks (function mode-hooks)
   "Add FUNCTION to multiple modes MODE-HOOKS."
-  (mapc (lambda (hook) (add-hook hook function)) mode-hooks))
+    (mapc (lambda (hook) (add-hook hook function)) mode-hooks))
 
 ;; Keypress frequency tracking.
 (use-package keyfreq)
@@ -39,24 +39,26 @@
   (setq custom-theme-allow-multiple-selections nil)
   (setq-default theme-load-from-file t)
   (setq user-full-name "Matt Russell")
+  (add-to-list 'auto-mode-alist '("Makfile.*" . makefile-gmake-mode))
   (keyfreq-mode)
   (menu-bar-mode 0)
   (helm-mode 1))
 
 (use-package org
-  :bind (("C-c l" . org-store-link)
-	 ("C-c c" . org-capture)
-	 ("C-c C-x i" . org-clock-in)
-	 ("C-c C-x o" . org-clock-out)
-	 ("C-c a" . org-agenda)
-	 ("C-c C-x a" . org-cycle-agenda-files)
-	 ("C-c C-x s" . org-mode--show-agenda)
-            ("C-c b" . org-iswitchb))
   :preface
-  (defun list-org-files (directory)
-    "List all `org-mode' files under DIRECTORY."
-    (-filter (apply-partially #'s-ends-with? ".org")
-	     (-filter #'f-file? (f-entries directory))))
+  (defun mattr/org-use-speed-commands-for-headings-and-lists ()
+    "Activate speed commands on list items too."
+    (or (and (looking-at org-outline-regexp) (looking-back "^\**"))
+	(save-excursion (and (looking-at (org-item-re)) (looking-back "^[ \t]*")))))
+  (defun mattr/org-mode-ask-effort ()
+    "Ask for an effort estimate when clocking in."
+    (unless (org-entry-get (point) "Effort")
+      (let ((effort
+	     (completing-read
+              "Effort: "
+              (org-entry-get-multivalued-property (point) "Effort"))))
+	(unless (equal effort "")
+	  (org-set-property "Effort" effort)))))
   :config
   (setq org-clock-persist t)
   (setq org-log-done #'time)
@@ -64,6 +66,7 @@
         (quote ((sequence
 		 "TODO(t)"
 		 "NEXT(n)"
+		 "STARTED(s)"
 		 "|"
 		 "DONE(d)")
 		(sequence
@@ -73,14 +76,49 @@
 		 "CANCELLED(c@/!)"
 		 "PHONE"
 		 "MEETING"))))
-  (setq org-agenda-files (list-org-files "~/org"))
+  (setq org-default-notes-file "~/org/notes.org")
+  (setq org-show-notification-handler 'message)
+  (setq org-agenda-files
+	(f-entries "~/org" (apply-partially #'s-ends-with? ".org") t))
   (setq org-directory "~/org")
   (setq org-default-notes-file "~/org/refile.org")
+  (setq org-use-effective-time t)
+  (setq org-clock-in-switch-to-state "STARTED")
+  (setq org-clock-report-include-clocking-task t)
+  (setq org-use-speed-commands 'mattr/org-use-speed-commands-for-headings-and-lists)
+  (setq org-goto-interface 'outline org-goto-max-level 10)
+  (setq org-startup-folded nil)
+  (setq org-cycle-include-plain-lists 'integrate)
+  (add-to-list 'org-speed-commands-user '("x" org-todo "DONE"))
+  (add-to-list 'org-speed-commands-user '("y" org-todo-yesterday "DONE"))
+  (add-to-list 'org-speed-commands-user '("!" my/org-clock-in-and-track))
+  (add-to-list 'org-speed-commands-user '("s" call-interactively 'org-schedule))
+  (add-to-list 'org-speed-commands-user '("d" my/org-move-line-to-destination))
+  (add-to-list 'org-speed-commands-user '("i" call-interactively 'org-clock-in))
+  (add-to-list 'org-speed-commands-user '("o" call-interactively 'org-clock-out))
+  (add-to-list 'org-speed-commands-user '("$" call-interactively 'org-archive-subtree))
+  ;; (bind-key "!" 'my/org-clock-in-and-track org-agenda-mode-map)
+  (bind-key "C-c j" 'org-clock-goto) ;; jump to current task from anywhere
+  (bind-key "C-c C-w" 'org-refile)
+  (bind-key "C-c r" 'org-capture)
+  (bind-key "C-c a" 'org-agenda)
+  (bind-key "C-c l" 'org-store-link)
+  (bind-key "C-c L" 'org-insert-link-global)
+  (bind-key "C-c O" 'org-open-at-point-global)
+  ;; (bind-key "<f9> <f9>" 'org-agenda-list)
+  ;; (bind-key "<f9> <f8>" (lambda () (interactive) (org-capture nil "r")))
+  (bind-key "C-TAB" 'org-cycle org-mode-map)
+  (bind-key "C-c v" 'org-show-todo-tree org-mode-map)
+  (bind-key "C-c C-r" 'org-refile org-mode-map)
+  (bind-key "C-c R" 'org-reveal org-mode-map)
   (org-clock-persistence-insinuate)
   (org-babel-do-load-languages
    #'org-babel-load-languages
    '((emacs-lisp . t)
-     (python . t))))
+     (python . t)))
+  (eval-after-load 'org-agenda
+    '(bind-key "i" 'org-agenda-clock-in org-agenda-mode-map))
+  (add-hook 'org-clock-in-prepare-hook 'mattr/org-mode-ask-effort))
 
 (use-package paredit
   :diminish paredit-mode
@@ -270,12 +308,6 @@
 
 (use-package pyautomagic
   :load-path user-lisp-directory)
-
-(use-package sgml-mode
-    :config
-    (add-hook 'sgml-mode-hook
-	    (lambda ()
-            (setq indent-tabs-mode nil))))
 
 (provide '.emacs-custom)
 ;;; .emacs-custom.el ends here
