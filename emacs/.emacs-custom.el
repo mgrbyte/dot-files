@@ -15,6 +15,8 @@
   "Add FUNCTION to multiple modes MODE-HOOKS."
     (mapc (lambda (hook) (add-hook hook function)) mode-hooks))
 
+(use-package company-jedi)
+
 ;; Keypress frequency tracking.
 (use-package keyfreq)
 
