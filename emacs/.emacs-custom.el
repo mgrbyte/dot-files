@@ -297,6 +297,7 @@
   :init
   (add-hook #'python-mode-hook
 	    (lambda ()
+	      (require 'pyautomagic)
 	      (setq import-python-el-settings 't)
 	      (pyvenv-mode 1)
 	      (pyautomagic--flake8-for-current-git-repo)
@@ -315,7 +316,16 @@
   (pyvenv-mode 1))
 
 (use-package pyautomagic
-  :load-path user-lisp-directory)
+  :load-path user-lisp-directory
+  :bind (("C-c v e" . pyautomagic--activate-venv-safely)
+	 ("C-c f c" . pyautomagic--configure-flycheck-checkers))
+  :init
+  (require 'flycheck)
+  (defun remember-flycheck-checker (whatever)
+    "Remember the last set `flycheck-checker'."
+    (pyautomagic--remember-flycheck-checker))
+  (message "Addding advice in pyautomagic:config")
+  (advice-add #'flycheck-select-checker :after #'remember-flycheck-checker))
 
 (provide '.emacs-custom)
 ;;; .emacs-custom.el ends here
