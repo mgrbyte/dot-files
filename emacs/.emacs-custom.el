@@ -27,7 +27,10 @@
 ;; Makes working with strings awesome
 (use-package s)
 
-(use-package company-jedi)
+;; Used for constributing 3rd party python packages
+;; instead of the more imposing flycheck-flake8 checker
+;;; (which is the default for my own and work packages)
+(use-package flycheck-pyflakes)
 
 (use-package keyfreq)
 
