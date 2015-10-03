@@ -275,13 +275,16 @@
   :load-path user-lisp-directory)
 
 (use-package gnus
-    :bind (("C-c C-x m" . gnus)))
+  :bind (("C-c C-x m" . gnus)))
+
+(use-package reload-dir-locals
+  :load-path user-lisp-directory
+  :bind (("C-c d l r" . reload-dir-locals-for-current-buffer)))
 
 (use-package pyvenv
   :bind (("C-c w" . pyvenv-workon)
 	 ("C-c v a" . pyvenv-activate)
-	 ("C-c v d" . pyvenv-deactivate)
-	 ("C-c v e" . pyautomagic--activate-venv-safely))
+	 ("C-c v d" . pyvenv-deactivate))
   :config
   (add-to-list 'pyvenv-post-activate-hooks #'pyvenv-restart-python)
   :init
