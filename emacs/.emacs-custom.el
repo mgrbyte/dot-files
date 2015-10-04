@@ -1,11 +1,7 @@
 ;;; Package -- Matt Russell's custom emacs setup -*- lexical-binding: t; coding: utf-8; mode: lisp -*-
 ;;;
 ;;; Commentary:
-;;; Integrates with netsight-emacs.
-;;; Customisation:
-;;;  - Adapts python-mode to work with different project styles,
-;;;    notably the Pylons project.
-;;;
+;;;    Integrates with netsight-emacs.
 ;;; Code:
 
 (defvar user-lisp-directory (expand-file-name "~/elisp")
