@@ -67,7 +67,9 @@
   (add-to-list 'auto-mode-alist '("Makfile.*" . makefile-gmake-mode))
   (keyfreq-mode)
   (menu-bar-mode 0)
-  (helm-mode 1))
+  (helm-mode 1)
+  (load-theme #'abyss t)
+  (powerline-default-theme))
 
 (use-package org
   :preface
@@ -151,8 +153,9 @@
   (add-to-hooks #'enable-paredit-mode `(lisp-mode-hook emacs-lisp-mode-hook)))
 
 (use-package powerline
-  :init
-  (powerline-default-theme))
+  :config
+  (setq-default powerline-default-separator 'wave))
+
 
 (use-package pretty-symbols
   :diminish pretty-symbols-mode
@@ -235,6 +238,8 @@
 		 (:connection-type . starttls)))))
       (error "Could not read authinfo credentials for Jabber")))
   :config
+  (setq-default jabber-avatar-cache-directory "~/.jabber-avatars")
+  (setq-default jabber-debug-keep-process-buffers t)
   (add-hook 'after-init-hook #'set-jabber-credentials))
 
 (use-package erc
