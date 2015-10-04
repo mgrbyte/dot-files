@@ -152,8 +152,7 @@
   :config
   (setq-default dired-omit-files-p t)
   :init
-  (require 'dired-x)
-  (dired-omit-mode 1))
+  (require 'dired-x))
 
 (use-package text-scale-mode
   :bind (("C-c +" . text-scale-increase)
