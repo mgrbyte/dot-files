@@ -194,7 +194,9 @@
 				    :require '(:secret)))
     (if creds
 	(let* ((authinfo-get (apply-partially #'plist-get (car creds)))
-	       (user (concat (funcall authinfo-get :user) "/workstation"))
+	       (user (s-join
+		      "/"
+		      (list (funcall authinfo-get :user) (system-name))))
 	       (host (concat "jabber." (jabber-jid-server user-mail-address)))
 	       (port (funcall authinfo-get :port))
 	       (passwd (funcall (funcall authinfo-get :secret))))
