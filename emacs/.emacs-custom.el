@@ -318,10 +318,9 @@
 	 ("C-c f c" . pyautomagic--configure-flycheck-checkers))
   :init
   (require 'flycheck)
-  (defun remember-flycheck-checker (whatever)
-    "Remember the last set `flycheck-checker'."
-    (pyautomagic--remember-flycheck-checker))
-  (message "Addding advice in pyautomagic:config")
+  (defun remember-flycheck-checker (checker)
+    "Remember the last set CHECKER which should be the same as `flycheck-checker'."
+    (pyautomagic--remember-flycheck-checker checker))
   (advice-add #'flycheck-select-checker :after #'remember-flycheck-checker))
 
 (provide '.emacs-custom)
