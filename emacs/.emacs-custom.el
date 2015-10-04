@@ -55,7 +55,10 @@
 
 (use-package netsight
   :config
+  (bind-key "C-c t" #'tool-bar-mode)
   (bind-key "C-x 4 s" #'netsight-sudo-edit netsight-keymap)
+  ;; avoid audio beeping by turning on visible-bell
+  (setq visible-bell t)
   (setq debug-on-error t)
   (setq custom-theme-directory (locate-user-emacs-file "themes"))
   (setq custom-theme-allow-multiple-selections nil)
