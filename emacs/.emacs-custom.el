@@ -25,6 +25,27 @@
 ;; Makes working with strings awesome
 (use-package s)
 
+(use-package flycheck
+  :preface
+
+  (defun mattr/flycheck-mode-line-with-checker-name (oldfun &optional status)
+    "Show the current checker name in the flycheck mode-line."
+    (let ((res (apply oldfun status)))
+      ;; Unless there is no current checker
+      (if flycheck-checker
+	  (s-replace "FlyC" (format "FlyC[%s]" flycheck-checker) res)
+	res)))
+
+  (defun mattr/remember-flycheck-checker (checker)
+      "Remember the last set CHECKER which should be the same as `flycheck-checker'."
+    (pyautomagic--remember-flycheck-checker checker))
+  :config
+  (advice-add #'flycheck-select-checker
+	      :after #'mattr/remember-flycheck-checker)
+  (advice-add #'flycheck-mode-line-status-text
+	      :around #'mattr/flycheck-mode-line-with-checker-name)
+  (flycheck-color-mode-line-mode 1))
+
 ;; Used for constributing 3rd party python packages
 ;; instead of the more imposing flycheck-flake8 checker
 ;;; (which is the default for my own and work packages)
@@ -126,7 +147,12 @@
   :config
   (add-to-hooks #'enable-paredit-mode `(lisp-mode-hook emacs-lisp-mode-hook)))
 
+(use-package powerline
+  :init
+  (powerline-default-theme))
+
 (use-package pretty-symbols
+  :diminish pretty-symbols-mode
   :preface
   (defun enable-pretty-symbols-mode ()
     (pretty-symbols-mode 1))
@@ -315,13 +341,7 @@
 (use-package pyautomagic
   :load-path user-lisp-directory
   :bind (("C-c v e" . pyautomagic--activate-venv-safely)
-	 ("C-c f c" . pyautomagic--configure-flycheck-checkers))
-  :init
-  (require 'flycheck)
-  (defun remember-flycheck-checker (checker)
-    "Remember the last set CHECKER which should be the same as `flycheck-checker'."
-    (pyautomagic--remember-flycheck-checker checker))
-  (advice-add #'flycheck-select-checker :after #'remember-flycheck-checker))
+	 ("C-c f c" . pyautomagic--configure-flycheck-checkers)))
 
 (provide '.emacs-custom)
 ;;; .emacs-custom.el ends here
