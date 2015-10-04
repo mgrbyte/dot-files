@@ -9,7 +9,7 @@
 
 (defun add-to-hooks (function mode-hooks)
   "Add FUNCTION to multiple modes MODE-HOOKS."
-    (mapc (lambda (hook) (add-hook hook function)) mode-hooks))
+  (mapc (lambda (hook) (add-hook hook function)) mode-hooks))
 
 (use-package company-jedi)
 
