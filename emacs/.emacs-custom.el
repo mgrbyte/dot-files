@@ -74,7 +74,8 @@
   (menu-bar-mode 0)
   (helm-mode 1)
   (load-theme #'abyss t)
-  (powerline-default-theme))
+  ;; (powerline-default-theme)
+  )
 
 (use-package org
   :preface
@@ -319,11 +320,7 @@
 	 ("C-c v a" . pyvenv-activate)
 	 ("C-c v d" . pyvenv-deactivate))
   :config
-  (add-to-list 'pyvenv-post-activate-hooks #'pyvenv-restart-python)
-  :init
-  (setq pyvenv-mode-line-indicator
-	'(pyvenv-virtual-env-name
-	  ("[venv:" pyvenv-virtual-env-name "] "))))
+  (add-to-list 'pyvenv-post-activate-hooks #'pyvenv-restart-python))
 
 (use-package python
   :bind (("RET" . newline-and-indent))
