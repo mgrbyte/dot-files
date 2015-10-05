@@ -226,20 +226,24 @@
 				    :require '(:secret)))
     (if creds
 	(let* ((authinfo-get (apply-partially #'plist-get (car creds)))
-	       (user (s-join
-		      "/"
-		      (list (funcall authinfo-get :user) (system-name))))
+	       (user
+		(s-join "/" (list (funcall authinfo-get :user) (system-name))))
 	       (host (concat "jabber." (jabber-jid-server user-mail-address)))
 	       (port (funcall authinfo-get :port))
 	       (passwd (funcall (funcall authinfo-get :secret))))
 	(setq jabber-account-list
-	      `((,user
-		 (:password . ,passwd)
-		 (:connection-type . starttls)))))
+	      `((,user (:password . ,passwd) (:connection-type . starttls)))))
       (error "Could not read authinfo credentials for Jabber")))
   :config
   (setq-default jabber-avatar-cache-directory "~/.jabber-avatars")
   (setq-default jabber-debug-keep-process-buffers t)
+  (setq-default jabber-activity-personal-face ((t (:foreground "gold" :weight bold))))
+  (setq-default jabber-chat-prompt-foreign ((t (:foreground "magenta" :weight bold))))
+  (setq-default jabber-chat-prompt-local
+		((t (:foreground "white smoke" :weight bold))))
+  (setq-default jabber-rare-time-face ((t (:foreground "gray" :underline t))))
+  (setq-default jabber-roster-user-online
+		((t (:foreground "cornsilk" :slant normal :weight bold)))))
   (add-hook 'after-init-hook #'set-jabber-credentials))
 
 (use-package erc
