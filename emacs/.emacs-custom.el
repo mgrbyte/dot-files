@@ -37,8 +37,9 @@
 	res)))
 
   (defun mattr/remember-flycheck-checker (checker)
-      "Remember the last set CHECKER which should be the same as `flycheck-checker'."
+    "Remember the last set CHECKER which should be the same as `flycheck-checker'."
     (pyautomagic--remember-flycheck-checker checker))
+
   :config
   (advice-add #'flycheck-select-checker
 	      :after #'mattr/remember-flycheck-checker)
@@ -68,8 +69,7 @@
   (keyfreq-mode)
   (menu-bar-mode 0)
   (helm-mode 1)
-  (load-theme #'abyss t)
-  (powerline-default-theme))
+  (load-theme #'abyss t))
 
 (use-package org
   :preface
@@ -151,6 +151,14 @@
   :diminish paredit-mode
   :config
   (add-to-hooks #'enable-paredit-mode `(lisp-mode-hook emacs-lisp-mode-hook)))
+
+(use-package virtualenvwrapper
+  :config
+  (setq mattr/virtualenvwrapper-mode-line
+	'(:eval
+	  (if (venv-current-name) (format "[venv: %s]" venv-current-name) "")))
+  (setq-default mode-line-format
+		(cons mode-line-format mattr/virtualenvwrapper-mode-line)))
 
 (use-package powerline
   :config
@@ -312,17 +320,6 @@
   :load-path user-lisp-directory
   :bind (("C-c d l r" . reload-dir-locals-for-current-buffer)))
 
-(use-package pyvenv
-  :bind (("C-c w" . pyvenv-workon)
-	 ("C-c v a" . pyvenv-activate)
-	 ("C-c v d" . pyvenv-deactivate))
-  :config
-  (add-to-list 'pyvenv-post-activate-hooks #'pyvenv-restart-python)
-  :init
-  (setq pyvenv-mode-line-indicator
-	'(pyvenv-virtual-env-name
-	  ("[venv:" pyvenv-virtual-env-name "] "))))
-
 (use-package python
   :bind (("RET" . newline-and-indent))
   :init
@@ -330,8 +327,6 @@
 	    (lambda ()
 	      (require 'pyautomagic)
 	      (setq import-python-el-settings 't)
-	      (pyvenv-mode 1)
-	      (pyautomagic--flake8-for-current-git-repo)
 	      (pyautomagic--venv-for-current-git-repo))))
 
 (use-package jedi
@@ -343,13 +338,13 @@
 
 (use-package rst
   :init
-  (auto-fill-mode t)
-  (pyvenv-mode 1))
+  (auto-fill-mode t))
 
 (use-package pyautomagic
   :load-path user-lisp-directory
   :bind (("C-c v e" . pyautomagic--activate-venv-safely)
 	 ("C-c f c" . pyautomagic--configure-flycheck-checkers)))
+
 
 (provide '.emacs-custom)
 ;;; .emacs-custom.el ends here

@@ -11,7 +11,7 @@
 (require 'f)
 (require 'flycheck)
 (require 'magit)
-(require 'pyvenv)
+(require 'virtualenvwrapper)
 (require 's)
 
 (defvar pyautomagic--default-flycheck-checker
@@ -35,24 +35,6 @@ Return nil if this is not the case."
          (remote (magit-get "branch" branch "remote")))
     (when remote
       (magit-get "remote" remote "url"))))
-
-(defun pyautomagic--is-pylons-project-repository (url)
-  "Return true if URL is a Pylons repository."
-  (s-contains? "Pylons/" url))
-
-(defun pyautomagic--flake8-for-current-git-repo()
-  "Set the flake8rc file for the current git repository."
-  (let* ((curr-git-remote-url (pyautomagic--git-get-current-remote-name))
-	 (flake8rc-filename "flake8rc"))
-    (if (and curr-git-remote-url
-	     (pyautomagic--is-pylons-project-repository curr-git-remote-url))
-	(setq flake8rc-filename "pylons.flake8rc"))
-    (setq-default flycheck-flake8rc (concat "~/.config/" flake8rc-filename))))
-
-(defun pyautomagic--activate-venv-safely (directory)
-  "Use instead of pyvenv-activate to strip trailing slash from DIRECTORY."
-  (interactive "DEnter Path to directory containing bin/activate:")
-  (pyvenv-activate (directory-file-name directory)))
 
 (defun pyautomagic--venv-known-names (directory)
   "List `known` virtualenvs names only in DIRECTORY."
@@ -101,11 +83,11 @@ sub-entry for `flycheck-flake8rc' defined."
 	 (dl-buffer-name (f-join (magit-toplevel) dir-locals-file)))
     (unless (pyautomagic--flycheck-checker-configured?
 	     (file-name-directory dl-buffer-name)
-	     #'flycheck-checker)
+	     'flycheck-checker)
       (find-file-literally (magit-toplevel))
       (add-dir-local-variable
        #'python-mode
-       #'flycheck-checker
+       'flycheck-checker
        (or checker flycheck-checker))
       (save-buffer)
       (kill-buffer)
@@ -128,7 +110,7 @@ using `pyautomagic--flake8rc-candidate-list'."
   (let ((dld (car (dir-locals-find-file (magit-toplevel)))))
     (unless (pyautomagic--flycheck-checker-configured?
 	     dld
-	     #'flycheck-flake8rc)
+	     'flycheck-flake8rc)
       (setq path
 	    (car
 	     (list
@@ -144,24 +126,27 @@ using `pyautomagic--flake8rc-candidate-list'."
       (save-excursion
 	  (find-file-literally (magit-toplevel))
 	  (if (equal path pyautomagic--default-flycheck-checker)
-	      (pyautomagic--remember-flycheck-checker #'python-pyflakes)
+	      (pyautomagic--remember-flycheck-checker 'python-pyflakes)
 	    (progn
 	      (add-dir-local-variable
-	       #'python-mode #'flycheck-flake8rc path)
-	      (pyautomagic--remember-flycheck-checker #'python-flake8)))))))
-
-(defvar pyvenv-virtual-env)
+	       #'python-mode 'flycheck-flake8rc path)
+	      (pyautomagic--remember-flycheck-checker 'python-flake8)))))))
 
 (defun pyautomagic--venv-for-current-git-repo ()
-  "Perhaps invoke `pyvenv-workon' dependant on a possible git repository."
+  "Perhaps invoke `venv-workon' dependent on a possible git repository.
+
+`venv-workon' is from the `virtualenvwrapper' package."
   (let* ((git-remote-name (pyautomagic--git-get-current-remote-name))
 	 (git-repo-name (s-downcase (or (file-name-base git-remote-name) "")))
-	 (venv-names (pyautomagic--venv-known-names (pyvenv-workon-home)))
+	 (venv-names (venv-get-candidates))
 	 (repo-venv (apply-partially #'s-contains? git-repo-name))
-	 (venvs-matched (-filter repo-venv venv-names)))
-    (if (and (> 0 (length venvs-matched)) pyvenv-virtual-env)
-	(pyvenv-deactivate)
-      (pyvenv-workon (car venvs-matched)))))
+	 (venvs-matched (-filter repo-venv venv-names))
+	 (venv-name (or (and venvs-matched (car venvs-matched)) nil)))
+    (when venv-name
+      (if (and venv-current-name (equal venv-name venv-current-name))
+	  (venv-deactivate))
+      (if (and venv-name (venv-is-valid venv-name))
+	  (venv-workon venv-name)))))
 
 (provide 'pyautomagic)
 ;;; pyautomagic.el ends here
