@@ -326,14 +326,13 @@
   (add-hook #'python-mode-hook
 	    (lambda ()
 	      (require 'pyautomagic)
-	      (setq import-python-el-settings 't)
 	      (pyvenv-mode 1)
-	      (pyautomagic--flake8-for-current-git-repo)
 	      (pyautomagic--venv-for-current-git-repo))))
 
 (use-package jedi
   :config
   (jedi:ac-setup)
+  (setq jedi:import-python-el-settings 't)
   (setq jedi:complete-on-dot 't)
   (bind-key "." #'jedi:goto-definition-pop-marker esc-map)
   (bind-key "S-." #'jedi:goto-definition-push-marker esc-map))
