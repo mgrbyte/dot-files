@@ -237,13 +237,6 @@
   :config
   (setq-default jabber-avatar-cache-directory "~/.jabber-avatars")
   (setq-default jabber-debug-keep-process-buffers t)
-  (setq-default jabber-activity-personal-face '((t (:foreground "gold" :weight bold))))
-  (setq-default jabber-chat-prompt-foreign '((t (:foreground "magenta" :weight bold))))
-  (setq-default jabber-chat-prompt-local
-      '((t (:foreground "white smoke" :weight bold))))
-  (setq-default jabber-rare-time-face '((t (:foreground "gray" :underline t))))
-  (setq-default jabber-roster-user-online
-      '((t (:foreground "cornsilk" :slant normal :weight bold))))
   (add-hook 'after-init-hook #'set-jabber-credentials))
 
 (use-package erc
