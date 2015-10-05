@@ -40,14 +40,6 @@ Return nil if this is not the case."
   "Return true if URL is a Pylons repository."
   (s-contains? "Pylons/" url))
 
-(defun pyautomagic--flake8-for-current-git-repo()
-  "Set the flake8rc file for the current git repository."
-  (let* ((curr-git-remote-url (pyautomagic--git-get-current-remote-name))
-	 (flake8rc-filename "flake8rc"))
-    (if (and curr-git-remote-url
-	     (pyautomagic--is-pylons-project-repository curr-git-remote-url))
-	(setq flake8rc-filename "pylons.flake8rc"))
-    (setq-default flycheck-flake8rc (concat "~/.config/" flake8rc-filename))))
 
 (defun pyautomagic--activate-venv-safely (directory)
   "Use instead of pyvenv-activate to strip trailing slash from DIRECTORY."
@@ -142,13 +134,13 @@ using `pyautomagic--flake8rc-candidate-list'."
 		   ;; https://github.com/jorgenschaefer/elpy/issues/144
 		   (equal path nil)))
       (save-excursion
-	  (find-file-literally (magit-toplevel))
-	  (if (equal path pyautomagic--default-flycheck-checker)
-	      (pyautomagic--remember-flycheck-checker #'python-pyflakes)
-	    (progn
-	      (add-dir-local-variable
-	       #'python-mode #'flycheck-flake8rc path)
-	      (pyautomagic--remember-flycheck-checker #'python-flake8)))))))
+        (find-file-literally (magit-toplevel))
+        (if (equal path pyautomagic--default-flycheck-checker)
+            (pyautomagic--remember-flycheck-checker #'python-pyflakes)
+          (progn
+            (add-dir-local-variable
+             #'python-mode #'flycheck-flake8rc path)
+            (pyautomagic--remember-flycheck-checker #'python-flake8)))))))
 
 (defvar pyvenv-virtual-env)
 
@@ -160,7 +152,7 @@ using `pyautomagic--flake8rc-candidate-list'."
 	 (repo-venv (apply-partially #'s-contains? git-repo-name))
 	 (venvs-matched (-filter repo-venv venv-names)))
     (if (and (> 0 (length venvs-matched)) pyvenv-virtual-env)
-	(pyvenv-deactivate)
+        (pyvenv-deactivate)
       (pyvenv-workon (car venvs-matched)))))
 
 (provide 'pyautomagic)
