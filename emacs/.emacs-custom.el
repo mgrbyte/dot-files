@@ -25,6 +25,11 @@
 ;; Makes working with strings awesome
 (use-package s)
 
+(use-package pyautomagic
+  :load-path user-lisp-directory
+  :bind (("C-c v e" . pyautomagic--activate-venv-safely)
+	 ("C-c f c" . pyautomagic--configure-flycheck-checkers)))
+
 (use-package flycheck
   :preface
 
@@ -341,11 +346,6 @@
   :init
   (auto-fill-mode t)
   (pyvenv-mode 1))
-
-(use-package pyautomagic
-  :load-path user-lisp-directory
-  :bind (("C-c v e" . pyautomagic--activate-venv-safely)
-	 ("C-c f c" . pyautomagic--configure-flycheck-checkers)))
 
 (provide '.emacs-custom)
 ;;; .emacs-custom.el ends here
