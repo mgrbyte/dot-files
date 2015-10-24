@@ -39,12 +39,10 @@ if [ -d "$LOCAL/bin" ]; then
     PATH="$LOCAL/bin:$PATH"
 fi
 
-if [ -x $(which pew-new) ]; then
-    export PROJECT_HOME="$HOME/git"
-elif [ -f "$VENV_WRAPPER" ]; then
+if [ -f "$VENV_WRAPPER" ]; then
     source "$VENV_WRAPPER"
 else
-    echo "No Python virtualenv support (pew nor virtualenvwrapper)"
+    echo "No virtualenvwrapper"
 fi
 
 JAVA_HOME="$HOME/jdk"
@@ -58,9 +56,8 @@ if [ -d "$ANDROID_STUDIO" ]; then
     export PATH="$PATH:$ANDROID_STUDIO/bin"
 fi
 
-LEIN_FAST_TRAMPOLINE=y
-export LEIN_FAST_TRAMPOLINE
-
+# Clojure stuff
+export LEIN_FAST_TRAMPOLINE="y"
 alias cljsbuild="lein trampoline cljsbuild $@"
 
 alias ls="ls -p"
@@ -68,6 +65,7 @@ alias ll="ls -l"
 alias la="ls -a"
 alias ec="emacsclient -c"
 alias et="emacsclient -t"
+alias grep="grep --color=auto"
 alias pbcopy="xclip -selection clipboard";
 alias pbpaste="xclip -selection clipboard -o";
 alias clean-old-kernels="sudo apt-get purge $(dpkg --list |egrep 'linux-image-[0-9]' |awk '{print $3,$2}' |sort -nr |tail -n +2 |grep -v $(uname -r) |awk '{ print $2}')"
