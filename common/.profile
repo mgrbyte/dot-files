@@ -3,25 +3,17 @@ export EMACS_SERVER_FILE="$HOME/.emacs.d/server/server"
 export EMAIL="mattr@netsight.co.uk"
 export GIT_TEMPLATES_DIR="$HOME/.git-templates"
 export GREP_COLOR="33;51;1"
-export GREP_OPTIONS="--color=auto"
 export LANGUAGE="en_GB:en"
 export LC_COLLATE="en_GB.utf8"
 export LC_CTYPE="en_GB.utf8"
 export LC_MESSAGES="en_GB.utf8"
-export PIP_DOWNLOAD_CACHE="$HOME/.pip/download-cache"
 export VENV_WRAPPER="$HOME/.local/bin/virtualenvwrapper.sh"
 export VISUAL="$EDITOR"
 export WORKON_HOME="$HOME/.virtualenvs"
 export JAVA_HOME="/usr/lib/jvm/java-7-openjdk-amd64"
 
 # Make sure /usr/local is before /usr/bin so custom stuff gets preference
-export PATH="/usr/local/bin:$(echo $PATH | sed 's/\/usr\/local\/bin://g')"
-
-# Anaconda
-# ANACONDA3_HOME="$HOME/anaconda3"
-# if [ -d "$ANACONDA3_HOME" ]; then
-#     export PATH="$HOME/anaconda3/bin:$PATH"
-# fi
+export PATH="/usr/local/bin:$(echo $PATH | sed 's|/usr/local/bin:||g')"
 
 CASK="$HOME/.cask"
 if [ -e "$CASK" ]; then
