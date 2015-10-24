@@ -7,7 +7,7 @@
 (defvar user-lisp-directory (expand-file-name "~/elisp")
   "Place to load local LISP code from.")
 
-(defun add-to-hooks (function mode-hooks)
+(defun mattr/add-to-hooks (function mode-hooks)
   "Add FUNCTION to multiple modes MODE-HOOKS."
   (mapc (lambda (hook) (add-hook hook function)) mode-hooks))
 
@@ -42,8 +42,9 @@
 	res)))
 
   (defun mattr/remember-flycheck-checker (checker)
-      "Remember the last set CHECKER which should be the same as `flycheck-checker'."
+    "Remember the last set CHECKER which should be the same as `flycheck-checker'."
     (pyautomagic--remember-flycheck-checker checker))
+
   :config
   (advice-add #'flycheck-select-checker
 	      :after #'mattr/remember-flycheck-checker)
@@ -156,7 +157,8 @@
 (use-package paredit
   :diminish paredit-mode
   :config
-  (add-to-hooks #'enable-paredit-mode `(lisp-mode-hook emacs-lisp-mode-hook)))
+  (mattr/add-to-hooks
+   #'enable-paredit-mode `(lisp-mode-hook emacs-lisp-mode-hook)))
 
 (use-package powerline
   :config
@@ -169,10 +171,10 @@
   (defun enable-pretty-symbols-mode ()
     (pretty-symbols-mode 1))
   :config
-  (add-to-hooks #'enable-pretty-symbols-mode
-		`(emacs-lisp-mode-hook
-		  lisp-mode-hook
-		  python-mode-hook)))
+  (mattr/add-to-hooks #'enable-pretty-symbols-mode
+		      `(emacs-lisp-mode-hook
+			lisp-mode-hook
+			python-mode-hook)))
 
 (use-package frame-cmds
   :bind (("C-c f m" . maximize-frame)
@@ -199,14 +201,18 @@
 (use-package ispell
   :bind (("C-c i" . ispell-buffer))
   :init
-  (add-to-hooks #'flyspell-mode
-		`(git-commit-mode-hook
-		  jabber-chat-mode-hook
-		  rst-mode-hook
-		  sphinx-doc-mode-hook)))
+  (mattr/add-to-hooks #'flyspell-mode
+		      `(git-commit-mode-hook
+			jabber-chat-mode-hook
+			rst-mode-hook
+			sphinx-doc-mode-hook)))
+
+(use-package magit-gh-pulls)
 
 (use-package magit
-  :bind (("C-c m" . magit-status)))
+  :bind (("C-c m" . magit-status))
+  :config
+  (add-hook #'magit-mode-hook #'turn-on-magit-gh-pulls))
 
 (use-package jabber
   :load-path user-lisp-directory
@@ -302,8 +308,18 @@
     (setq helm-grep-default-command "ack-grep -Hn --no-group --no-color %e %p %f"
           helm-grep-default-recurse-command "ack-grep -H --no-group --no-color %e %p %f")))
 
+(use-package helm-projectile
+  :config
+  (projectile-global-mode)
+  (setq projectile-completion-system 'helm)
+  (helm-projectile-on)
+  (persp-mode))
+
 (use-package package
   :bind (("C-c C-l" . list-packages)))
+
+(use-package perspective)
+(use-package persp-projectile)
 
 (use-package thememgr
   :load-path user-lisp-directory)
