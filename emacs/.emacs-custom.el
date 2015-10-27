@@ -207,12 +207,8 @@
 			rst-mode-hook
 			sphinx-doc-mode-hook)))
 
-(use-package magit-gh-pulls)
-
 (use-package magit
-  :bind (("C-c m" . magit-status))
-  :config
-  (add-hook #'magit-mode-hook #'turn-on-magit-gh-pulls))
+  :bind (("C-c m" . magit-status)))
 
 (use-package jabber
   :load-path user-lisp-directory
