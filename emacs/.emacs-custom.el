@@ -240,8 +240,8 @@
 	       (host (concat "jabber." (jabber-jid-server user-mail-address)))
 	       (port (funcall authinfo-get :port))
 	       (passwd (funcall (funcall authinfo-get :secret))))
-	(setq jabber-account-list
-	      `((,user (:password . ,passwd) (:connection-type . starttls)))))
+	  (setq jabber-account-list
+		`((,user (:password . ,passwd) (:connection-type . starttls)))))
       (error "Could not read authinfo credentials for Jabber")))
   :config
   (setq-default jabber-avatar-cache-directory "~/.jabber-avatars")
