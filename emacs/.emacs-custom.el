@@ -76,8 +76,7 @@
   (menu-bar-mode 0)
   (helm-mode 1)
   (load-theme #'abyss t)
-  ;; (powerline-default-theme)
-  )
+  (powerline-default-theme))
 
 (use-package org
   :preface
