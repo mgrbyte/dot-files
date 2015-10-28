@@ -69,6 +69,7 @@
   (setq custom-theme-directory (locate-user-emacs-file "themes"))
   (setq custom-theme-allow-multiple-selections nil)
   (setq-default theme-load-from-file t)
+  (setq-default epg-gpg-program "gpg2")
   (setq user-full-name "Matt Russell")
   (add-to-list 'auto-mode-alist '("Makfile.*" . makefile-gmake-mode))
   (keyfreq-mode)
