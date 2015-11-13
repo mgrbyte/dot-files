@@ -19,7 +19,7 @@
     rhh  = reset ---hard HEAD
     rpo = remote prune origin
 [core]
-    excludesfilme = /home/mattr/.gitignore_global
+    excludesfile = /home/mattr/.gitignore_global
     attributesfile = ~/.gitattributes
 [merge "pofile"]
     name = custom merge driver for gettext po files
