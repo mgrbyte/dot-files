@@ -75,8 +75,7 @@
   (keyfreq-mode)
   (menu-bar-mode 0)
   (helm-mode 1)
-  (load-theme #'abyss t)
-  (powerline-default-theme))
+  (load-theme #'abyss t))
 
 (use-package org
   :preface
