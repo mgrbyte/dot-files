@@ -378,17 +378,16 @@
    LaTeX-table-label "tab"
    TeX-auto-save t
    TeX-auto-save t
-   TeX-newline-function 'reindent-then-newline-and-indent
+   TeX-newline-function #'reindent-then-newline-and-indent
    TeX-parse-self t
    TeX-parse-self t
    Tex-save-query nil)
-  (require 'tex-site)
-  (autoload 'reftex-mode "reftex" "RefTeX Minor Mode" t)
-  (autoload 'turn-on-reftex "reftex" "RefTeX Minor Mode" nil)
-  (autoload 'reftex-citation "reftex-cite" "Make citation" nil)
-  (autoload 'reftex-index-phrase-mode "reftex-index" "Phrase Mode" t)
-  (add-hook 'latex-mode-hook 'turn-on-reftex)
-  (add-hook 'LaTeX-mode-hook 'turn-on-reftex))
+  (autoload #'reftex-mode "reftex" "RefTeX Minor Mode" t)
+  (autoload #'turn-on-reftex "reftex" "RefTeX Minor Mode" nil)
+  (autoload #'reftex-citation "reftex-cite" "Make citation" nil)
+  (autoload #'reftex-index-phrase-mode "reftex-index" "Phrase Mode" t)
+  (add-hook #'latex-mode-hook #'turn-on-reftex)
+  (add-hook #'LaTeX-mode-hook #'turn-on-reftex))
 
 (provide '.emacs-custom)
 ;;; .emacs-custom.el ends here
