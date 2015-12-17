@@ -201,7 +201,8 @@
   :bind (("C-c i" . ispell-buffer))
   :init
   (mattr/add-to-hooks #'flyspell-mode
-		      `(git-commit-mode-hook
+		      `(LaTeX-mode-hook
+			git-commit-mode-hook
 			jabber-chat-mode-hook
 			rst-mode-hook
 			sphinx-doc-mode-hook)))
@@ -354,6 +355,40 @@
   :init
   (auto-fill-mode t)
   (pyvenv-mode 1))
+
+(use-package tex-mode
+  :preface
+  (defun turn-on-outline-minor-mode ()
+    "Turn on the outline minor mode."
+    (outline-minor-mode 1)
+    (add-hook 'LaTeX-mode-hook 'turn-on-outline-minor-mode)
+    (add-hook 'latex-mode-hook 'turn-on-outline-minor-mode)
+    (setq outline-minor-mode-prefix "C-c C-o"))
+  :config
+  (setq-default
+   LaTeX-eqnarray-label "eq"
+   LaTeX-equation-label "eq"
+   LaTeX-figure-label "fig"
+   LaTeX-myChapter-label "chap"
+   LaTeX-section-hook '(LaTeX-section-heading
+			LaTeX-section-title
+			LaTeX-section-toc
+			LaTeX-section-section
+			LaTeX-section-label)
+   LaTeX-table-label "tab"
+   TeX-auto-save t
+   TeX-auto-save t
+   TeX-newline-function 'reindent-then-newline-and-indent
+   TeX-parse-self t
+   TeX-parse-self t
+   Tex-save-query nil)
+  (require 'tex-site)
+  (autoload 'reftex-mode "reftex" "RefTeX Minor Mode" t)
+  (autoload 'turn-on-reftex "reftex" "RefTeX Minor Mode" nil)
+  (autoload 'reftex-citation "reftex-cite" "Make citation" nil)
+  (autoload 'reftex-index-phrase-mode "reftex-index" "Phrase Mode" t)
+  (add-hook 'latex-mode-hook 'turn-on-reftex)
+  (add-hook 'LaTeX-mode-hook 'turn-on-reftex))
 
 (provide '.emacs-custom)
 ;;; .emacs-custom.el ends here
