@@ -1,7 +1,7 @@
 ;;; Package -- Matt Russell's custom emacs setup -*- lexical-binding: t; coding: utf-8; mode: lisp -*-
 ;;;
 ;;; Commentary:
-;;;    Integrates with netsight-emacs.
+;;;    Integrates with mgrbyte-emacs.
 ;;; Code:
 
 (defvar user-lisp-directory (expand-file-name "~/elisp")
@@ -59,10 +59,10 @@
 
 (use-package keyfreq)
 
-(use-package netsight
+(use-package mgrbyte
   :config
   (bind-key "C-c t" #'tool-bar-mode)
-  (bind-key "C-x 4 s" #'netsight-sudo-edit netsight-keymap)
+  (bind-key "C-x 4 s" #'mgrbyte-sudo-edit mgrbyte-keymap)
   ;; avoid audio beeping by turning on visible-bell
   (setq visible-bell t)
   (setq debug-on-error t)
@@ -223,7 +223,7 @@
 
          * This is the netsight.co.uk jabber server.
 
-         * Environment variable `EMAIL` is set to a Netsight email address.
+         * Environment variable `EMAIL` is set to my email address.
 
      References:
      http://enthusiasm.cozy.org/archives/2014/07/auth-source-getting-my-secrets-out-of-my-emacs-init-file
