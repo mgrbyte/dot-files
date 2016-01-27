@@ -1,7 +1,7 @@
 [init]
     templatedir = ~/.git-template
 [user]
-    email = mattr@netsight.co.uk
+    email = matthew.russell@horizon5.org
     name = Matt Russell
 [push]
     default = simple
