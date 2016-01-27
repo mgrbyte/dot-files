@@ -68,7 +68,7 @@ Return nil if this is not the case."
     (append config-entries project-entries)))
 
 (defun pyautomagic--flycheck-checker-configured? (directory-name variable)
-  "Is a `flycheck' VARIABLE configured for MODE as a dir-local variable in DIRECTORY-NAME?.
+  "Does a dir-local in DIRECTORY-NAME contain a `flycheck' VARIABLE?.
 
 Determined by looking at dir-locals for the current git
 repository, and seeing if there is a `python-mode' entry with a
