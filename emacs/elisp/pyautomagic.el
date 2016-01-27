@@ -94,11 +94,11 @@ sub-entry for `flycheck-flake8rc' defined."
 	 (dl-buffer-name (f-join (magit-toplevel) dir-locals-file)))
     (unless (pyautomagic--flycheck-checker-configured?
 	     (file-name-directory dl-buffer-name)
-	     #'flycheck-checker)
+	     'flycheck-checker)
       (find-file-literally (magit-toplevel))
       (add-dir-local-variable
        #'python-mode
-       #'flycheck-checker
+       'flycheck-checker
        (or checker flycheck-checker))
       (save-buffer)
       (kill-buffer)
@@ -121,7 +121,7 @@ using `pyautomagic--flake8rc-candidate-list'."
   (let ((dld (car (dir-locals-find-file (magit-toplevel)))))
     (unless (pyautomagic--flycheck-checker-configured?
 	     dld
-	     #'flycheck-flake8rc)
+	     'flycheck-flake8rc)
       (setq path
 	    (car
 	     (list
@@ -137,11 +137,11 @@ using `pyautomagic--flake8rc-candidate-list'."
       (save-excursion
         (find-file-literally (magit-toplevel))
         (if (equal path pyautomagic--default-flycheck-checker)
-            (pyautomagic--remember-flycheck-checker #'python-pyflakes)
+            (pyautomagic--remember-flycheck-checker 'python-pyflakes)
           (progn
             (add-dir-local-variable
-             #'python-mode #'flycheck-flake8rc path)
-            (pyautomagic--remember-flycheck-checker #'python-flake8)))))))
+             #'python-mode 'flycheck-flake8rc path)
+            (pyautomagic--remember-flycheck-checker 'python-flake8)))))))
 
 (defvar pyvenv-virtual-env)
 
