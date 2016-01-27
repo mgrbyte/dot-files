@@ -32,7 +32,8 @@ Return nil if this is not the case."
 (defun pyautomagic--git-get-current-remote-name ()
   "Get the current git remote name if any."
   (let* ((branch  (magit-get-current-branch))
-         (remote (magit-get "branch" branch "remote")))
+         (remote (or (magit-get "branch" branch "remote")
+		     (magit-get "branch" "master" "remote"))))
     (when remote
       (magit-get "remote" remote "url"))))
 
