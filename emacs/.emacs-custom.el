@@ -70,7 +70,6 @@
   (setq custom-theme-allow-multiple-selections nil)
   (setq-default theme-load-from-file t)
   (setq-default epg-gpg-program "gpg2")
-  (setq user-full-name "Matt Russell")
   (add-to-list 'auto-mode-alist '("Makfile.*" . makefile-gmake-mode))
   (keyfreq-mode)
   (menu-bar-mode 0)
@@ -185,7 +184,16 @@
  	 ("<M-right>" . move-frame-right)))
 
 (use-package gnus
-  :bind (("C-x g" . gnus-other-frame)))
+  :bind (("C-x g" . gnus-other-frame))
+  :preface
+  (defun mattr/gnus-group-list-subscribed-groups ()
+    "List all subscribed groups with or without un-read messages."
+    (interactive)
+    (gnus-group-list-all-groups 5))
+  :config
+  (bind-key "o"
+	    #'mattr/gnus-group-list-subscribed-groups
+	    gnus-group-mode-map))
 
 (use-package dired
   :config
@@ -228,7 +236,7 @@
      References:
      http://enthusiasm.cozy.org/archives/2014/07/auth-source-getting-my-secrets-out-of-my-emacs-init-file
      https://github.com/ardumont/org/blob/master/articles/emacs-jabber.org"
-    (setq creds (auth-source-search :user user-mail-address
+    (setq creds (auth-source-search :user "mattr@netsight.co.uk"
 				    :port "xmpp"
 				    :max 1
 				    :require '(:secret)))
