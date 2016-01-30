@@ -1,6 +1,6 @@
 export EDITOR="emacs -Q -nw"
 export EMACS_SERVER_FILE="$HOME/.emacs.d/server/server"
-export EMAIL="mattr@netsight.co.uk"
+export EMAIL="matthew.russell76@gmail.com"
 export GIT_TEMPLATES_DIR="$HOME/.git-templates"
 export GREP_COLOR="33;51;1"
 export LANGUAGE="en_GB:en"

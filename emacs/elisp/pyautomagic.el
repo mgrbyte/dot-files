@@ -1,7 +1,7 @@
 ;;; package -- Matt Russell's custom Emacs/Python integration.
 ;;;
 ;;; Commentary:
-;;; Integrates with netsight-emacs.
+;;; Integrates with mgrbyte-emacs.
 ;;; Customisations:
 ;;;  - Adapts python-mode to work with differnet project styles,
 ;;;    notably the Pylons project.
