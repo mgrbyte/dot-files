@@ -9,18 +9,20 @@
 (require 'shr)
 
 (defvar authinfo-creds "~/.gnupg/authinfo.gpg")
-(defvar netsight-mail-server "mail.netsight.co.uk")
-(defvar netsight-user-name "mattr")
-(defvar netsight-smtp-port "465")
+(defvar google-user-name "matthew.russell76")
+(defvar google-smtp-mail-server "smtp.gmail.com")
+(defvar google-imap-mail-server "imap.gmail.com")
 
 (define-key gnus-summary-mode-map "d" #'gnus-summary-mark-as-expirable)
 
 (setq-default user-full-name "Matt Russell")
 (setq-default epa-file-cache-passphrase-for-symmetric-encryption t)
 (setq-default smtpmail-auth-credentials authinfo-creds)
-(setq gnus-select-method '(nnimap "mail.netsight.co.uk"
+(setq gnus-select-method '(nnimap "gmail"
 				  (nnimap-inbox "INBOX")
-				  (nnimap-adddress "mail.netsight.co.uk")
+				  (nnimap-adddress google-imap-mail-server)
+				  (nnimap-server-port "imaps")
+				  (nnimap-stram ssl)
 				  (nnir-search-engine imap)
 				  (nnimap-authinfo-file authinfo-creds)
 				  (nnmail-expiry-wait 90)))
@@ -33,17 +35,11 @@
 (setq message-citation-line-function 'message-insert-formatted-citation-line)
 (setq message-citation-line-format "On %a, %b %d %Y at %r, %f wrote:")
 (setq gnus-thread-hide-subtree t)
-(setq-default user-mail-address (format "%s@netsight.co.uk" netsight-user-name))
+(setq-default user-mail-address (format "%s@gmail.com" google-user-name))
 (setq-default send-mail-function #'smtpmail-send-it)
 (setq-default message-send-mail-function #'smtpmail-send-it)
-(setq-default smtpmail-default-smtp-server netsight-mail-server)
-(setq-default smtpmail-auth-credentials
-	      '((netsight-mail-server
-		 netsight-smtp-port
-		 netsight-user-name
-		 nil)))
-(setq-default smtpmail-starttls-credentials
-	      '((netsight-mail-server netsight-smtp-port nil nil)))
+(setq-default smtpmail-smtp-service 587)
+
 ;; MM
 (setq mm-text-html-renderer 'shr)
 (add-to-list 'mm-attachment-override-types "image/.*")
