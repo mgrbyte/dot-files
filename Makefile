@@ -7,9 +7,7 @@ endef
 need-help := $(filter help,$(MAKECMDGOALS))
 
 help: ; @echo $(if $(need-help),,Type \'$(MAKE)$(dash-f) help\' to get help)
-install: clean venvwrapper stow
-update: clean restow
-uninstall: clean unstow
+update: clean re-install
 
 get-pip.py: $(call print-help,get-pip.py,downloads pip for python 2 and 3)
 	@wget https://bootstrap.pypa.io/get-pip.py
