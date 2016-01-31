@@ -1,19 +1,32 @@
 # Path to your oh-my-zsh installation.
-export ZSH="$HOME/.oh-my-zsh"
-
-ZSH_CUSTOM="$HOME/oh-my-zsh-custom"
-ZSH_THEME="socrates"
-CASE_SENSITIVE="true"
-ENABLE_CORRECTION="false"
-HIST_STAMPS="dd/mm/yyyy"
-COMPLETION_WAITING_DOTS="true"
 
 plugins=(git python virtualenv-prompt virtualenvwrapper pip fabric debian themes)
 
-export PATH="$HOME/.local/bin:/usr/local/bin:/usr/local/sbin:/usr/sbin:/usr/bin:/sbin:/bin:$HOME/.cask/bin"
-export SSH_KEY_PATH="~/.ssh/id_rsa"
+clean_old_kernels () {
+    sudo apt-get purge $(dpkg --list | \
+			 grep -E 'linux-image-[0-9]' | \
+			 awk '{ print $3,$2 }' | \
+			 sort -nr | \
+                         tail -n +2 | \
+			 grep -v $(uname -r) | \
+			 awk '{ print $2 }')
+    return $?;
+}
 
-source ~/.profile
+# XXX: according to the manuals, this file should not assume a tty
+# or run commands that produce output, which the folowing technically does..sorta.
+# Make sure /usr/local is before /usr/bin so custom stuff gets preference
+# export PATH="/usr/local/bin:$(echo $PATH | sed 's|/usr/local/bin:||g')"
+
+alias cljsbuild="lein trampoline cljsbuild $@"
+alias ls="ls --group-directories-first -p"
+alias ll="ls -g"
+alias la="ls -a"
+alias lt="ls -lt"
+alias grep="grep --color=auto"
+alias pbcopy="xclip -selection clipboard";
+alias pbpaste="xclip -selection clipboard -o";
+
 source "$ZSH/oh-my-zsh.sh"
 source "$VENV_WRAPPER"
 
