@@ -3,6 +3,8 @@
 ;;; Commentary:
 ;;;     Matt R's gnus configuration
 ;;; Code:
+(require 'gnus-group)
+(require 'gnus-sum)
 (require 'epg-config)
 (require 'f)
 (require 'nnimap)
@@ -14,7 +16,6 @@
 (defun mgrbyte/gnus-group-list-subscribed-groups ()
   "List all subscribed groups with or without un-read messages."
   (interactive)
-  (require 'gnus)
   (gnus-group-list-all-groups 5))
 
 (defun mgrbyte/gpg-fingerprint (email-address)
@@ -100,7 +101,7 @@ Select interactively from files present in `message-signature-directory'."
   (bind-key
    "d" #'gnus-summary-mark-as-expirable gnus-summary-mode-map)
   (bind-key
-   "o" #'mgrbyte--gnus-group-list-subscribed-groups gnus-group-mode-map)
+   "o" #'mgrbyte/gnus-group-list-subscribed-groups gnus-group-mode-map)
   (add-hook 'gnus-group-mode-hook 'gnus-topic-mode)
   (setq-default
    gnus-permanently-visible-groups "INBOX"
