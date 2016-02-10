@@ -24,6 +24,7 @@ if [ -d "$LOCAL/bin" ]; then
     PATH="$LOCAL/bin:$PATH"
 fi
 
+VENV_WRAPPER="$HOME/.local/bin/virtualenvwrapper.sh"
 if [ -f "$VENV_WRAPPER" ]; then
     source "$VENV_WRAPPER"
 else
@@ -55,7 +56,6 @@ export LEIN_FAST_TRAMPOLINE="y"
 export NAME="Matt Russell"
 export SMTPSERVER="smtp.hosts.co.uk"
 export SMTPUSER="mgrbyte.co.uk"
-export VENV_WRAPPER="$HOME/.local/bin/virtualenvwrapper.sh"
 export VISUAL="$EDITOR -t"
 export WORKON_HOME="$HOME/.virtualenvs"
 
