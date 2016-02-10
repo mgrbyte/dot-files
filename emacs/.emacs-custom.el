@@ -277,5 +277,13 @@
       '(bind-key "i" 'org-agenda-clock-in org-agenda-mode-map)))
   (add-hook 'org-clock-in-prepare-hook 'mgrbyte--org-mode-ask-effort))
 
+
+(use-package mgrbyte
+  :config
+  ;; Position frame geometry
+  (setq initial-frame-alist
+	'((top . 0) (left . 420)
+	  (width . 80) (height . 300))))
+
 (provide '.emacs-custom)
 ;;; .emacs-custom.el ends here
