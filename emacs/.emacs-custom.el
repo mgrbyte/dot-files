@@ -5,6 +5,7 @@
 ;;; Code:
 
 (require 'org)
+(require 'use-package)
 
 (defvar user-lisp-directory (expand-file-name "~/elisp")
   "Place to load local LISP code from.")
@@ -276,7 +277,6 @@
     (eval-after-load 'org-agenda
       '(bind-key "i" 'org-agenda-clock-in org-agenda-mode-map)))
   (add-hook 'org-clock-in-prepare-hook 'mgrbyte--org-mode-ask-effort))
-
 
 (use-package mgrbyte
   :config
