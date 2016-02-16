@@ -10,12 +10,17 @@ if [ -e "$DOT_LOCAL" ]; then
     export PATH="$PATH:$DOT_LOCAL/bin"
 fi
 
+DATOMIC="$HOME/datamoic"
+if [ -e "$DATOMIC" ]; then
+    export PATH="$PATH:$DATOMIC/bin"
+fi
+
 NIXOS="$HOME/.nix-profile"
 if [ -e "$NIXOS" ]; then
     export PATH="$PATH:$NIXOS/bin"
 fi
 
-if [ -d "$HOME/bin" ] ; then
+if [ -d "$HOME/bin" ]; then
     PATH="$PATH:$HOME/bin"
 fi
 
