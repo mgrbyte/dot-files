@@ -127,6 +127,10 @@ Select interactively from files present in `message-signature-directory'."
 	       '(nnimap "horizon5"
 			(nnimap-user "horizon5.org")
 			(nnimap-address "imap.hosts.co.uk")
+			(nnimap-authinfo-file authinfo-creds))
+	       '(nnimap "mrussell@ebi.ac.uk"
+			(nnimap-user "mrussell")
+			(nnimap-address "imap.ebi.ac.uk")
 			(nnimap-authinfo-file authinfo-creds))))
 
 
