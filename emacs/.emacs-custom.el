@@ -11,30 +11,6 @@
   "Place to load local LISP code from.")
 
 
-(use-package erc
-  :preface
-  (defmacro erc-bouncer-connect (command server port nick ssl pass)
-   "Create interactive command COMMAND, for connecting to an IRC server.
-
-    Connect to SERVER at PORT using NICK SSL and PASS then issue COMMAND.
-    The command uses interactive mode if passed an argument."
-   (fset command
-         `(lambda (arg)
-           (interactive "p")
-	   (if (not (= 1 arg))
-	       (call-interactively 'erc)
-	     (setq ((erc-connect-function
-		    ',(if ssl
-			  'erc-open-ssl-stream
-			'open-network-stream)))
-		   (erc :server ,server
-			:port ,port
-			:nick ,nick
-			:password ,pass))))))
-  :config
-  (autoload 'erc "erc" "" t)
-  (erc-bouncer-connect erc-ifs "t4nk.irc.tf" 6697 "mattr" t "637094"))
-
 (use-package jabber
   :load-path user-lisp-directory
   :preface
