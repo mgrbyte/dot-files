@@ -28,6 +28,5 @@ alias pbcopy="xclip -selection clipboard";
 alias pbpaste="xclip -selection clipboard -o";
 
 source "$ZSH/oh-my-zsh.sh"
-source "$VENV_WRAPPER"
 
 setxkbmap -layout us -option ctrl:nocaps

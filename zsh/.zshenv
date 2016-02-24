@@ -32,8 +32,6 @@ fi
 VENV_WRAPPER="$HOME/.local/bin/virtualenvwrapper.sh"
 if [ -f "$VENV_WRAPPER" ]; then
     source "$VENV_WRAPPER"
-else
-    echo "No virtualenvwrapper"
 fi
 
 JAVA_HOME="$HOME/jdk"
