@@ -1,6 +1,6 @@
-# Path to your oh-my-zsh installation.
+HOSTNAME="$(hostname)"
 
-plugins=(git python virtualenv-prompt virtualenvwrapper pip fabric debian themes)
+EBI_DOMAIN="ebi.ac.uk"
 
 clean_old_kernels () {
     sudo apt-get purge $(dpkg --list | \
@@ -13,10 +13,16 @@ clean_old_kernels () {
     return $?;
 }
 
-# XXX: according to the manuals, this file should not assume a tty
-# or run commands that produce output, which the folowing technically does..sorta.
-# Make sure /usr/local is before /usr/bin so custom stuff gets preference
-# export PATH="/usr/local/bin:$(echo $PATH | sed 's|/usr/local/bin:||g')"
+is_work() {
+    test "${HOSTNAME#*$EBI_DOMAIN}" != "$HOSTNAME";
+    return $?;
+}
+
+if [ is_work ]; then
+    plugins=(git python themes)
+else
+    plugins=(git python virtualenv-prompt virtualenvwrapper pip fabric debian themes)
+fi
 
 alias cljsbuild="lein trampoline cljsbuild $@"
 alias ls="ls --group-directories-first -p"
@@ -29,4 +35,6 @@ alias pbpaste="xclip -selection clipboard -o";
 
 source "$ZSH/oh-my-zsh.sh"
 
-setxkbmap -layout us -option ctrl:nocaps
+if [ ! -z "$DISPLAY" ]; then
+    setxkbmap -layout us -option ctrl:nocaps
+fi
