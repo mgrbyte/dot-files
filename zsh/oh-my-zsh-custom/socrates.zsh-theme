@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 # prompt style and colors based on Steve Losh's Prose theme:
 # http://github.com/sjl/oh-my-zsh/blob/master/themes/prose.zsh-theme
 #
@@ -95,8 +96,15 @@ function steeef_precmd {
 }
 add-zsh-hook precmd steeef_precmd
 
-function is_localhost {
-    HOSTNAME="$(hostname)"
-}
+symbol="λ"
+HOSTNAME="$(hostname)"
+if [[ ${HOSTNAME#*"ebi.ac.uk"} != "$HOSTNAME" ]]; then
+    symbol="🐛 "
+fi
 
-PROMPT=$'%{$yellow%}%n%{$reset_color%}%{$fg_bold[white]%}@%{$reset_color%}%{$fg_bold[red]%}%m%{$reset_color%} in %{$limegreen%}%~%{$reset_color%}$(ruby_prompt_info " with%{$fg[red]%} " v g "%{$reset_color%}")$vcs_info_msg_0_%{$orange%} λ%{$reset_color%}: '
+PROMPT=$'%{$yellow%}%n%{$reset_color%}%{$fg_bold[white]%}@%{$reset_color%}%{$fg_bold[red]%}%m%{$reset_color%} in %{$limegreen%}%~%{$reset_color%}$(ruby_prompt_info " with%{$fg[red]%} " v g "%{$reset_color%}")$vcs_info_msg_0_%{$orange%} $symbol%{$reset_color%}: '
+
+
+# Local Variables:
+# mode: sh
+# End:
