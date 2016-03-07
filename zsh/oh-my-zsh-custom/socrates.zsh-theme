@@ -97,8 +97,9 @@ function steeef_precmd {
 add-zsh-hook precmd steeef_precmd
 
 symbol="λ"
-HOSTNAME="$(hostname)"
-if [[ ${HOSTNAME#*"ebi.ac.uk"} != "$HOSTNAME" ]]; then
+
+grep -q ebi /etc/resolv.conf
+if [[ $? -eq 0 ]]; then
     symbol="🐛 "
 fi
 
