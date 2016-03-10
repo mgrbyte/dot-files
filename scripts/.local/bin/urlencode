@@ -1,0 +1,16 @@
+#!env python2.7
+# -*- coding: utf-8 -*-
+from __future__ import print_function
+
+import urllib
+import sys
+
+
+def urlencode_args(args):
+    return map(urllib.urlencode, args)
+
+
+if __name__ == '__main__':
+    print(urlencode_args(sys.argv[1:]))
+
+
