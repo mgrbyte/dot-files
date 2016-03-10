@@ -1,4 +1,5 @@
 DIRS ?= $(shell git ls-tree --name-only -d HEAD)
+LEIN_BINARY := ${HOME}/.local/bin/lein
 
 define print-help
 	$(if $(need-help),$(warning $1 -- $2))
@@ -29,5 +30,9 @@ uninstall: $(call print-help,uninstall,unlinks dot-files)
 
 clean: $(call print-help,clean,removes build artifacts)
 	@rm -f get-pip.py
+
+install-lein: $(call print-help,install-lein,installs leinigen)
+	curl -L https://raw.githubusercontent.com/technomancy/leiningen/stable/bin/lein > ${LEIN_BINARY}
+	chmod u+x ${LEIN_BINARY}
 
 .PHONY: cleanup install update uninstall install uninstall re-install
