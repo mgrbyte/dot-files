@@ -258,6 +258,8 @@
 (use-package mgrbyte
   :config
   ;; Position frame geometry
+  (setq cider-repl-history-file
+	(f-join  (getenv "HOME") ".cider-repl-history"))
   (setq initial-frame-alist
 	'((top . 0) (left . 420)
 	  (width . 80) (height . 300))))
