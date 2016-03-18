@@ -45,8 +45,9 @@
       (error "Could not read authinfo credentials for Jabber")))
   :config
   (setq-default jabber-avatar-cache-directory "~/.jabber-avatars")
-  (setq-default jabber-debug-keep-process-buffers t)
-  (add-hook 'after-init-hook #'set-jabber-credentials))
+  (setq-default jabber-debug-keep-process-buffers t))
+  ;; Disable Jabber (missing authinfo on work laptop)
+  ;; (add-hook 'after-init-hook #'set-jabber-credentials))
 
 
 (use-package recentf
