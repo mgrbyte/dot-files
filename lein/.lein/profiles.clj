@@ -1,8 +1,11 @@
 {:user {
         :plugins [[cider/cider-nrepl "0.12.0-SNAPSHOT"]
-                  [jonase/eastwood "0.2.3"]]
+                  [lein-ancient "0.6.8"]
+                  [lein-bikeshed "0.3.0"]
+                  [lein-kibit "0.1.2"]]
 
         :dependencies [[org.clojure/clojure "1.7.0"]
+                       [org.clojure/tools.reader "1.0.0-alpha3"]
                        [datomic-schema-grapher "0.0.1"]
                        [com.datomic/datomic-pro "0.9.5350"]
                        [me.raynes/fs "1.4.6"]
