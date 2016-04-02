@@ -6,6 +6,7 @@
 
         :dependencies [[org.clojure/clojure "1.7.0"]
                        [org.clojure/tools.reader "1.0.0-alpha3"]
+                       [com.cemerick/url "0.1.1"]
                        [datomic-schema-grapher "0.0.1"]
                        [com.datomic/datomic-pro "0.9.5350"]
                        [me.raynes/fs "1.4.6"]
