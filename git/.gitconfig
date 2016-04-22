@@ -18,6 +18,10 @@
     mnf = merge --no-ff
     rhh  = reset ---hard HEAD
     rpo = remote prune origin
+    llog = log --oneline --graph
+    lp = log -p
+    log-unpushed = log --no-merges
+    diff-all = difftool -y -d
 [core]
     excludesfile = /home/mattr/.gitignore_global
     attributesfile = ~/.gitattributes
