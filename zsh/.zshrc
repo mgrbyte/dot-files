@@ -30,6 +30,8 @@ alias ll="ls -g"
 alias la="ls -a"
 alias lt="ls -lt"
 alias grep="grep --color=auto"
+alias egrep="egrep --color=auto"
+alias rgrep="rgrep --color=auto"
 alias pbcopy="xclip -selection clipboard";
 alias pbpaste="xclip -selection clipboard -o";
 
