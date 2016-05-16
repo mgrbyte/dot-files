@@ -45,6 +45,11 @@ if [ -d "$ANDROID_STUDIO" ]; then
     export PATH="$PATH:$ANDROID_STUDIO/bin"
 fi
 
+TERRAFORM_BIN="${HOME}/terraform"
+if [ -d "${TERRAFORM_BIN}" ]; then
+    export PATH="${TERRAFORM_BIN}:${PATH}"
+fi
+
 # general
 export EDITOR="emacsclient"
 export EMACS_SERVER_FILE="$HOME/.emacs.d/server/server"
