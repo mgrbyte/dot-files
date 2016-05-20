@@ -50,6 +50,12 @@ if [ -d "${TERRAFORM_BIN}" ]; then
     export PATH="${TERRAFORM_BIN}:${PATH}"
 fi
 
+EC2_HOME="${HOME}/ec2-api-tools"
+if [ -e "${EC2_HOME}" ]; then
+    export EC2_HOME
+    export PATH="${PATH}:${EC2_HOME}/bin"
+fi
+
 # general
 export EDITOR="emacsclient"
 export EMACS_SERVER_FILE="${HOME}/.emacs.d/server/server"
