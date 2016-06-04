@@ -13,14 +13,10 @@
                        [me.raynes/fs "1.4.6"]
                        [clj-stacktrace "0.2.8"]
                        [acyclic/squiggly-clojure "0.1.5"]
-                       ^:replace [org.clojure/tools.nrepl "0.2.12"]
-                       ;; Consider using typed? [org.clojure/core.typed "0.3.22"]
-                       ]
-        }
-
+                       ^:replace [org.clojure/tools.nrepl "0.2.12"]]}
+ :signing {:gpg-key "matthew.russell@wormbase.org"}
  ;; VisualVM profiling opts
  :jvm-opts ["-Dcom.sun.management.jmxremote"
             "-Dcom.sun.management.jmxremote.ssl=false"
             "-Dcom.sun.management.jmxremote.authenticate=false"
             "-Dcom.sun.management.jmxremote.port=43210"]}
-
