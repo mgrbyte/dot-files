@@ -217,6 +217,7 @@
 
 (use-package mgrbyte
   :config
+  (setq rst-slides-program "google-chrome")
   ;; Position frame geometry
   (setq cider-repl-history-file
 	(f-join  (getenv "HOME") ".cider-repl-history"))
