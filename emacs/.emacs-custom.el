@@ -10,46 +10,6 @@
 (defvar user-lisp-directory (expand-file-name "~/elisp")
   "Place to load local LISP code from.")
 
-
-(use-package jabber
-  :load-path user-lisp-directory
-  :preface
-  (defun set-jabber-credentials ()
-    "Reads jabber credentials from encrypted authinfo GPG file.
-
-         Assumptions:
-
-         * Pre-existance of a line such as the following in ~/.authinfo.gpg:
-           machine jabber port xmpp login <user-mail-address> password <passwd
-
-         * This is the netsight.co.uk jabber server.
-
-         * Environment variable `EMAIL` is set to my email address.
-
-     References:
-     http://enthusiasm.cozy.org/archives/2014/07/auth-source-getting-my-secrets-out-of-my-emacs-init-file
-     https://github.com/ardumont/org/blob/master/articles/emacs-jabber.org"
-    (setq creds (auth-source-search :user "mattr@netsight.co.uk"
-				    :port "xmpp"
-				    :max 1
-				    :require '(:secret)))
-    (if creds
-	(let* ((authinfo-get (apply-partially #'plist-get (car creds)))
-	       (user
-		(s-join "/" (list (funcall authinfo-get :user) (system-name))))
-	       (host (concat "jabber." (jabber-jid-server user-mail-address)))
-	       (port (funcall authinfo-get :port))
-	       (passwd (funcall (funcall authinfo-get :secret))))
-	  (setq jabber-account-list
-		`((,user (:password . ,passwd) (:connection-type . starttls)))))
-      (error "Could not read authinfo credentials for Jabber")))
-  :config
-  (setq-default jabber-avatar-cache-directory "~/.jabber-avatars")
-  (setq-default jabber-debug-keep-process-buffers t))
-  ;; Disable Jabber (missing authinfo on work laptop)
-  ;; (add-hook 'after-init-hook #'set-jabber-credentials))
-
-
 (use-package recentf
   :bind (("C-x r e" . recentf-edit-list)))
 
