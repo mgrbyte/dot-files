@@ -70,21 +70,8 @@
   :load-path user-lisp-directory
   :bind (("C-c d l r" . reload-dir-locals-for-current-buffer)))
 
-(use-package pyvenv
-  :bind (("C-c w" . pyvenv-workon)
-	 ("C-c v a" . pyvenv-activate)
-	 ("C-c v d" . pyvenv-deactivate))
-  :config
-  (add-to-list 'pyvenv-post-activate-hooks #'pyvenv-restart-python))
-
 (use-package python
-  :bind (("RET" . newline-and-indent))
-  :init
-  (add-hook #'python-mode-hook
-	    (lambda ()
-	      (require 'pyautomagic)
-	      (pyvenv-mode 1)
-	      (pyautomagic--venv-for-current-git-repo))))
+  :bind (("RET" . newline-and-indent)))
 
 (use-package jedi
   :config
@@ -96,8 +83,7 @@
 
 (use-package rst
   :init
-  (auto-fill-mode t)
-  (pyvenv-mode 1))
+  (auto-fill-mode t))
 
 (use-package tex-mode
   :preface
