@@ -34,6 +34,7 @@ alias egrep="egrep --color=auto"
 alias rgrep="rgrep --color=auto"
 alias pbcopy="xclip -selection clipboard";
 alias pbpaste="xclip -selection clipboard -o";
+alias python="python3"
 
 source "$ZSH/oh-my-zsh.sh"
 

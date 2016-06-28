@@ -31,6 +31,7 @@ fi
 
 VENV_WRAPPER="${HOME}/.local/bin/virtualenvwrapper.sh"
 if [ -f "${VENV_WRAPPER}" ]; then
+    export VIRTUALENVWRAPPER_PYTHON="$(which python3)"
     source "${VENV_WRAPPER}"
 fi
 
@@ -72,6 +73,7 @@ export SMTPSERVER="smtp.hosts.co.uk"
 export SMTPUSER="mgrbyte.co.uk"
 export VISUAL="${EDITOR} -t"
 export WORKON_HOME="${HOME}/.virtualenvs"
+export PROJECT_HOME="${HOME}/git"
 
 # ohmyzsh
 export ZSH="${HOME}/.oh-my-zsh"
