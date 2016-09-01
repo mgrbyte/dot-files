@@ -57,8 +57,7 @@ if [ -e "${EC2_HOME}" ]; then
 fi
 
 # general
-export EDITOR="emacsclient"
-export EMACS_SERVER_FILE="${HOME}/.emacs.d/server/server"
+export EDITOR="emacsclient -t"
 export EMAIL="matt@mgrbyte.co.uk"
 export GIT_TEMPLATES_DIR="${HOME}/.git-templates"
 export GREP_COLOR="33;51;1"
@@ -70,7 +69,7 @@ export LEIN_FAST_TRAMPOLINE="y"
 export NAME="Matt Russell"
 export SMTPSERVER="smtp.hosts.co.uk"
 export SMTPUSER="mgrbyte.co.uk"
-export VISUAL="${EDITOR} -t"
+export VISUAL="emacsclient -c -a ''"
 export WORKON_HOME="${HOME}/.virtualenvs"
 
 # ohmyzsh
