@@ -85,3 +85,7 @@ export HISTFILE="${HOME}/.history"
 export SAVEHIST=1000000
 export HIST_STAMPS="dd/mm/yyyy"
 export COMPLETION_WAITING_DOTS="true"
+
+if [ -e "${HOME}/.aws/env" ]; then
+    source "${HOME}/.aws/env"
+fi
