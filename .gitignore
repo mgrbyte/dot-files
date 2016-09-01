@@ -8,3 +8,8 @@ gnupg/.gnupg/secring.gpg
 gnupg/.gnupg/trustdb.gpg
 lein/.lein/repl-port
 lein/.lein/self-installs/
+lein/.lein/credentials.clj.gpg
+lein/.lein/indices/
+/gnupg/.gnupg/secret.asc
+/gnupg/.gnupg/private-keys-*
+/gnupg/.gnupg/.*
