@@ -87,6 +87,9 @@ export SAVEHIST=1000000
 export HIST_STAMPS="dd/mm/yyyy"
 export COMPLETION_WAITING_DOTS="true"
 
-if [ -e "${HOME}/.aws/env" ]; then
-    source "${HOME}/.aws/env"
+AWS_ENV_FILE="${HOME}/.aws/env"
+if [ -e "${AWS_ENV_FILE}" ]; then
+    source "${AWS_ENV_FILE}"
+elif [ -e "$(dirname ${AWS_ENV_FILE})" ]; then
+    echo "WARNING: AWS environment file ${AWS_ENV_FILE} is missing"
 fi
