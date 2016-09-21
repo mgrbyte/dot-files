@@ -2,22 +2,22 @@
 # conditionals
 CASK="${HOME}/.cask"
 if [ -e "${CASK}" ]; then
-    export PATH="${PATH}:${CASK}/bin"
+    PATH="${PATH}:${CASK}/bin"
 fi
 
 DOT_LOCAL="${HOME}/.local"
 if [ -e "${DOT_LOCAL}" ]; then
-    export PATH="${PATH}:${DOT_LOCAL}/bin"
+    PATH="${PATH}:${DOT_LOCAL}/bin"
 fi
 
 DATOMIC="${HOME}/datamoic"
 if [ -e "${DATOMIC}" ]; then
-    export PATH="${PATH}:${DATOMIC}/bin"
+    PATH="${PATH}:${DATOMIC}/bin"
 fi
 
 NIXOS="${HOME}/.nix-profile"
 if [ -e "${NIXOS}" ]; then
-    export PATH="${PATH}:${NIXOS}/bin"
+    PATH="${PATH}:${NIXOS}/bin"
 fi
 
 if [ -d "${HOME}/bin" ]; then
@@ -43,18 +43,17 @@ fi
 
 ANDROID_STUDIO="${HOME}/android-studio"
 if [ -d "${ANDROID_STUDIO}" ]; then
-    export PATH="${PATH}:${ANDROID_STUDIO}/bin"
+    PATH="${PATH}:${ANDROID_STUDIO}/bin"
 fi
 
 TERRAFORM_BIN="${HOME}/terraform"
 if [ -d "${TERRAFORM_BIN}" ]; then
-    export PATH="${TERRAFORM_BIN}:${PATH}"
+    PATH="${TERRAFORM_BIN}:${PATH}"
 fi
 
 EC2_HOME="${HOME}/ec2-api-tools"
 if [ -e "${EC2_HOME}" ]; then
-    export EC2_HOME
-    export PATH="${PATH}:${EC2_HOME}/bin"
+    PATH="${PATH}:${EC2_HOME}/bin"
 fi
 
 # general
@@ -93,3 +92,6 @@ if [ -e "${AWS_ENV_FILE}" ]; then
 elif [ -e "$(dirname ${AWS_ENV_FILE})" ]; then
     echo "WARNING: AWS environment file ${AWS_ENV_FILE} is missing"
 fi
+
+# Always export PATH last after all manipulations.
+export PATH
