@@ -45,6 +45,7 @@ if [ -d "${TERRAFORM_BIN}" ]; then
     PATH="${TERRAFORM_BIN}:${PATH}"
 fi
 
+# AWS Java CLI
 EC2_HOME="${HOME}/ec2-api-tools"
 if [ -e "${EC2_HOME}" ]; then
     PATH="${PATH}:${EC2_HOME}/bin"
