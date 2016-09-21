@@ -31,14 +31,8 @@ fi
 
 VENV_WRAPPER="${HOME}/.local/bin/virtualenvwrapper.sh"
 if [ -f "${VENV_WRAPPER}" ]; then
-    export VIRTUALENVWRAPPER_PYTHON="$(which python3)"
+    VIRTUALENVWRAPPER_PYTHON="$(which python3)"
     source "${VENV_WRAPPER}"
-fi
-
-JAVA_HOME="${HOME}/jdk"
-if [ -d "${JAVA_HOME}" ]; then
-    export JAVA_HOME
-    export PATH="${JAVA_HOME}/bin:${PATH}"
 fi
 
 ANDROID_STUDIO="${HOME}/android-studio"
