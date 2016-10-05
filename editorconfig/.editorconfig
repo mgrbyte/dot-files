@@ -37,4 +37,4 @@ indent_size = 2
 
 [*.conf,*.ini]
 indent_style = space
-indent_size = 4
+indent_size = 2
