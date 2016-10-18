@@ -4,7 +4,7 @@
         :singing {:gpg-key "matthew.russell@wormbase.org"}
         :dependencies [[clojure-ini "0.0.2"]
                        [me.raynes/fs "1.4.6"]]
-        :plugins [[cider/cider-nrepl "0.14.0-SNAPSHOT"]
+        :plugins [[cider/cider-nrepl "0.15.0-SNAPSHOT"]
                   [refactor-nrepl "0.2.2"]
                   [jonase/eastwood "0.2.3"]
                   [lein-ancient "0.6.8"]
