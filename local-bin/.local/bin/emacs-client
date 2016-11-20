@@ -1,0 +1,2 @@
+#!/bin/env zsh
+emacsclient -f ~/.emacs.d/server/server -c -a "" -e '(switch-to-buffer "*dashboard*")(redisplay)'
