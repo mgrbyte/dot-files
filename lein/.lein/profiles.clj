@@ -15,6 +15,7 @@
  :repl {:dependencies [[acyclic/squiggly-clojure "0.1.6"]
                        [datomic-schema-grapher "0.0.1"]
                        [org.clojure/tools.nrepl "0.2.12"]]}
+ :repl-options {:init (set! *print-length* 10)}
  ;; VisualVM profiling opts
  :jvm-opts ["-Dcom.sun.management.jmxremote"
             "-Dcom.sun.management.jmxremote.ssl=false"
