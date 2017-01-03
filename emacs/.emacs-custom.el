@@ -3,6 +3,7 @@
 ;;; Commentary:
 ;;;    Integrates with mgrbyte-emacs.
 ;;; Code:
+(require 'dashboard)
 (require 'use-package)
 
 (defvar user-lisp-directory (expand-file-name "~/elisp")
@@ -18,9 +19,16 @@
 (use-package thememgr
   :load-path user-lisp-directory)
 
+(use-package golden-ratio
+  :ensure t
+  :diminish golden-ratio-mode
+  :init
+  (golden-ratio-mode 1))
+
 (use-package mgrbyte
   :init
   (toggle-frame-maximized))
+
 
 (provide '.emacs-custom)
 ;;; .emacs-custom.el ends here
