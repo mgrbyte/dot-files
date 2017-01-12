@@ -19,12 +19,6 @@
 (use-package thememgr
   :load-path user-lisp-directory)
 
-(use-package golden-ratio
-  :ensure t
-  :diminish golden-ratio-mode
-  :init
-  (golden-ratio-mode 1))
-
 (use-package mgrbyte
   :init
   (toggle-frame-maximized))
