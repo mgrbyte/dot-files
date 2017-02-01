@@ -1,5 +1,6 @@
 {:user
- {:env {:squiggly {:checkers [:eastwood]}}
+ {:env {:squiggly {:checkers [:eastwood]
+                   :eastwood-exclude-linters [:kibit]}}
   :plugin-repositories [["private-plugins"
                          {:url "private repo url"}]]
         :singing {:gpg-key "matthew.russell@wormbase.org"}
