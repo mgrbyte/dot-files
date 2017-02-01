@@ -13,3 +13,4 @@ lein/.lein/indices/
 /gnupg/.gnupg/secret.asc
 /gnupg/.gnupg/private-keys-*
 /gnupg/.gnupg/.*
+/lein/.lein/repl-history
