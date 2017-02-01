@@ -35,7 +35,9 @@ alias rgrep="rgrep --color=auto"
 alias pbcopy="xclip -selection clipboard";
 alias pbpaste="xclip -selection clipboard -o";
 alias python="python3"
+
 alias psj="ps awx | grep 'jav[a]'"
+alias rgrep-clj='grep --include="*.clj" -r'
 
 source "$ZSH/oh-my-zsh.sh"
 
