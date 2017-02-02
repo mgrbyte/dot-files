@@ -1,6 +1,5 @@
 {:user
- {:env {:squiggly {:checkers [:eastwood]
-                   :eastwood-exclude-linters [:kibit]}}
+ {:env {:squiggly "{:checkers [:eastwood]}"}
   :plugin-repositories [["private-plugins"
                          {:url "private repo url"}]]
   :singing {:gpg-key "matthew.russell@wormbase.org"}
@@ -16,11 +15,12 @@
   ;;            "-Dcom.sun.management.jmxremote.ssl=false"
   ;;            "-Dcom.sun.management.jmxremote.authenticate=false"
   ;;            "-Dcom.sun.management.jmxremote.port=43210"]}
-  :repl {:dependencies [[acyclic/squiggly-clojure "0.1.6"]
-                        [cider/cider-nrepl "0.15.0-SNAPSHOT"]
-                        [datomic-schema-grapher "0.0.1"]
-                        [org.clojure/tools.nrepl "0.2.12"]]
-         :plugins [[cider/cider-nrepl "0.15.0-SNAPSHOT"]]}
-  :repl-options {:init (set! *print-length* 10)}}}
+  }
+ :repl {:dependencies [[acyclic/squiggly-clojure "0.1.6"]
+                       [cider/cider-nrepl "0.15.0-SNAPSHOT"]
+                       [datomic-schema-grapher "0.0.1"]
+                       [org.clojure/tools.nrepl "0.2.12"]]
+        :plugins [[cider/cider-nrepl "0.15.0-SNAPSHOT"]]}
+ :repl-options {:init (set! *print-length* 10)}}
 
 
