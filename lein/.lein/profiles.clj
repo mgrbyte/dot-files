@@ -7,10 +7,10 @@
   :dependencies [[clojure-ini "0.0.2"]
                  [me.raynes/fs "1.4.6"]]
   :plugins [[jonase/eastwood "0.2.3"]
-            [lein-ancient "0.6.8"]
-            [lein-bikeshed "0.3.0"]
+            [lein-ancient "0.6.10"]
+            [lein-bikeshed "0.4.1"]
             [lein-ns-dep-graph "0.1.0-SNAPSHOT"]
-            [refactor-nrepl "0.2.2"]]
+            [refactor-nrepl "2.2.0"]]
   ;; VisualVM profiling opts
   ;; :jvm-opts ["-Dcom.sun.management.jmxremote"
   ;;            "-Dcom.sun.management.jmxremote.ssl=false"
