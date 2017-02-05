@@ -10,6 +10,7 @@
     ci = commit
     cb = checkout -b
     co = checkout
+    chp = cherry-pick
     df = diff
     db = branch -D
     rh = reset --hard
