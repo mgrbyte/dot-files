@@ -23,6 +23,7 @@
   :init
   (toggle-frame-maximized)
   :config
+  (setq-default flycheck-pyflakes-executable "~/.local/bin/pyflakes")
   (setq backup-directory-alist '(("." . "~/.emacs.d/backup"))
 	backup-by-copying t
 	version-control t
