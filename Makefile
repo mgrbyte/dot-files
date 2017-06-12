@@ -29,7 +29,7 @@ install: $(call print-help,install,creates symlinks to setup dot-files)
 	${STOW} ${DIRS}
 
 
-reinstall: $(call print-help,re-install,re-creates symlinks to setup dot-files)
+re-install: $(call print-help,re-install,re-creates symlinks to setup dot-files)
 	${STOW} -R ${DIRS}
 
 uninstall: $(call print-help,uninstall,unlinks dot-files)
