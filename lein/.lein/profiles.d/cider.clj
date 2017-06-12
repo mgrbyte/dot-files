@@ -1,7 +1,7 @@
-{:plugins [[cider/cider-nrepl "0.14.0"]
+{:plugins [[cider/cider-nrepl "0.15.0-SNAPSHOT"]
            [jonase/eastwood "0.2.3"
             :exclusions [org.clojure/clojure]]
-           [refactor-nrepl "2.2.0"]]
+           [refactor-nrepl "2.3.0-SNAPSHOT"]]
  :dependencies [[acyclic/squiggly-clojure "0.1.6"]]
  :env {:squiggly
               ;; Quote options to avoid warnings
