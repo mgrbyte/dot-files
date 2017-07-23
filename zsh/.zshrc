@@ -13,12 +13,14 @@ clean_old_kernels () {
     return $?;
 }
 
-is_work() {
+is_ebi_host() {
     test "${HOSTNAME#*$EBI_DOMAIN}" != "$HOSTNAME";
     return $?;
 }
 
-if [ is_work ]; then
+if [ is_ebi_host ]; then
+    # disable advanced theme for emacs tramp compat.
+    export ZSH_THEME=""
     plugins=(git python themes)
 else
     plugins=(git python virtualenv-prompt virtualenvwrapper pip fabric debian themes)
