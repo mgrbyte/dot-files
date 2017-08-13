@@ -9,7 +9,13 @@ clean_old_kernels () {
 			 sort -nr | \
                          tail -n +2 | \
 			 grep -v $(uname -r) | \
-			 awk '{ print $2 }')
+			 awk '{ print $2 }');
+    if [ $? -eq 0 ]; then
+	sudo apt-get autoremove
+    fi
+    if [ $? -eq 0 ]; then
+	sudo apt-get clean
+    fi
     return $?;
 }
 
