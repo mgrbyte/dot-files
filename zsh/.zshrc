@@ -25,8 +25,8 @@ is_ebi_host() {
 }
 
 if [ is_ebi_host ]; then
-    # disable advanced theme for emacs tramp compat.
-    export ZSH_THEME=""
+    # Hint: Disable advanced theme for emacs tramp compat by settng ZSH_THEME="".
+    export ZSH_THEME="socrates"
     plugins=(git python themes)
 else
     plugins=(git python virtualenv-prompt virtualenvwrapper pip fabric debian themes)
