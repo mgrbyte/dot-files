@@ -26,6 +26,9 @@
 [core]
     excludesfile = /home/mattr/.gitignore_global
     attributesfile = ~/.gitattributes
+[diff]
+    tool = meld
+
 [merge "pofile"]
     name = custom merge driver for gettext po files
     driver = git-po-merge %A %O %B
