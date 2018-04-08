@@ -2,23 +2,6 @@ HOSTNAME="$(hostname)"
 
 EBI_DOMAIN="ebi.ac.uk"
 
-clean_old_kernels () {
-    sudo apt-get purge $(dpkg --list | \
-			 grep -E 'linux-image-[0-9]' | \
-			 awk '{ print $3,$2 }' | \
-			 sort -nr | \
-                         tail -n +2 | \
-			 grep -v $(uname -r) | \
-			 awk '{ print $2 }');
-    if [ $? -eq 0 ]; then
-	sudo apt-get autoremove
-    fi
-    if [ $? -eq 0 ]; then
-	sudo apt-get clean
-    fi
-    return $?;
-}
-
 is_ebi_host() {
     test "${HOSTNAME#*$EBI_DOMAIN}" != "$HOSTNAME";
     return $?;
