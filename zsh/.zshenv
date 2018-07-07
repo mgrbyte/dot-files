@@ -40,6 +40,11 @@ if [ -d "${ANDROID_STUDIO}" ]; then
     PATH="${PATH}:${ANDROID_STUDIO}/bin"
 fi
 
+ARDUINO_HOME="${HOME}/arduino-1.8.5"
+if [ -d "${ARDUINO_HOME}" ]; then
+    PATH="${PATH}:${ARDUINO_HOME}"
+fi
+
 TERRAFORM_BIN="${HOME}/terraform"
 if [ -d "${TERRAFORM_BIN}" ]; then
     PATH="${TERRAFORM_BIN}:${PATH}"
