@@ -1,7 +1,8 @@
-{:repl {:plugins [[cider/cider-nrepl "0.18.0-SNAPSHOT"]
-                  [refactor-nrepl "2.4.0-SNAPSHOT"]]
+{:repl {:plugins [[refactor-nrepl "2.4.0-SNAPSHOT"]
+                  [cider/cider-nrepl "0.20.0"]]
         :dependencies
-        [[acyclic/squiggly-clojure "0.1.9-SNAPSHOT" :exclusions [org.clojure/tools.reader]]
+        [[org.clojure/tools.nrepl "0.2.13"]
+         [acyclic/squiggly-clojure "0.1.9-SNAPSHOT" :exclusions [org.clojure/tools.reader]]
          [compliment "0.3.5"]]}
  :env {:squiggly
        "{:checkers [:eastwood]
