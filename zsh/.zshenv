@@ -51,6 +51,9 @@ if [ -e "${EC2_HOME}" ]; then
     PATH="${PATH}:${EC2_HOME}/bin"
 fi
 
+# Turn off making distinction between output ending with \newline or not
+export PROMPT_EOL_MARK=""
+
 # general
 export EDITOR="emacsclient -t"
 export EMAIL="matt@mgrbyte.co.uk"
