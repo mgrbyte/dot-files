@@ -40,6 +40,11 @@ if [ -d "${ANDROID_STUDIO}" ]; then
     PATH="${PATH}:${ANDROID_STUDIO}/bin"
 fi
 
+LINUX_BREW="/home/linuxbrew/.linuxbrew"
+if [ -d "${LINUX_BREW}" ]; then
+    PATH="${PATH}:${LINUX_BREW}/bin"
+fi
+
 TERRAFORM_BIN="${HOME}/terraform"
 if [ -d "${TERRAFORM_BIN}" ]; then
     PATH="${TERRAFORM_BIN}:${PATH}"
