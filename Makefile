@@ -11,11 +11,6 @@ need-help := $(filter help,$(MAKECMDGOALS))
 
 help: ; @echo $(if $(need-help),,Type \'$(MAKE)$(dash-f) help\' to get help)
 
-.PHONY: install-lein
-install-lein: $(call print-help,install-lein,installs leinigen)
-	@curl -L ${LEIN_URL} -o ${LEIN_BINARY}
-	@chmod u+x ${LEIN_BINARY}
-
 get-pip.py: $(call print-help,get-pip.py,downloads pip for python 2 and 3)
 	@wget https://bootstrap.pypa.io/get-pip.py
 	@python2 get-pip.py --user --upgrade 2> /dev/null
@@ -37,9 +32,5 @@ uninstall: $(call print-help,uninstall,unlinks dot-files)
 
 clean: $(call print-help,clean,removes build artifacts)
 	@rm -f get-pip.py
-
-install-lein: $(call print-help,install-lein,installs leinigen)
-	curl -L https://raw.githubusercontent.com/technomancy/leiningen/stable/bin/lein > ${LEIN_BINARY}
-	chmod u+x ${LEIN_BINARY}
 
 .PHONY: clean install uninstall install uninstall reinstall
