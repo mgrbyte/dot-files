@@ -23,8 +23,7 @@ venvwrapper: get-pip.py $(call print-help,venvwrapper,installs various python 2 
 install: $(call print-help,install,creates symlinks to setup dot-files)
 	${STOW} ${DIRS}
 
-
-reinstall: $(call print-help,re-install,re-creates symlinks to setup dot-files)
+reinstall: $(call print-help,reinstall,re-creates symlinks to setup dot-files)
 	${STOW} -R ${DIRS}
 
 uninstall: $(call print-help,uninstall,unlinks dot-files)
