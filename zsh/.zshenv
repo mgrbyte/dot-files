@@ -40,9 +40,18 @@ if [ -d "${ANDROID_STUDIO}" ]; then
     PATH="${PATH}:${ANDROID_STUDIO}/bin"
 fi
 
-LINUX_BREW="/home/linuxbrew/.linuxbrew"
-if [ -d "${LINUX_BREW}" ]; then
-    PATH="${PATH}:${LINUX_BREW}/bin"
+linuxbrew_home="/home/linuxbrew/.linuxbrew"
+if [ -d "${linuxbrew_home}" ]; then
+    HOMEBREW_PREFIX="${linuxbrew_home}"
+    unset linuxbrew_home
+    PATH="${HOMEBREW_PREFIX}/bin:${HOMEBREW_PREFIX}/sbin:$PATH"
+    HOMEBREW_PREFIX="$(brew --prefix)"
+    export HOMEBREW_CELLAR="${HOMEBREW_PREFIX}/Cellar"
+    export HOMEBREW_REPOSITORY="${HOMEBREW_PREFIX}/Homebrew"
+    export MANPATH="${HOMEBREW_PREFIX}/share/man:$MANPATH"
+    export INFOPATH="${HOMEBREW_PREFIX}/share/info:$INFOPATH"
+else
+    echo "Not setting up homebrew, has not been installed."
 fi
 
 TERRAFORM_BIN="${HOME}/terraform"
