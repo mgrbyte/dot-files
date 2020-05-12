@@ -1,4 +1,7 @@
 get-pip.py
+*.bak
+*.old
+*.disabled
 *~
 *.elc
 *.pyc
@@ -11,7 +14,10 @@ lein/.lein/repl-port
 lein/.lein/self-installs/
 lein/.lein/credentials.clj.gpg
 lein/.lein/indices/
+/fonts/.fonts
 /gnupg/.gnupg/secret.asc
 /gnupg/.gnupg/private-keys-*
 /gnupg/.gnupg/.*
 /lein/.lein/repl-history
+/virtualenvwrapper/.virtualenvs/*
+
