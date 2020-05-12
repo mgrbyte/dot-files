@@ -52,6 +52,10 @@ if [ -d "${linuxbrew_home}" ]; then
     export INFOPATH="${HOMEBREW_PREFIX}/share/info:$INFOPATH"
 else
     echo "Not setting up homebrew, has not been installed."
+
+ARDUINO_HOME="${HOME}/arduino-1.8.5"
+if [ -d "${ARDUINO_HOME}" ]; then
+    PATH="${PATH}:${ARDUINO_HOME}"
 fi
 
 TERRAFORM_BIN="${HOME}/terraform"
