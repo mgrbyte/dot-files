@@ -1,7 +1,7 @@
 DIRS ?= $(shell git ls-tree --name-only -d HEAD)
 LEIN_BINARY := ${HOME}/.local/bin/lein
 TARGET := ${HOME}
-STOW := @stow --verbose=1 -t ${TARGET}
+STOW := @stow --verbose=1 --adopt -t ${TARGET}
 
 define print-help
 	$(if $(need-help),$(warning $1 -- $2))
