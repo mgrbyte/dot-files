@@ -21,14 +21,25 @@ indent_style = space
 indent_size = 4
 
 # Lisp
-[*.{el,clj}]
+[*.{el,clj,cljs}]
 indent_style = space
 indent_size = 2
 
+# JS
+[*.{js,jsx}]
+indent_style = space
+indent_size = 2
+
+
 # Java/C style
-[*.{c,java,js}]
+[*.{c,java}]
 indent_style = space
 indent_size = 4
+
+[*.json]
+indent_style = space
+indent_size = 2
+
 
 # Matches the exact files either package.json or .travis.yml
 [{package.json,.travis.yml}]
