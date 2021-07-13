@@ -1,4 +1,3 @@
-
 # conditionals
 CASK="${HOME}/.cask"
 if [ -e "${CASK}" ]; then
@@ -27,12 +26,6 @@ fi
 LOCAL="${HOME}/.local"
 if [ -d "${LOCAL}/bin" ]; then
     PATH="${LOCAL}/bin:${PATH}"
-fi
-
-VENV_WRAPPER="${HOME}/.local/bin/virtualenvwrapper.sh"
-if [ -f "${VENV_WRAPPER}" ]; then
-    VIRTUALENVWRAPPER_PYTHON="$(which python3)"
-    source "${VENV_WRAPPER}"
 fi
 
 ANDROID_STUDIO="${HOME}/android-studio"
@@ -67,6 +60,12 @@ EC2_HOME="${HOME}/ec2-api-tools"
 if [ -e "${EC2_HOME}" ]; then
     PATH="${PATH}:${EC2_HOME}/bin"
 fi
+
+
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"
+
 
 # Turn off making distinction between output ending with \newline or not
 export PROMPT_EOL_MARK=""
@@ -106,6 +105,12 @@ if [ -e "${AWS_ENV_FILE}" ]; then
     source "${AWS_ENV_FILE}"
 elif [ -e "$(dirname ${AWS_ENV_FILE})" ]; then
     echo "WARNING: AWS environment file ${AWS_ENV_FILE} is missing"
+fi
+
+VENV_WRAPPER="${HOME}/.local/bin/virtualenvwrapper.sh"
+if [ -f "${VENV_WRAPPER}" ]; then
+    VIRTUALENVWRAPPER_PYTHON="$(which python3)"
+    source "${VENV_WRAPPER}"
 fi
 
 # Always export PATH last after all manipulations.
