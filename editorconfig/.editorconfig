@@ -49,3 +49,8 @@ indent_size = 2
 [*.conf,*.ini]
 indent_style = space
 indent_size = 2
+
+
+[*.jinja,*.html]
+indent_style = space
+indent_size = 2
