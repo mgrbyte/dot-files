@@ -1,9 +1,15 @@
-
 HOSTNAME="$(hostname)"
 
 # Hint: Disable advanced theme for emacs tramp compat by settng ZSH_THEME="".
-export ZSH_THEME="socrates"
+if [[ "${TERM}" = "PS1" ]]; then
+   ZSH_THEME=""
+else
+    ZSH_THEME="socrates"
+fi
+export ZSH_THEME
+
 plugins=(git python virtualenvwrapper pip fabric debian themes)
+
 
 alias cljsbuild="lein trampoline cljsbuild $@"
 alias ls="ls --group-directories-first -p"
@@ -34,6 +40,14 @@ if [ ! -z "$DISPLAY" ]; then
     setxkbmap -layout us -option ctrl:nocaps
 else
     echo "X is not running!"
+fi
+
+which keychain > /dev/null 2>&1
+if [ ! $? -eq 0 ]; then
+    echo "Keychain not installed, not starting ssh-agent."
+else
+    keychain --quiet --nogui /home/matt/.ssh/id_rsa_mtr21pqh_bangor_ac_uk
+    source $HOME/.keychain/$HOST-sh
 fi
 
 export NVM_DIR="$HOME/.nvm"
