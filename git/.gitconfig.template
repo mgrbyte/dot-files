@@ -1,0 +1,39 @@
+[init]
+    templatedir = ~/.git-template
+[user]
+    email = 
+    name = Matt Russell
+    signingkey = 
+[push]
+    default = simple
+[alias]
+    br = branch
+    ci = commit
+    cb = checkout -b
+    co = checkout
+    chp = cherry-pick
+    df = diff
+    db = branch -D
+    diff-all = difftool -y -d
+    rh = reset --hard
+    rn = branch -m
+    st = status -uno
+    mnf = merge --no-ff
+    rhh  = reset ---hard HEAD
+    rpo = remote prune origin
+    llog = log --oneline --graph
+    lp = log -p
+    log-unpushed = log --no-merges
+    sl = stash list
+[core]
+    excludesfile = ~/.gitignore_global
+    attributesfile = ~/.gitattributes
+[diff]
+    tool = meld
+[merge "pofile"]
+    name = custom merge driver for gettext po files
+    driver = git-po-merge %A %O %B
+[commit]
+	gpgsign = true
+[tag]
+	gpgsign = true
