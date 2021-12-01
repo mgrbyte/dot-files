@@ -71,8 +71,8 @@ export NVM_DIR="$HOME/.nvm"
 export PROMPT_EOL_MARK=""
 
 # general
-export EDITOR="emacsclient -t"
-export EMAIL="matt@mgrbyte.co.uk"
+export EDITOR="emacs"
+export EMAIL="$(git config user.email)"
 export GIT_TEMPLATES_DIR="${HOME}/.git-templates"
 export GREP_COLOR="33;51;1"
 export LANGUAGE="en_GB:en"
@@ -83,7 +83,7 @@ export LEIN_FAST_TRAMPOLINE="y"
 export NAME="Matt Russell"
 export SMTPSERVER="smtp.hosts.co.uk"
 export SMTPUSER="mgrbyte.co.uk"
-export VISUAL="emacsclient -c -a ''"
+export VISUAL="emacs -Q -nw"
 export WORKON_HOME="${HOME}/.virtualenvs"
 export PROJECT_HOME="${HOME}/git"
 
@@ -111,6 +111,11 @@ VENV_WRAPPER="${HOME}/.local/bin/virtualenvwrapper.sh"
 if [ -f "${VENV_WRAPPER}" ]; then
     VIRTUALENVWRAPPER_PYTHON="$(which python3)"
     source "${VENV_WRAPPER}"
+fi
+
+LOCAL_EMACS="$HOME/.local/emacs"
+if [[ -d ${LOCAL_EMACS} ]]; then
+    PATH="${LOCAL_EMACS}/bin:${PATH}"
 fi
 
 # Always export PATH last after all manipulations.
