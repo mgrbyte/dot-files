@@ -21,11 +21,10 @@ alias egrep="egrep --color=auto"
 alias rgrep="rgrep --color=auto"
 alias pbcopy="xclip -selection clipboard";
 alias pbpaste="xclip -selection clipboard -o";
-alias python="python3"
-alias pip="python3 -m pip"
 
 alias psj="ps awx | grep 'jav[a]'"
 alias rgrep-clj='grep --include="*.clj" -r'
+alias rgrep-py='grep -r --include="*.py"'
 
 source "$ZSH/oh-my-zsh.sh"
 
