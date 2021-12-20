@@ -1,14 +1,16 @@
 HOSTNAME="$(hostname)"
 
 # Hint: Disable advanced theme for emacs tramp compat by settng ZSH_THEME="".
-if [[ "${TERM}" = "PS1" ]]; then
-   ZSH_THEME=""
+if [ $TERM = "dumb" ]; then
+    unsetopt zle
+    PS1='$ '
+    ZSH_THEME=""
 else
     ZSH_THEME="socrates"
 fi
 export ZSH_THEME
 
-plugins=(git python virtualenvwrapper pip fabric debian themes)
+plugins=(git python pip fabric debian themes)
 
 
 alias cljsbuild="lein trampoline cljsbuild $@"
