@@ -118,5 +118,12 @@ if [[ -d ${LOCAL_EMACS} ]]; then
     PATH="${LOCAL_EMACS}/bin:${PATH}"
 fi
 
+CONDA_HOME="$HOME/conda"
+if [[ -d $CONDA_HOME ]]; then
+    export CONDA_HOME
+    PATH="$CONDA_HOME/bin:$PATH"
+fi
+
 # Always export PATH last after all manipulations.
 export PATH
+
