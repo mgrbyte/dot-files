@@ -1,4 +1,0 @@
-[ui]
-username = MatthewRussell <matthew.russell@horizon5.org>
-verbose = True
-ignore = ~/.hgignore
