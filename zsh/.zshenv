@@ -4,11 +4,6 @@ if [ -e "${CASK}" ]; then
     PATH="${PATH}:${CASK}/bin"
 fi
 
-DOT_LOCAL="${HOME}/.local"
-if [ -e "${DOT_LOCAL}" ]; then
-    PATH="${PATH}:${DOT_LOCAL}/bin"
-fi
-
 DATOMIC="${HOME}/datamoic"
 if [ -e "${DATOMIC}" ]; then
     PATH="${PATH}:${DATOMIC}/bin"
@@ -19,13 +14,9 @@ if [ -e "${NIXOS}" ]; then
     PATH="${PATH}:${NIXOS}/bin"
 fi
 
-if [ -d "${HOME}/bin" ]; then
-    PATH="${PATH}:${HOME}/bin"
-fi
-
-LOCAL="${HOME}/.local"
-if [ -d "${LOCAL}/bin" ]; then
-    PATH="${LOCAL}/bin:${PATH}"
+LOCAL_BIN="${HOME}/.local/bin"
+if [ -e "${LOCAL_BIN}" ]; then
+    PATH="${LOCAL_BIN}:${PATH}"
 fi
 
 ANDROID_STUDIO="${HOME}/android-studio"
