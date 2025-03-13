@@ -33,18 +33,6 @@ if [ -d "${ANDROID_STUDIO}" ]; then
     PATH="${PATH}:${ANDROID_STUDIO}/bin"
 fi
 
-linuxbrew_home="/home/linuxbrew/.linuxbrew"
-if [ -d "${linuxbrew_home}" ]; then
-    HOMEBREW_PREFIX="${linuxbrew_home}"
-    unset linuxbrew_home
-    PATH="${HOMEBREW_PREFIX}/bin:${HOMEBREW_PREFIX}/sbin:$PATH"
-    HOMEBREW_PREFIX="$(brew --prefix)"
-    export HOMEBREW_CELLAR="${HOMEBREW_PREFIX}/Cellar"
-    export HOMEBREW_REPOSITORY="${HOMEBREW_PREFIX}/Homebrew"
-    export MANPATH="${HOMEBREW_PREFIX}/share/man:$MANPATH"
-    export INFOPATH="${HOMEBREW_PREFIX}/share/info:$INFOPATH"
-fi
-
 ARDUINO_HOME="${HOME}/arduino-1.8.5"
 if [ -d "${ARDUINO_HOME}" ]; then
     PATH="${PATH}:${ARDUINO_HOME}"
@@ -61,17 +49,42 @@ if [ -e "${EC2_HOME}" ]; then
     PATH="${PATH}:${EC2_HOME}/bin"
 fi
 
+AWS_ENV_FILE="${HOME}/.aws/env"
+if [ -e "${AWS_ENV_FILE}" ]; then
+    source "${AWS_ENV_FILE}"
+fi
+
+LOCAL_EMACS="$HOME/.local/emacs"
+if [ -d ${LOCAL_EMACS} ]; then
+    PATH="${LOCAL_EMACS}/bin:${PATH}"
+fi
+MAMBA_HOME="$HOME/mambaforge"
+if [ -d $MAMBA_HOME ]; then
+    export MAMBA_HOMEa
+    PATH="${MAMBA_HOME}/bin:$PATH"
+fi
+
 
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"
 
+which code &> /dev/null
+if [ $? -eq 0 ]; then
+    export EDITOR="code"
+    export VISUAL="code"
+else
+    export EDITOR="emacs"
+    export VISUAL="emacs"
+fi
+
+
+export DOTFILES="${HOME}/git/dot-files"
 
 # Turn off making distinction between output ending with \newline or not
 export PROMPT_EOL_MARK=""
 
 # general
-export EDITOR="emacs"
 export EMAIL="$(git config user.email)"
 export GIT_TEMPLATES_DIR="${HOME}/.git-templates"
 export GREP_COLOR="33;51;1"
@@ -79,13 +92,7 @@ export LANGUAGE="en_GB:en"
 export LC_COLLATE="en_GB.utf8"
 export LC_CTYPE="en_GB.utf8"
 export LC_MESSAGES="en_GB.utf8"
-export LEIN_FAST_TRAMPOLINE="y"
 export NAME="Matt Russell"
-export SMTPSERVER="smtp.hosts.co.uk"
-export SMTPUSER="mgrbyte.co.uk"
-export VISUAL="emacs -Q -nw"
-export WORKON_HOME="${HOME}/.virtualenvs"
-export PROJECT_HOME="${HOME}/git"
 
 # ohmyzsh
 export ZSH="${HOME}/.oh-my-zsh"
@@ -95,33 +102,27 @@ export CASE_SENSITIVE="true"
 export ENABLE_CORRECTION="false"
 export APPEND_HISTORY="1"
 export INC_APPEND_HISTORY="1"
-export HISTFILE="${HOME}/.history"
+export HISTFILE="${HOME}/.zsh_history"
 export SAVEHIST=1000000
 export HIST_STAMPS="dd/mm/yyyy"
 export COMPLETION_WAITING_DOTS="true"
 
-AWS_ENV_FILE="${HOME}/.aws/env"
-if [ -e "${AWS_ENV_FILE}" ]; then
-    source "${AWS_ENV_FILE}"
-elif [ -e "$(dirname ${AWS_ENV_FILE})" ]; then
-    echo "WARNING: AWS environment file ${AWS_ENV_FILE} is missing"
-fi
+# XDG
+export XDG_DESKTOP_DIR="${HOME}/Desktop"
+export XDG_DOWNLOAD_DIR="${HOME}/Downloads"
+export XDG_TEMPLATES_DIR="${HOME}/Templates"
+export XDG_PUBLICSHARE_DIR="${HOME}/Public"
+export XDG_DOCUMENTS_DIR="${HOME}/Documents"
+export XDG_MUSIC_DIR="${HOME}/Music"
+export XDG_PICTURES_DIR="${HOME}/Pictures"
+export XDG_VIDEOS_DIR="${HOME}/Videos"
+export XDG_CACHE_HOME="${HOME}/.cache"
+export XDG_CONFIG_HOME="${DOTFILES}"
+export ZDOTDIR="${XDG_CONFIG_HOME}/zsh"
 
-VENV_WRAPPER="${HOME}/.local/bin/virtualenvwrapper.sh"
-if [ -f "${VENV_WRAPPER}" ]; then
-    VIRTUALENVWRAPPER_PYTHON="$(which python3)"
-    source "${VENV_WRAPPER}"
-fi
-
-LOCAL_EMACS="$HOME/.local/emacs"
-if [[ -d ${LOCAL_EMACS} ]]; then
-    PATH="${LOCAL_EMACS}/bin:${PATH}"
-fi
-
-CONDA_HOME="$HOME/conda"
-if [[ -d $CONDA_HOME ]]; then
-    export CONDA_HOME
-    PATH="$CONDA_HOME/bin:$PATH"
+# Load work env if present
+if [ -e "${HOME}/.work.env" ]; then
+    source "${HOME}/.work.env"
 fi
 
 # Always export PATH last after all manipulations.

@@ -10,7 +10,7 @@ else
 fi
 export ZSH_THEME
 
-plugins=(git python pip fabric debian themes)
+plugins=(git python themes)
 
 
 alias cljsbuild="lein trampoline cljsbuild $@"
@@ -31,7 +31,7 @@ alias rgrep-py='grep -r --include="*.py"'
 source "$ZSH/oh-my-zsh.sh"
 
 DISPLAY=""
-WSL=$(which wsl.exe)
+which wsl.exe &> /dev/null
 if [ $? -eq 0  ] && [ -z "$DISPLAY" ]; then
     DISPLAY="$(grep -m 1 nameserver /etc/resolv.conf | awk '{print $2}')"
 fi
@@ -43,35 +43,30 @@ else
     echo "X is not running!"
 fi
 
-which keychain > /dev/null 2>&1
-if [ ! $? -eq 0 ]; then
+export NVM_DIR="$HOME/.nvm"
+if [ -d ${NVM_DIR} ]; then
+    [ -s "${NVM_DIR}/nvm.sh" ] && \. "${NVM_DIR}/nvm.sh"  # This loads nvm
+fi
+
+
+which keychain &> /dev/null
+if [ $? -ne 0 ]; then
     echo "Keychain not installed, not starting ssh-agent."
 else
-    keychain --quiet --nogui /home/matt/.ssh/id_rsa_mtr21pqh_bangor_ac_uk
-    source $HOME/.keychain/$HOST-sh
+    ssh_private_keys=$(find ~/.ssh -type f -name 'id_*' | grep -vE '\.pub')
+    keychain --quiet --nogui ${ssh_private_keys}
+    unset ssh_
+    source $HOME/.keychain/$HOSTNAME-sh
 fi
 
-export NVM_DIR="$HOME/.nvm"
-[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
-[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+which screenfetch &>/dev/null
+if [ $? -eq 0 ]; then screenfetch ; fi
 
-# >>> conda initialize >>>
-# !! Contents within this block are managed by 'conda init' !!
-__conda_setup="$('/home/mtr21pqh/conda/bin/conda' 'shell.zsh' 'hook' 2> /dev/null)"
-if [ $? -eq 0 ]; then
-    eval "$__conda_setup"
-else
-    if [ -f "/home/mtr21pqh/conda/etc/profile.d/conda.sh" ]; then
-        . "/home/mtr21pqh/conda/etc/profile.d/conda.sh"
-    else
-        export PATH="/home/mtr21pqh/conda/bin:$PATH"
-    fi
-fi
-unset __conda_setup
+source ${HOME}/git/dot-files/zsh/completion.zsh
+fpath+=~/.zfunc
 
-if [ -f "/home/mtr21pqh/conda/etc/profile.d/mamba.sh" ]; then
-    . "/home/mtr21pqh/conda/etc/profile.d/mamba.sh"
-fi
 
-# <<< conda initialize <<<
+autoload -U compinit; compinit
+zstyle ':completion:*' menu select
 
+autoload -Uz compinit
