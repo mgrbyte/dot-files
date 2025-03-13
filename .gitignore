@@ -28,6 +28,7 @@ iterative/telemetry
 iterative/telemetry.lock
 htop/htoprc
 
+uv/uv-receipt.json
 zsh/.zsh_history
 zsh/.zcompdump*
 
