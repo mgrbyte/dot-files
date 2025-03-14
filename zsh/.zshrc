@@ -1,6 +1,5 @@
 ZSH_THEME="sonicradish" # set by `omz`
 
-HOSTNAME="$(hostname)"
 
 plugins=(git python themes)
 
@@ -21,19 +20,7 @@ alias rgrep-clj='grep --include="*.clj" -r'
 alias rgrep-py='grep -r --include="*.py"'
 
 source "${ZSH}/oh-my-zsh.sh"
-
-DISPLAY=""
-which wsl.exe &> /dev/null
-if [ $? -eq 0  ] && [ -z "$DISPLAY" ]; then
-    DISPLAY="$(grep -m 1 nameserver /etc/resolv.conf | awk '{print $2}')"
-fi
-
-if [ ! -z "$DISPLAY" ]; then
-    export DISPLAY="$DISPLAY:0"
-    setxkbmap -layout us -option ctrl:nocaps
-else
-    echo "X is not running!"
-fi
+setxkbmap -layout us -option ctrl:nocaps
 
 export NVM_DIR="$HOME/.nvm"
 if [ -d ${NVM_DIR} ]; then
@@ -42,23 +29,19 @@ fi
 
 
 which keychain &> /dev/null
-if [ $? -ne 0 ]; then
-    echo "Keychain not installed, not starting ssh-agent."
-else
-    ssh_private_keys=$(find ~/.ssh -type f -name 'id_*' | grep -vE '\.pub')
-    keychain --quiet --nogui ${ssh_private_keys}
-    unset ssh_
-    source $HOME/.keychain/$HOSTNAME-sh
+if [ $? -eq 0 ]; then
+    ssh_private_keys=$(grep -slR "PRIVATE" ~/.ssh/)
+    keychain --agents "ssh,gpg" --quick --quiet --nogui ${ssh_private_keys}
+    unset ssh_private_keys
+    source ${HOME}/.keychain/$(hostname)-sh
 fi
 
 which screenfetch &>/dev/null
 if [ $? -eq 0 ]; then screenfetch ; fi
 
-source ${HOME}/git/dot-files/zsh/completion.zsh
+source ${DOTFILES}/zsh/completion.zsh
 fpath+=~/.zfunc
-
 
 autoload -U compinit; compinit
 zstyle ':completion:*' menu select
-
 autoload -Uz compinit
