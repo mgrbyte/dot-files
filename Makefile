@@ -1,6 +1,6 @@
 DIRS ?= $(shell git ls-tree --name-only -d HEAD)
 TARGET := ${HOME}
-STOW := @stow --verbose=1 --adopt -t ${TARGET}
+STOW := @stow --verbose=1 -t ${TARGET}
 
 define print-help
 	$(if $(need-help),$(warning $1 -- $2))
@@ -19,7 +19,4 @@ reinstall: $(call print-help,reinstall,re-creates symlinks to setup dot-files)
 uninstall: $(call print-help,uninstall,unlinks dot-files)
 	${STOW} -D ${DIRS}
 
-clean: $(call print-help,clean,removes build artifacts)
-	@rm -f get-pip.py
-
-.PHONY: clean install uninstall install uninstall reinstall
+.PHONY: install uninstall install uninstall reinstall
