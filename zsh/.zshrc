@@ -1,14 +1,6 @@
-HOSTNAME="$(hostname)"
+ZSH_THEME="sonicradish" # set by `omz`
 
-# Hint: Disable advanced theme for emacs tramp compat by settng ZSH_THEME="".
-if [ $TERM = "dumb" ]; then
-    unsetopt zle
-    PS1='$ '
-    ZSH_THEME=""
-else
-    ZSH_THEME="socrates"
-fi
-export ZSH_THEME
+HOSTNAME="$(hostname)"
 
 plugins=(git python themes)
 
@@ -28,7 +20,7 @@ alias psj="ps awx | grep 'jav[a]'"
 alias rgrep-clj='grep --include="*.clj" -r'
 alias rgrep-py='grep -r --include="*.py"'
 
-source "$ZSH/oh-my-zsh.sh"
+source "${ZSH}/oh-my-zsh.sh"
 
 DISPLAY=""
 which wsl.exe &> /dev/null
