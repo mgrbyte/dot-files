@@ -88,7 +88,7 @@ export NAME="Matt Russell"
 # ohmyzsh
 export ZSH="${HOME}/.oh-my-zsh"
 export ZSH_CUSTOM="${ZSH}/custom"
-export ZSH_THEME="sonicradish"
+export ZSH_THEME="jreese"
 export CASE_SENSITIVE="true"
 export ENABLE_CORRECTION="true"
 export APPEND_HISTORY="1"
@@ -118,5 +118,3 @@ fi
 
 # Always export PATH last after all manipulations.
 export PATH
-
-
