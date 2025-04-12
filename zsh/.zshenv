@@ -1,4 +1,11 @@
 # conditionals
+
+HOMEBREW="/opt/homebrew"
+if [ -d "${HOMEBREW}" ]; then
+    echo "Adding homebrew to path."
+    PATH="${HOMEBREW}/bin:${PATH}"
+fi
+
 CASK="${HOME}/.cask"
 if [ -e "${CASK}" ]; then
     PATH="${PATH}:${CASK}/bin"
@@ -90,7 +97,7 @@ export ZSH="${HOME}/.oh-my-zsh"
 export ZSH_CUSTOM="${ZSH}/custom"
 export ZSH_THEME="jreese"
 export CASE_SENSITIVE="true"
-export ENABLE_CORRECTION="true"
+export ENABLE_CORRECTION="false"
 export APPEND_HISTORY="1"
 export INC_APPEND_HISTORY="1"
 export HISTFILE="${HOME}/.zsh_history"

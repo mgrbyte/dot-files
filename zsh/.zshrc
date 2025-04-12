@@ -1,8 +1,6 @@
 ZSH_THEME="sonicradish" # set by `omz`
 
-
 plugins=(git python themes)
-
 
 alias cljsbuild="lein trampoline cljsbuild $@"
 alias ls="ls --group-directories-first -p"
@@ -20,7 +18,11 @@ alias rgrep-clj='grep --include="*.clj" -r'
 alias rgrep-py='grep -r --include="*.py"'
 
 source "${ZSH}/oh-my-zsh.sh"
-setxkbmap -layout us -option ctrl:nocaps
+
+which setxbmap &> /dev/null
+if [ $? -eq 0 ]; then
+    setxkbmap -layout us -option ctrl:nocaps
+fi
 
 export NVM_DIR="$HOME/.nvm"
 if [ -d ${NVM_DIR} ]; then
@@ -44,4 +46,5 @@ fpath+=~/.zfunc
 
 autoload -U compinit; compinit
 zstyle ':completion:*' menu select
+zstyle ':completion:*:*:ssh:*:*' known-hosts-files /etc/ssh/ssh_known_hosts ~/.ssh/known_hosts
 autoload -Uz compinit
