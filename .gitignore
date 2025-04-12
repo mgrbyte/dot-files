@@ -31,5 +31,5 @@ htop/htoprc
 uv/uv-receipt.json
 zsh/.zsh_history
 zsh/.zcompdump*
-
+zsh/.zsh_sessions/
 
