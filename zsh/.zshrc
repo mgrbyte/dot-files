@@ -9,13 +9,15 @@ alias la="ls -a"
 alias lt="ls -lt"
 alias grep="grep --color=auto"
 alias egrep="egrep --color=auto"
-alias rgrep="rgrep --color=auto"
-alias pbcopy="xclip -selection clipboard";
-alias pbpaste="xclip -selection clipboard -o";
+alias rgrep="grep -r --color=auto"
+# alias pbcopy="xclip -selection clipboard";
+# alias pbpaste="xclip -selection clipboard -o";
 
 alias psj="ps awx | grep 'jav[a]'"
-alias rgrep-clj='grep --include="*.clj" -r'
-alias rgrep-py='grep -r --include="*.py"'
+alias rgrep='grep -H -r -n'
+alias rgrep-ts='rgrep --include="*.ts" --include="*.tsx"'
+alias rgrep-clj='rgrep --include="*.clj" -r'
+alias rgrep-py='rgrep --include="*.py"'
 
 source "${ZSH}/oh-my-zsh.sh"
 
@@ -33,7 +35,7 @@ fi
 which keychain &> /dev/null
 if [ $? -eq 0 ]; then
     ssh_private_keys=$(grep -slR "PRIVATE" ~/.ssh/)
-    keychain --agents "ssh,gpg" --quick --quiet --nogui ${ssh_private_keys}
+    keychain --quick --quiet --nogui ${ssh_private_keys}
     unset ssh_private_keys
     source ${HOME}/.keychain/$(hostname)-sh
 fi
@@ -48,3 +50,4 @@ autoload -U compinit; compinit
 zstyle ':completion:*' menu select
 zstyle ':completion:*:*:ssh:*:*' known-hosts-files /etc/ssh/ssh_known_hosts ~/.ssh/known_hosts
 autoload -Uz compinit
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
