@@ -2,7 +2,6 @@
 
 HOMEBREW="/opt/homebrew"
 if [ -d "${HOMEBREW}" ]; then
-    echo "Adding homebrew to path."
     PATH="${HOMEBREW}/bin:${PATH}"
 fi
 
