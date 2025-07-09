@@ -46,6 +46,9 @@ if [ $? -eq 0 ]; then screenfetch ; fi
 source ${DOTFILES}/zsh/completion.zsh
 fpath+=~/.zfunc
 
+# Load any work specific env vars.
+[ -f "~/.zshenv.work" ] && source ~/.zshenv.work
+
 autoload -U compinit; compinit
 zstyle ':completion:*' menu select
 zstyle ':completion:*:*:ssh:*:*' known-hosts-files /etc/ssh/ssh_known_hosts ~/.ssh/known_hosts
