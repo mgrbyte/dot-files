@@ -31,7 +31,7 @@ def _comment_conflicts(match):
 comment_conflicts = functools.partial(conflicts_regex.sub, _comment_conflicts)
 
 jaq_strapline = functools.partial(jaq_branch_regex.sub,
-                                  '# Describe the issue:\n\g<issue_id>\n')
+                                  r'# Describe the issue:' + '\n' + r'\g<issue_id>' + '\n')
 
 
 def format_pre_commit_msg(msg):
