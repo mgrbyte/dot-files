@@ -56,4 +56,4 @@ autoload -U compinit; compinit
 zstyle ':completion:*' menu select
 zstyle ':completion:*:*:ssh:*:*' known-hosts-files /etc/ssh/ssh_known_hosts ~/.ssh/known_hosts
 autoload -Uz compinit
-[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+
