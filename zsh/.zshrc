@@ -10,8 +10,11 @@ alias lt="ls -lt"
 alias grep="grep --color=auto"
 alias egrep="egrep --color=auto"
 alias rgrep="grep -r --color=auto"
-# alias pbcopy="xclip -selection clipboard";
-# alias pbpaste="xclip -selection clipboard -o";
+
+if [ ! $(uname) = "Darwin" ]; then
+    alias pbcopy="xclip -selection clipboard"
+    alias pbpaste="xclip -selection clipboard -o"
+fi
 
 alias psj="ps awx | grep 'jav[a]'"
 alias rgrep='grep -H -r -n'
