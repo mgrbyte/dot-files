@@ -1,7 +1,7 @@
 # conditionals
 
 HOMEBREW="/opt/homebrew"
-if [ -d "${HOMEBREW}" ]; then
+if [ -d "${BREW_HOME}" ]; then
     PATH="${HOMEBREW}/bin:${PATH}"
 fi
 
