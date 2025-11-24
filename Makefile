@@ -1,6 +1,6 @@
 DIRS ?= $(shell git ls-tree --name-only -d HEAD)
 TARGET := ${HOME}
-STOW := @stow --verbose=1 -t ${TARGET}
+STOW := @stow --verbose=1 --dotfiles -t ${TARGET}
 
 define print-help
 	$(if $(need-help),$(warning $1 -- $2))
