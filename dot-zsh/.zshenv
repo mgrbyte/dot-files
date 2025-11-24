@@ -1,7 +1,7 @@
 # conditionals
 
 HOMEBREW="/opt/homebrew"
-if [ -d "${BREW_HOME}" ]; then
+if [ -d "${HOMEBREW}" ]; then
     PATH="${HOMEBREW}/bin:${PATH}"
 fi
 
@@ -57,7 +57,7 @@ if [ -d ${LOCAL_EMACS} ]; then
 fi
 MAMBA_HOME="$HOME/mambaforge"
 if [ -d $MAMBA_HOME ]; then
-    export MAMBA_HOMEa
+    export MAMBA_HOME
     PATH="${MAMBA_HOME}/bin:$PATH"
 fi
 
@@ -76,7 +76,7 @@ else
 fi
 
 
-export DOTFILES="${HOME}/git/dot-files"
+export DOTFILES="${HOME}/github/mgrbyte/dot-files"
 
 # Turn off making distinction between output ending with \newline or not
 export PROMPT_EOL_MARK=""
