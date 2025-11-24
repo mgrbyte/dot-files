@@ -115,7 +115,7 @@ export XDG_PICTURES_DIR="${HOME}/Pictures"
 export XDG_VIDEOS_DIR="${HOME}/Videos"
 export XDG_CACHE_HOME="${HOME}/.cache"
 export XDG_CONFIG_HOME="${DOTFILES}"
-export ZDOTDIR="${XDG_CONFIG_HOME}/zsh"
+export ZDOTDIR="${XDG_CONFIG_HOME}/dot-zsh"
 
 # Load work env if present
 if [ -e "${HOME}/.work.env" ]; then

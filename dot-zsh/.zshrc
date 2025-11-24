@@ -46,7 +46,7 @@ fi
 which screenfetch &>/dev/null
 if [ $? -eq 0 ]; then screenfetch ; fi
 
-source ${DOTFILES}/zsh/completion.zsh
+source ${DOTFILES}/dot-zsh/completion.zsh
 fpath+=~/.zfunc
 
 # Load any work specific env vars.
